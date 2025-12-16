@@ -36,22 +36,13 @@ export const Navbar: React.FC = () => {
                   className={'px-3 py-2 text-sm font-medium tracking-wide text-gray-200 hover:text-gray-300 hover:scale-105 transition-all duration-200'}>
                   {link.name}
                 </Link>
-              ))}
-              {role === UserRole.ADMIN ? (
+              ))}              
                  <Link
                  href="/admin"
                  className="px-3 py-2 text-sm font-medium text-red-500 hover:text-red-400 flex items-center gap-1"
                >
                  <ShieldCheck size={16} /> Admin
-               </Link>
-              ) : (
-                <Link
-                  href="/admin"
-                  className="px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-400"
-                >
-                  Admin
-                </Link>
-              )}
+               </Link>              
             </div>
           </div>
           
