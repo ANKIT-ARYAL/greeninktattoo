@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useRef } from 'react';
 import { Upload, CheckCircle, Image as ImageIcon, X } from 'lucide-react';
 import { useStore } from '../context/StoreContext';
