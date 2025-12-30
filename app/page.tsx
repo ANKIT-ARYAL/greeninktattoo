@@ -3,6 +3,7 @@
 import Hero from './components/Hero';
 import Designs from './components/Designs';
 import BookingSection from './components/BookingSection';
+import ReviewSlider from './components/Reviews';
 
 export default function Page() {
   return (
@@ -14,6 +15,9 @@ export default function Page() {
 
       {/* CTA / Booking Section */}
       <BookingSection />
+
+      {/* Review Section */}
+      <ReviewSlider />
     </div>
   );
 }

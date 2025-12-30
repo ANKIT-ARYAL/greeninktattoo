@@ -1,46 +1,108 @@
-import Link from 'next/link'
+'use client';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Image from 'next/image';
-export default function Hero() {
-  return (
-    <div>
-            <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 w-full min-h-screen">
-          <Image 
-            src="/herobg.jpg" 
-            alt="Tattoo Artist Working"             
-            className="w-full h-full object-cover opacity-30 blur-xs"
-            fill
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/60"></div>
-        </div>
 
-        <div className="relative z-10 text-center px-4 mt-32 max-w-4xl mx-auto">
-          <h2 className="text-sm md:text-base font-bold tracking-[0.2em] text-gray-400 uppercase mb-4 animate-fade-in-up">
-            Thamel, Kathmandu
-          </h2>
-          <h1 className="text-5xl md:text-8xl font-display font-bold uppercase tracking-tighter mb-6 text-white leading-none">
-            Ink That <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Endures</span>
-          </h1>
-          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
-            Anjit Tattoo brings world-class artistry to Nepal. Custom designs, impeccable hygiene, and a passion for storytelling through skin.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/contact" 
-              className="px-8 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 transition duration-300 rounded-sm"
-            >
-              Book Appointment
-            </Link>
-            <Link 
-              href="/gallery" 
-              className="px-8 py-4 bg-transparent border border-white text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition duration-300 rounded-sm"
-            >
-              View Gallery
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
-  )
+export default function Hero() {
+  // Animation Variants
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  return (
+    <section className="relative h-[95vh] flex items-center justify-center overflow-hidden bg-black">
+      {/* BACKGROUND IMAGE - Optimized for speed */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 1.1 }}
+        animate={{ opacity: 0.35, scale: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="absolute inset-0 z-0"
+      >
+        <Image 
+          src="/herobg.jpg" 
+          alt="Anjit Tattoo Studio"             
+          className="w-full h-full object-cover blur-[2px]"
+          fill
+          priority
+          sizes="100vw"
+          quality={80} // Lowering quality slightly drastically improves load speed without visible loss
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/60"></div>
+      </motion.div>
+
+      {/* CONTENT AREA */}
+      <motion.div 
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 text-center px-6 max-w-5xl mx-auto"
+      >
+        <motion.span 
+          variants={fadeInUp}
+          className="inline-block text-[10px] md:text-xs font-black tracking-[0.5em] text-emerald-500 uppercase mb-6 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20"
+        >
+          Thamel, Kathmandu • Nepal
+        </motion.span>
+
+        <motion.h1 
+          variants={fadeInUp}
+          className="text-6xl md:text-9xl font-display font-bold uppercase tracking-tighter mb-6 text-white leading-[0.85]"
+        >
+          Ink That <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-600 italic">
+            Endures
+          </span>
+        </motion.h1>
+
+        <motion.p 
+          variants={fadeInUp}
+          className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed"
+        >
+          Anjit Tattoo brings world-class artistry to the heart of Nepal. Custom designs and impeccable hygiene for your next masterpiece.
+        </motion.p>
+
+        <motion.div 
+          variants={fadeInUp}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
+          <Link 
+            href="/contact" 
+            className="group relative px-10 py-5 bg-white text-black font-black uppercase text-[11px] tracking-[0.2em] transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden"
+          >
+            <span className="relative z-10">Book Appointment</span>
+            <div className="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+          </Link>
+
+          <Link 
+            href="/gallery" 
+            className="px-10 py-5 bg-transparent border border-white/20 text-white font-black uppercase text-[11px] tracking-[0.2em] transition-all hover:bg-white hover:text-black hover:border-white rounded-full"
+          >
+            View Gallery
+          </Link>
+        </motion.div>
+      </motion.div>
+
+      {/* Subtle Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <div className="w-[1px] h-12 bg-gradient-to-b from-emerald-500 to-transparent"></div>
+      </motion.div>
+    </section>
+  );
 }

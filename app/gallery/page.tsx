@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Filter, Loader2, Maximize2, Sparkles, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { Loader2, Maximize2, Sparkles, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Design {
   id: string;
@@ -13,8 +14,6 @@ export default function GalleryPage() {
   const [designs, setDesigns] = useState<Design[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string>('All');
-  
-  // LIGHTBOX STATE
   const [selectedImage, setSelectedImage] = useState<Design | null>(null);
 
   const categories = ['All', 'Blackwork', 'Realism', 'Traditional', 'Japanese', 'Minimalist'];
@@ -38,114 +37,161 @@ export default function GalleryPage() {
     ? designs 
     : designs.filter(d => d.category.toLowerCase() === activeCategory.toLowerCase());
 
+  // Handle Lightbox Navigation
+  const navigateLightbox = (direction: 'next' | 'prev') => {
+    if (!selectedImage) return;
+    const currentIndex = filteredDesigns.findIndex(d => d.id === selectedImage.id);
+    let nextIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
+    
+    if (nextIndex >= filteredDesigns.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = filteredDesigns.length - 1;
+    
+    setSelectedImage(filteredDesigns[nextIndex]);
+  };
+
   return (
-    <div className="min-h-screen bg-neutral-950 pt-32 pb-24 sm:px-6 md:px-20">
-      {/* --- LIGHTBOX OVERLAY --- */}
-{selectedImage && (
-  <div 
-    className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-3xl flex items-center justify-center overflow-hidden"
-    onClick={() => setSelectedImage(null)}
-  >
-    {/* Close Button - More visible and higher up */}
-    <button className="absolute top-8 right-8 text-white/40 hover:text-white hover:scale-110 transition-all z-[120]">
-      <X size={48} strokeWidth={1.5} />
-    </button>
-
-    <div 
-      className="relative w-screen h-screen flex items-center justify-center p-0 md:p-4"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* THE IMAGE: Forced to nearly full screen height */}
-      <img 
-        src={selectedImage.imageUrl} 
-        alt={selectedImage.title} 
-        className="h-full md:h-[95vh] w-auto max-w-full object-contain shadow-[0_0_150px_rgba(0,0,0,0.8)] animate-in zoom-in-95 duration-500 ease-out"
-      />
+    <div className="min-h-screen bg-neutral-950 pt-32 pb-24 px-4 md:px-20 overflow-x-hidden">
       
-      {/* FLOATING CAPTION: Positioned over the image bottom to save vertical space */}
-      <div className="absolute bottom-12 left-0 right-0 flex flex-col items-center pointer-events-none">
-         <div className="bg-black/40 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/10 flex flex-col items-center">
-            <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.6em] mb-1 animate-in fade-in slide-in-from-bottom-2 duration-700">
-              {selectedImage.category}
-            </span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-white uppercase italic tracking-tighter animate-in fade-in slide-in-from-bottom-4 duration-1000">
-              {selectedImage.title}
-            </h2>
-         </div>
-      </div>
-    </div>
-  </div>
-)}
-
-      <div className="sm:px-6 md:px-20">
-        {/* Header Section */}
-        <div className="text-center mb-16 space-y-4">
-          <div className="flex justify-center items-center gap-2 mb-4">
-            <Sparkles className="text-emerald-500" size={16} />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">Portfolio Archive</span>
-          </div>
-          <h1 className="text-6xl md:text-8xl font-display font-bold text-white uppercase italic tracking-tighter leading-none">
-            The <span className="text-neutral-800">Collection</span>
-          </h1>
-        </div>
-
-        {/* Filter Bar */}
-        <div className="sticky top-24 z-30 flex flex-wrap justify-center gap-3 mb-16 bg-black/20 backdrop-blur-md p-4 rounded-3xl border border-white/5">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-500 border ${
-                activeCategory === cat
-                  ? 'bg-white text-black border-white'
-                  : 'bg-neutral-900/50 text-neutral-500 border-white/5 hover:border-white/20 hover:text-white'
-              }`}
-            >
-              {cat}
+      {/* --- ENHANCED LIGHTBOX --- */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button className="absolute top-8 right-8 text-white/50 hover:text-white z-[110] transition-colors">
+              <X size={40} />
             </button>
-          ))}
+
+            {/* Navigation Buttons */}
+            <button 
+              onClick={(e) => { e.stopPropagation(); navigateLightbox('prev'); }}
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-4 text-white/30 hover:text-white transition-colors"
+            >
+              <ChevronLeft size={48} />
+            </button>
+            <button 
+              onClick={(e) => { e.stopPropagation(); navigateLightbox('next'); }}
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-4 text-white/30 hover:text-white transition-colors"
+            >
+              <ChevronRight size={48} />
+            </button>
+
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-5xl max-h-[85vh] flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img 
+                src={selectedImage.imageUrl} 
+                alt={selectedImage.title} 
+                className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl"
+              />
+              <div className="mt-8 text-center">
+                <span className="text-emerald-500 text-[10px] font-black uppercase tracking-[0.6em] block mb-2">
+                  {selectedImage.category}
+                </span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-white uppercase italic tracking-tighter">
+                  {selectedImage.title}
+                </h2>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- MAIN PAGE CONTENT --- */}
+      <div className="max-w-7xl mx-auto">
+        <header className="text-center mb-16 space-y-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center items-center gap-2 mb-4"
+          >
+            <Sparkles className="text-emerald-500" size={16} />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">The Portfolio Archive</span>
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-7xl md:text-9xl font-display font-bold text-white uppercase italic tracking-tighter leading-none"
+          >
+            Art on <span className="text-neutral-900">Skin</span>
+          </motion.h1>
+        </header>
+
+        {/* Categories Bar */}
+        <div className="sticky top-28 z-40 flex justify-center mb-16">
+          <div className="flex flex-wrap justify-center gap-2 bg-neutral-900/50 backdrop-blur-xl p-2 rounded-[2rem] border border-white/5">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${
+                  activeCategory === cat
+                    ? 'bg-emerald-500 text-black shadow-[0_0_20px_rgba(16,185,129,0.3)]'
+                    : 'text-neutral-500 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Gallery Grid */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-40">
-            <Loader2 className="animate-spin text-neutral-800" size={48} />
+          <div className="flex flex-col items-center justify-center py-40 gap-4">
+            <Loader2 className="animate-spin text-emerald-500" size={40} />
+            <p className="text-[10px] font-black uppercase tracking-widest text-neutral-700">Loading Masterpieces</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredDesigns.map((design) => (
-              <div 
-                key={design.id} 
-                className="group relative rounded-2xl overflow-hidden bg-neutral-900 border border-white/5 aspect-[2/3]"
-              >
-                <img 
-                  src={design.imageUrl} 
-                  alt={design.title} 
-                  className="w-full h-full object-cover transition duration-1000 group-hover:scale-110"
-                />
-
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-[9px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-1 block">
-                        {design.category}
-                      </span>
-                      <h3 className="text-xl font-display font-bold text-white uppercase italic tracking-tighter">
-                        {design.title}
-                      </h3>
+          <motion.div 
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          >
+            <AnimatePresence mode='popLayout'>
+              {filteredDesigns.map((design) => (
+                <motion.div 
+                  key={design.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  className="group relative rounded-[2rem] overflow-hidden bg-neutral-900 aspect-[2/3] cursor-pointer"
+                  onClick={() => setSelectedImage(design)}
+                >
+                  <img 
+                    src={design.imageUrl} 
+                    alt={design.title} 
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 group-hover:opacity-100 transition-opacity" />
+                  
+                  <div className="absolute inset-0 flex flex-col justify-end p-8 translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <span className="text-[9px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-1">
+                      {design.category}
+                    </span>
+                    <h3 className="text-xl font-display font-bold text-white uppercase italic tracking-tighter leading-none">
+                      {design.title}
+                    </h3>
+                    <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                       <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
+                          <Maximize2 size={16} />
+                       </div>
                     </div>
-                    {/* ZOOM BUTTON TRIGGER */}
-                    <button 
-                      onClick={() => setSelectedImage(design)}
-                      className="p-3 bg-white/10 rounded-full backdrop-blur-md border border-white/10 text-white hover:bg-white hover:text-black transition-all"
-                    >
-                      <Maximize2 size={16} />
-                    </button>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         )}
       </div>
     </div>
