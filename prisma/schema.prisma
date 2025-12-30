@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+model Booking {
+  id              String   @id @default(cuid())
+  name            String
+  contactNumber   String
+  email           String
+  description     String?
+  designType      String   // 'existing' or 'custom'
+  selectedDesignId String?
+  status          String   @default("PENDING") // PENDING, CONFIRMED, REJECTED, RESCHEDULED
+  scheduledAt     DateTime // Combined Date and Time
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+model TattooDesign {
+  id          String   @id @default(cuid())
+  title       String
+  category    String   // Blackwork, Realism, etc.
+  imageUrl    String   // URL from Cloudinary or similar
+  description String?
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  excerpt   String?  // Short summary for the list view
+  image     String?  // Header image URL
+  published Boolean  @default(false)
+  author    String   @default("Anjit")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
