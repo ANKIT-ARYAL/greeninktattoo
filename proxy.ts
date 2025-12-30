@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const token = request.cookies.get('admin_session')?.value;
   const { pathname } = request.nextUrl;
 
-  // 1. Protect all sub-routes of /admin (e.g., /admin/dashboard, /admin/bookings)
-  // But EXCLUDE the root /admin page so the login form can load
   if (pathname.startsWith('/admin') && pathname !== '/admin') {
     if (!token) {
       return NextResponse.redirect(new URL('/admin', request.url));
