@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           <div className=" flex items-center gap-2">
             <Link href="/" className="text-2xl font-display font-bold tracking-wider text-white uppercase">
-             <Image src='/logo.png' alt='Anjit Tattoo Logo' width={150} height={50} className='invert'/>
+             <Image src='/logo.png' alt='Anjit Tattoo Logo' width={150} height={50} className='invert' priority/>
             </Link>
           </div>
           

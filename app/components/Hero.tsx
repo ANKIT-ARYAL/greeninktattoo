@@ -10,6 +10,7 @@ export default function Hero() {
             alt="Tattoo Artist Working"             
             className="w-full h-full object-cover opacity-30 blur-xs"
             fill
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/60"></div>
         </div>
