@@ -1,7 +1,8 @@
 'use client';
 import React from 'react';
+import Image from 'next/image'; // Import Next.js Image
 import { motion, Variants } from 'framer-motion';
-import { Award, ShieldCheck, Zap } from 'lucide-react';
+import { ShieldCheck, Zap } from 'lucide-react';
 
 export default function AboutSection() {
   const textVariants: Variants = {
@@ -35,7 +36,6 @@ export default function AboutSection() {
               </div>
             </motion.div>
 
-            {/* The Quote from the Image */}
             <motion.blockquote 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -47,27 +47,46 @@ export default function AboutSection() {
             </motion.blockquote>
           </div>
 
-          {/* RIGHT: Visual Work Grid (The "Magazine" Look) */}
+          {/* RIGHT: Visual Work Grid (Optimized) */}
           <div className="lg:col-span-7 grid grid-cols-2 gap-4">
             {/* Main Portrait */}
             <motion.div 
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.01 }}
               className="col-span-2 relative aspect-[16/9] rounded-[2rem] overflow-hidden border border-white/10"
             >
-              <img src="/anjit-rai-tattooing.png" alt="Anjit Rai" className="w-full h-full object-cover object-top" />
+              <Image 
+                src="/anjit-rai-tattooing.png" 
+                alt="Anjit Rai" 
+                fill // Use fill for relative containers
+                className="object-cover object-top transition-opacity duration-500"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority // Load this image first as it's the main profile pic
+              />
               <div className="absolute bottom-6 left-6 bg-black/60 backdrop-blur-md p-4 rounded-2xl border border-white/10">
                 <p className="text-white font-display italic text-2xl uppercase">Lead Artist</p>
                 <p className="text-emerald-500 text-[10px] font-black uppercase tracking-widest">Est. Kathmandu, Nepal</p>
               </div>
             </motion.div>
 
-            {/* Featured Designs from the Magazine */}
-            <motion.div whileHover={{ y: -10 }} className="aspect-[3/4] rounded-[2rem] overflow-hidden border border-white/10 bg-neutral-900">
-              <img src="/wolf-tattoo.png" alt="Wolf Design" className="w-full h-full object-cover" />
+            {/* Featured Designs */}
+            <motion.div whileHover={{ y: -10 }} className="relative aspect-[3/4] rounded-[2rem] overflow-hidden border border-white/10 bg-neutral-900">
+              <Image 
+                src="/wolf-tattoo.png" 
+                alt="Wolf Design" 
+                fill 
+                className="object-cover" 
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
             </motion.div>
             
-            <motion.div whileHover={{ y: -10 }} className="aspect-[3/4] rounded-[2rem] overflow-hidden border border-white/10 bg-neutral-900">
-              <img src="/samurai-tattoo.png" alt="Samurai Design" className="w-full h-full object-cover" />
+            <motion.div whileHover={{ y: -10 }} className="relative aspect-[3/4] rounded-[2rem] overflow-hidden border border-white/10 bg-neutral-900">
+              <Image 
+                src="/samurai-tattoo.png" 
+                alt="Samurai Design" 
+                fill 
+                className="object-cover" 
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
             </motion.div>
           </div>
         </div>
@@ -76,9 +95,7 @@ export default function AboutSection() {
         <div className="mt-32 pt-20 border-t border-white/5">
            <h3 className="text-center text-white font-display italic text-4xl uppercase mb-16">The Journey</h3>
            <div className="relative flex flex-col md:flex-row justify-between items-center gap-8">
-              {/* Central Line */}
               <div className="absolute top-1/2 left-0 w-full h-[1px] bg-white/10 hidden md:block" />
-              
               <TimelinePoint year="2012" desc="Junior Trainee at Tikejhya" />
               <TimelinePoint year="2016" desc="Professional Artist Status" />
               <TimelinePoint year="2022" desc="Founded Anjit Tattoo Thamel" />
