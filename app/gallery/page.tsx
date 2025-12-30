@@ -30,13 +30,13 @@ export default async function GalleryPage() {
 
           <Reveal delay={0.2}>
             <h1 className="text-7xl md:text-9xl font-display font-bold text-white uppercase italic tracking-tighter leading-none">
-              Art on <span className="text-neutral-900">Skin</span>
+              Art on <span className="text-gray-700">Skin</span>
             </h1>
           </Reveal>
         </header>
 
         {/* GALLERY GRID */}
-        <Reveal delay={0.4} direction="none">
+        <Reveal delay={0.4} direction="up">
           <GalleryClient designs={serializedDesigns} />
         </Reveal>
 

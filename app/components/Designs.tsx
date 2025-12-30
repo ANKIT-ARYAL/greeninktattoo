@@ -25,7 +25,7 @@ export default async function Designs() {
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">Portfolio</span>
             </div>
             <h2 className="text-5xl md:text-7xl font-display font-bold text-white italic uppercase tracking-tighter">
-              Featured <span className="text-neutral-800">Work</span>
+              Featured <span className="text-gray-700">Work</span>
             </h2>
           </div>
           <Link href="/gallery" className="group flex items-center gap-3 text-white hover:text-emerald-500 transition-all font-black uppercase text-[10px] tracking-[0.3em] pb-2 border-b border-white/10">

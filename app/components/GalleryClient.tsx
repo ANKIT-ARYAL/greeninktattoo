@@ -91,19 +91,11 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
                 onClick={() => setSelectedImage(design)}
                 className="group relative rounded-[2.5rem] overflow-hidden bg-neutral-900 aspect-[3/4] cursor-pointer border border-white/5"
               >
-                {/* 1. Low-res blur placeholder */}
-                {blurUrl && (
-                  <img src={blurUrl} className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40" alt="" />
-                )}
-
-                {/* 2. Main Image */}
                 <img 
                   src={displayUrl} 
                   alt={design.title} 
-                  loading={index < 3 ? "eager" : "lazy"}
-                  decoding="async"
-                  onLoad={(e) => (e.currentTarget.style.opacity = "1")}
-                  className="relative z-10 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 opacity-0" 
+                  loading={index < 3 ? "eager" : "lazy"}                
+                  className="relative z-10 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                 />
                 
                 <div className="absolute inset-0 z-20 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
