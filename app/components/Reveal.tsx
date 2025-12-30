@@ -20,9 +20,9 @@ export default function Reveal({
   const variants = {
     hidden: {
       opacity: 0,
-      y: direction === 'up' ? 30 : direction === 'down' ? -30 : 0,
-      x: direction === 'left' ? 30 : direction === 'right' ? -30 : 0,
-      scale: direction === 'none' ? 0.95 : 1,
+      y: direction === 'up' ? 20 : direction === 'down' ? -20 : 0,
+      x: direction === 'left' ? 20 : direction === 'right' ? -20 : 0,
+      scale: direction === 'none' ? 0.98 : 1,
     },
     visible: {
       opacity: 1,
@@ -37,13 +37,15 @@ export default function Reveal({
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
+      // margin: "0px" is safer for Hero sections to prevent delay
+      viewport={{ once: true, margin: "0px" }}
       transition={{ 
         duration: duration, 
         delay: delay, 
-        ease: [0.21, 0.47, 0.32, 0.98] 
+        ease: [0.22, 1, 0.36, 1] // Smoother cubic-bezier
       }}
       variants={variants}
+      style={{ willChange: "transform, opacity" }} // Performance boost
     >
       {children}
     </motion.div>
