@@ -1,69 +1,114 @@
 'use client';
-import React, { useState } from 'react';
-
-import { Menu, X } from 'lucide-react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { Home, Image as ImageIcon, Calendar, User, Instagram } from 'lucide-react';
 
-export const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const links = [
-    { name: 'Home', path: '/' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'Book Now', path: '/contact' },
-    { name: 'About', path: '/about' }
+export const Navbar = () => {
+  const pathname = usePathname();
+
+  const navLinks = [
+    { name: 'Home', path: '/', icon: Home },
+    { name: 'Gallery', path: '/gallery', icon: ImageIcon },
+    { name: 'Book', path: '/contact', icon: Calendar },
+    { name: 'About', path: '/about', icon: User },
   ];
 
   return (
-    <nav className="fixed w-full z-50 bg-brand-black/90 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          <div className=" flex items-center gap-2">
-            <Link href="/" className="text-2xl font-display font-bold tracking-wider text-white uppercase">
-             <Image src='/logo.png' alt='Anjit Tattoo Logo' width={150} height={50} className='invert' priority/>
-            </Link>
-          </div>
-          
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {links.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.path}
-                  className={'px-3 py-2 text-sm font-medium tracking-wide text-gray-200 hover:text-gray-300 hover:scale-105 transition-all duration-200'}>
-                  {link.name}
-                </Link>
-              ))}                             
+    <>
+      {/* --- TOP BAR (Desktop & Mobile Logo) --- */}
+      <nav className="fixed top-0 left-0 right-0 z-[100] bg-black/60 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <div className="flex items-center justify-between h-20 md:h-24">
+            
+            {/* Logo Section */}
+            <div className="flex items-center">
+              <Link href="/" className="relative hover:scale-105 transition-transform duration-300">
+                <Image 
+                  src='/logo.png' 
+                  alt='Anjit Tattoo Logo' 
+                  width={130} 
+                  height={40} 
+                  className='invert brightness-200' 
+                  priority
+                />
+              </Link>
+            </div>
+
+            {/* Desktop-Only Links */}
+            <div className="hidden md:flex items-center space-x-10">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.path;
+                return (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-300 hover:text-emerald-500 ${
+                      isActive ? 'text-emerald-500' : 'text-neutral-400'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+              <a 
+                href="https://instagram.com/anjittattoo" 
+                target="_blank" 
+                className="text-neutral-400 hover:text-white transition-colors"
+              >
+                <Instagram size={18} />
+              </a>
+            </div>
+
+            {/* Mobile-Only Instagram (replaces hamburger) */}
+            <div className="md:hidden">
+              <a href="https://instagram.com/anjittattoo" className="text-white p-2">
+                <Instagram size={22} strokeWidth={1.5} />
+              </a>
             </div>
           </div>
-          
-          <div className="-mr-2 flex md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile menu */}
-      {isOpen && (
-        <div className="md:hidden bg-neutral-900 border-b border-white/10">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {links.map((link) => (
-              <Link
-                key={link.name}
-                href={link.path}
-                onClick={() => setIsOpen(false)}
-                className={'block px-3 py-2 rounded-md text-base font-medium text-white'}>
-                {link.name}
-              </Link>
-            ))}             
+      {/* --- MOBILE BOTTOM NAV (Facebook Style) --- */}
+      <nav className="fixed bottom-0 left-0 right-0 z-[100] md:hidden">
+        {/* Subtle Gradient Shadow to prevent content clashing */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-transparent -top-10 pointer-events-none" />
+        
+        <div className="relative bg-black/80 backdrop-blur-3xl border-t border-white/10 px-8 pt-3 pb-8">
+          <div className="flex justify-between items-end max-w-md mx-auto">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.path;
+              const Icon = link.icon;
+
+              return (
+                <Link 
+                  key={link.path} 
+                  href={link.path}
+                  className="flex flex-col items-center gap-1.5 transition-all active:scale-90"
+                >
+                  <div className={`relative p-2.5 rounded-2xl transition-all duration-500 ${
+                    isActive 
+                      ? 'bg-emerald-500 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)]' 
+                      : 'text-neutral-500 hover:text-neutral-300'
+                  }`}>
+                    <Icon size={20} strokeWidth={isActive ? 2.5 : 1.5} />
+                    {isActive && (
+                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border-2 border-emerald-500" />
+                    )}
+                  </div>
+                  <span className={`text-[8px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${
+                    isActive ? 'text-emerald-500' : 'text-neutral-600'
+                  }`}>
+                    {link.name}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
-      )}
-    </nav>
+      </nav>
+    </>
   );
 };

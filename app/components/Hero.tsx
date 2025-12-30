@@ -1,82 +1,48 @@
-'use client';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import Reveal from './Reveal'; // Import the shared client wrapper
 
 export default function Hero() {
-  // Animation Variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
   return (
     <section className="relative h-[95vh] flex items-center justify-center overflow-hidden bg-black">
-      {/* BACKGROUND IMAGE - Optimized for speed */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 0.35, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="absolute inset-0 z-0"
-      >
+      {/* BACKGROUND IMAGE - Still wraps in Reveal for the fade/scale effect */}
+      <Reveal direction="none" duration={1.5} className="absolute inset-0 z-0">
         <Image 
           src="/herobg.jpg" 
           alt="Anjit Tattoo Studio"             
-          className="w-full h-full object-cover blur-[2px]"
+          className="w-full h-full object-cover blur-[2px] opacity-35"
           fill
           priority
           sizes="100vw"
-          quality={80} // Lowering quality slightly drastically improves load speed without visible loss
+          quality={80}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/60"></div>
-      </motion.div>
+      </Reveal>
 
       {/* CONTENT AREA */}
-      <motion.div 
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto"
-      >
-        <motion.span 
-          variants={fadeInUp}
-          className="inline-block text-[10px] md:text-xs font-black tracking-[0.5em] text-emerald-500 uppercase mb-6 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20"
-        >
-          Thamel, Kathmandu • Nepal
-        </motion.span>
-
-        <motion.h1 
-          variants={fadeInUp}
-          className="text-6xl md:text-9xl font-display font-bold uppercase tracking-tighter mb-6 text-white leading-[0.85]"
-        >
-          Ink That <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-600 italic">
-            Endures
+      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+        <Reveal delay={0.2}>
+          <span className="inline-block text-[10px] md:text-xs font-black tracking-[0.5em] text-emerald-500 uppercase mb-6 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
+            Thamel, Kathmandu • Nepal
           </span>
-        </motion.h1>
+        </Reveal>
 
-        <motion.p 
-          variants={fadeInUp}
-          className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed"
-        >
-          Anjit Tattoo brings world-class artistry to the heart of Nepal. Custom designs and impeccable hygiene for your next masterpiece.
-        </motion.p>
+        <Reveal delay={0.3}>
+          <h1 className="text-6xl md:text-9xl font-display font-bold uppercase tracking-tighter mb-6 text-white leading-[0.85]">
+            Ink That <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-600 italic">
+              Endures
+            </span>
+          </h1>
+        </Reveal>
 
-        <motion.div 
-          variants={fadeInUp}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
+        <Reveal delay={0.4}>
+          <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+            Anjit Tattoo brings world-class artistry to the heart of Nepal. Custom designs and impeccable hygiene for your next masterpiece.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.5} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link 
             href="/contact" 
             className="group relative px-10 py-5 bg-white text-black font-black uppercase text-[11px] tracking-[0.2em] transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden"
@@ -91,18 +57,13 @@ export default function Hero() {
           >
             View Gallery
           </Link>
-        </motion.div>
-      </motion.div>
+        </Reveal>
+      </div>
 
       {/* Subtle Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
+      <Reveal delay={1.5} direction="none" className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <div className="w-[1px] h-12 bg-gradient-to-b from-emerald-500 to-transparent"></div>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

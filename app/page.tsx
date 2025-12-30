@@ -1,5 +1,3 @@
-'use client';
-
 import Hero from './components/Hero';
 import Designs from './components/Designs';
 import BookingSection from './components/BookingSection';
