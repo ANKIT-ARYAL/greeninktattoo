@@ -1,87 +1,125 @@
 'use client';
-import React, { useState } from 'react';
-import { FileText, Image as ImageIcon, Globe, Lock, Save } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Plus, Trash2, Loader2, Edit3, Image as ImageIcon, X, FileText, Calendar } from 'lucide-react';
+import AddBlogModal from '@/app/components/AddBlogModal';
+import EditBlogModal from '@/app/components/EditBlogModal';
 
-export default function BlogEditor() {
-  const [post, setPost] = useState({
-    title: '',
-    content: '',
-    excerpt: '',
-    image: '',
-    published: false
-  });
+interface Blog {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  imageUrl: string;
+  createdAt: string;
+}
 
-  // Validation: No leading spaces and auto-generate slug
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.replace(/^\s+/, '');
-    setPost({ ...post, title: val });
+export default function BlogsAdminPage() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [blogToEdit, setBlogToEdit] = useState<Blog | null>(null);
+
+  const fetchBlogs = async () => {
+    try {
+      const res = await fetch('/api/blogs');
+      const data = await res.json();
+      if (Array.isArray(data)) setBlogs(data);
+    } catch (err) {
+      console.error("Fetch error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const savePost = async () => {
-    if (!post.title.trim() || !post.content.trim()) {
-      alert("Title and Content are required.");
-      return;
-    }
+  useEffect(() => { fetchBlogs(); }, []);
 
-    const slug = post.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-    
-    await fetch('/api/blog', {
-      method: 'POST',
-      body: JSON.stringify({ ...post, slug }),
-    });
-    
-    alert("Post saved successfully!");
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this blog post?")) return;
+    const res = await fetch(`/api/blogs/${id}`, { method: 'DELETE' });
+    if (res.ok) setBlogs(prev => prev.filter(b => b.id !== id));
   };
 
   return (
-    <div className="bg-neutral-900 border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-      <div className="p-6 border-b border-white/5 bg-white/5 flex justify-between items-center">
-        <h3 className="text-xl font-display font-bold text-white uppercase tracking-tight">Studio Journal</h3>
-        <div className="flex gap-3">
-          <button 
-            onClick={() => setPost({...post, published: !post.published})}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all ${
-              post.published ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/20'
-            }`}
-          >
-            {post.published ? <Globe size={14} /> : <Lock size={14} />}
-            {post.published ? 'PUBLIC' : 'DRAFT'}
-          </button>
+    <div className="min-h-screen bg-black p-8 lg:p-12 space-y-10">
+      <header className="flex justify-between items-end max-w-7xl mx-auto w-full">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-2">Editorial Control</p>
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-white uppercase italic tracking-tighter">Blog Manager</h1>
         </div>
-      </div>
-
-      <div className="p-8 space-y-6">
-        <input
-          type="text"
-          placeholder="Article Title..."
-          value={post.title}
-          onChange={handleTitleChange}
-          className="w-full bg-transparent text-4xl font-display font-bold text-white outline-none placeholder:text-neutral-800"
-        />
-
-        <div className="flex gap-4 items-center p-4 bg-black/40 rounded-xl border border-white/5">
-          <ImageIcon className="text-neutral-600" size={20} />
-          <input 
-            type="url" 
-            placeholder="Header Image URL"
-            className="bg-transparent w-full text-sm text-gray-400 outline-none"
-            onChange={(e) => setPost({...post, image: e.target.value})}
-          />
-        </div>
-
-        <textarea
-          placeholder="Write your story here..."
-          className="w-full h-64 bg-transparent text-gray-300 leading-relaxed outline-none resize-none placeholder:text-neutral-800"
-          onChange={(e) => setPost({...post, content: e.target.value})}
-        />
-
         <button 
-          onClick={savePost}
-          className="flex items-center justify-center gap-2 w-full py-4 bg-white text-black font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-200 transition-all"
+          onClick={() => setIsAddModalOpen(true)}
+          className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-emerald-500 transition-all shadow-xl active:scale-95"
         >
-          <Save size={18} /> Save Article
+          <Plus size={18} /> New Article
         </button>
-      </div>
+      </header>
+
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-40">
+          <Loader2 className="animate-spin text-emerald-500 mb-4" size={40} />
+          <p className="text-neutral-500 text-[10px] font-black uppercase tracking-widest">Accessing Archives...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {blogs.map((blog) => (
+            <div key={blog.id} className="group bg-neutral-900 border border-white/5 rounded-[2.5rem] overflow-hidden hover:border-white/20 transition-all duration-500 flex flex-col md:flex-row">
+              <div className="md:w-48 aspect-square md:aspect-auto overflow-hidden bg-black relative">
+                <img 
+                  src={blog.imageUrl || "https://placehold.co/400x400/171717/white?text=Blog"} 
+                  alt={blog.title} 
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700"
+                />
+              </div>
+
+              <div className="p-8 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <Calendar size={12} className="text-emerald-500" />
+                    <span className="text-[9px] text-neutral-500 font-black uppercase tracking-widest">
+                      {new Date(blog.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <h3 className="text-white font-bold text-xl uppercase italic tracking-tighter line-clamp-1 mb-2">{blog.title}</h3>
+                  <p className="text-neutral-500 text-xs line-clamp-2 leading-relaxed">{blog.excerpt}</p>
+                </div>
+
+                <div className="flex justify-end gap-2 mt-6">
+                  <button 
+                    onClick={() => setBlogToEdit(blog)}
+                    className="p-3 bg-white/5 text-neutral-400 hover:text-emerald-500 hover:bg-white/10 rounded-xl transition-all"
+                  >
+                    <Edit3 size={18} />
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(blog.id)}
+                    className="p-3 bg-white/5 text-neutral-400 hover:text-red-500 hover:bg-white/10 rounded-xl transition-all"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* MODALS */}
+      <AddBlogModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+        onSuccess={fetchBlogs} 
+      />
+      
+      {blogToEdit && (
+        <EditBlogModal 
+          blog={blogToEdit} 
+          isOpen={!!blogToEdit} 
+          onClose={() => setBlogToEdit(null)} 
+          onSuccess={fetchBlogs} 
+        />
+      )}
     </div>
   );
-};
+}
+
+

@@ -17,35 +17,29 @@ export default function Reveal({
   className = "" 
 }: RevealProps) {
   
-  const variants = {
-    hidden: {
-      opacity: 0,
-      y: direction === 'up' ? 20 : direction === 'down' ? -20 : 0,
-      x: direction === 'left' ? 20 : direction === 'right' ? -20 : 0,
-      scale: direction === 'none' ? 0.98 : 1,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      x: 0,
-      scale: 1,
-    },
-  };
-
   return (
     <motion.div
       className={className}
-      initial="hidden"
-      whileInView="visible"
-      // margin: "0px" is safer for Hero sections to prevent delay
-      viewport={{ once: true, margin: "0px" }}
+      initial={{ 
+        opacity: 0, 
+        y: direction === 'up' ? 30 : direction === 'down' ? -30 : 0,
+        x: direction === 'left' ? 30 : direction === 'right' ? -30 : 0,
+        scale: direction === 'none' ? 0.95 : 1
+      }}
+      whileInView={{ 
+        opacity: 1, 
+        y: 0, 
+        x: 0,
+        scale: 1
+      }}
+      // margin: "200px" triggers the animation way before the element hits the screen
+      viewport={{ once: true, margin: "0px 0px 200px 0px" }}
       transition={{ 
         duration: duration, 
         delay: delay, 
-        ease: [0.22, 1, 0.36, 1] // Smoother cubic-bezier
+        ease: [0.25, 1, 0.5, 1] 
       }}
-      variants={variants}
-      style={{ willChange: "transform, opacity" }} // Performance boost
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>

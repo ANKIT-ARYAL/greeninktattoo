@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Loader2, Edit3, Image as ImageIcon, Instagram, X, Link as LinkIcon } from 'lucide-react';
+import { EditDesignModal } from '../../components/EditDesignModal'; // Assuming the path is correct
+import { AddDesignModal } from '@/app/components/AddDesignModal';
 
 interface Design {
   id: string;
@@ -13,7 +15,10 @@ export default function DesignsAdminPage() {
   const [designs, setDesigns] = useState<Design[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editingDesign, setEditingDesign] = useState<Design | null>(null);
+  
+  // State for the Edit Modal
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [designToEdit, setDesignToEdit] = useState<Design | null>(null);
 
   const fetchDesigns = async () => {
     try {
@@ -33,6 +38,12 @@ export default function DesignsAdminPage() {
     if (!confirm("Delete this piece from your portfolio?")) return;
     const res = await fetch(`/api/designs/${id}`, { method: 'DELETE' });
     if (res.ok) setDesigns(prev => prev.filter(d => d.id !== id));
+  };
+
+  // Function to trigger edit
+  const handleEditClick = (design: Design) => {
+    setDesignToEdit(design);
+    setIsEditModalOpen(true);
   };
 
   return (
@@ -59,7 +70,6 @@ export default function DesignsAdminPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
           {designs.map((design) => {
             const isIG = design.imageUrl.includes('instagram.com');
-            // Using weserv proxy to bypass Instagram's CORP policy so you can see the image
             const rawIgUrl = isIG 
               ? `${design.imageUrl.split('?')[0].replace(/\/$/, "")}/media/?size=l`
               : design.imageUrl;
@@ -93,7 +103,20 @@ export default function DesignsAdminPage() {
                     <p className="text-[9px] text-emerald-500 font-black uppercase tracking-[0.2em] mt-1.5">{design.category}</p>
                   </div>
                   <div className="flex gap-1">
-                    <button onClick={() => handleDelete(design.id)} className="p-3 text-neutral-600 hover:text-red-500 transition-colors">
+                    {/* EDIT BUTTON */}
+                    <button 
+                      onClick={() => handleEditClick(design)} 
+                      className="p-3 text-neutral-600 hover:text-emerald-500 transition-colors"
+                      title="Edit Design"
+                    >
+                      <Edit3 size={18} />
+                    </button>
+                    {/* DELETE BUTTON */}
+                    <button 
+                      onClick={() => handleDelete(design.id)} 
+                      className="p-3 text-neutral-600 hover:text-red-500 transition-colors"
+                      title="Delete Design"
+                    >
                       <Trash2 size={18} />
                     </button>
                   </div>
@@ -104,110 +127,26 @@ export default function DesignsAdminPage() {
         </div>
       )}
 
+      {/* ADD MODAL */}
       <AddDesignModal 
         isOpen={isAddModalOpen} 
         onClose={() => setIsAddModalOpen(false)} 
         onSuccess={fetchDesigns} 
       />
+
+      {/* EDIT MODAL - Triggered when designToEdit is set */}
+      {isEditModalOpen && designToEdit && (
+        <EditDesignModal 
+          design={designToEdit}
+          isOpen={isEditModalOpen}
+          onClose={() => {
+            setIsEditModalOpen(false);
+            setDesignToEdit(null);
+          }}
+          onSuccess={fetchDesigns}
+        />
+      )}
     </div>
   );
 }
 
-// --- SUB-COMPONENT: ADD MODAL ---
-
-function AddDesignModal({ isOpen, onClose, onSuccess }: { isOpen: boolean, onClose: () => void, onSuccess: () => void }) {
-  const [mode, setMode] = useState<'upload' | 'instagram'>('upload');
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({ title: '', category: 'Black & Grey', imageUrl: '' });
-
-  if (!isOpen) return null;
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await fetch('/api/designs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (res.ok) {
-        onSuccess();
-        onClose();
-        setFormData({ title: '', category: 'Black & Grey', imageUrl: '' });
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm">
-      <div className="bg-neutral-900 border border-white/10 w-full max-w-md rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8)]">
-        <div className="p-10">
-          <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-display font-bold text-white uppercase italic tracking-tighter">Add Design</h2>
-            <button onClick={onClose} className="text-neutral-500 hover:text-white transition-all"><X size={28}/></button>
-          </div>
-
-          <div className="flex p-1.5 bg-black rounded-2xl mb-10 border border-white/5">
-            <button 
-              type="button"
-              onClick={() => setMode('upload')}
-              className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${mode === 'upload' ? 'bg-neutral-800 text-white shadow-xl' : 'text-neutral-600 hover:text-neutral-400'}`}
-            >
-              <ImageIcon size={14} /> My Upload
-            </button>
-            <button 
-              type="button"
-              onClick={() => setMode('instagram')}
-              className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${mode === 'instagram' ? 'bg-neutral-800 text-white shadow-xl' : 'text-neutral-600 hover:text-neutral-400'}`}
-            >
-              <Instagram size={14} /> Instagram
-            </button>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-8">
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase text-neutral-500 tracking-[0.3em]">Title</label>
-              <input 
-                required
-                className="w-full bg-black border border-white/5 rounded-2xl px-5 py-4 text-white focus:border-emerald-500 outline-none transition-all placeholder:text-neutral-800"
-                placeholder="Design Name"
-                value={formData.title}
-                onChange={(e) => setFormData({...formData, title: e.target.value})}
-              />
-            </div>
-
-            <div className="space-y-3">
-              <label className="text-[10px] font-black uppercase text-neutral-500 tracking-[0.3em]">
-                {mode === 'instagram' ? 'Post Link' : 'Image URL'}
-              </label>
-              <div className="relative">
-                <input 
-                  required
-                  className="w-full bg-black border border-white/5 rounded-2xl pl-14 pr-5 py-4 text-white focus:border-emerald-500 outline-none transition-all placeholder:text-neutral-800"
-                  placeholder={mode === 'instagram' ? "https://www.instagram.com/p/..." : "https://your-image-link.jpg"}
-                  value={formData.imageUrl}
-                  onChange={(e) => setFormData({...formData, imageUrl: e.target.value})}
-                />
-                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-700">
-                  {mode === 'instagram' ? <Instagram size={20} /> : <LinkIcon size={20} />}
-                </div>
-              </div>
-            </div>
-
-            <button 
-              disabled={loading}
-              className="w-full bg-white text-black font-black uppercase text-[10px] tracking-[0.3em] py-5 rounded-2xl hover:bg-emerald-500 transition-all active:scale-95 flex items-center justify-center gap-3"
-            >
-              {loading ? <Loader2 className="animate-spin" size={18} /> : 'Publish to Gallery'}
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}

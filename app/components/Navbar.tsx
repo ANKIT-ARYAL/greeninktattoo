@@ -13,6 +13,7 @@ export const Navbar = () => {
     { name: 'Gallery', path: '/gallery', icon: ImageIcon },
     { name: 'Book', path: '/contact', icon: Calendar },
     { name: 'About', path: '/about', icon: User },
+    { name: 'Blogs', path: '/blogs', icon: ImageIcon },
   ];
 
   return (
