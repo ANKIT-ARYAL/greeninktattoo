@@ -53,7 +53,7 @@ export const Navbar = () => {
                 );
               })}
               <a 
-                href="https://instagram.com/anjittattoo" 
+                href="https://instagram.com/anjit_tattoo" 
                 target="_blank" 
                 className="text-neutral-400 hover:text-white transition-colors"
               >

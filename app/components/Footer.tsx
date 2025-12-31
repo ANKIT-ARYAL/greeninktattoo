@@ -31,7 +31,7 @@ export const Footer = () => {
 
             <div className="flex gap-4">
               {[
-                { icon: Instagram, href: 'https://instagram.com/anjittattoo' },
+                { icon: Instagram, href: 'https://instagram.com/anjit_tattoo' },
                 { icon: Facebook, href: '#' },
                 { icon: Youtube, href: 'https://youtube.com/...' }
               ].map((social, i) => (
