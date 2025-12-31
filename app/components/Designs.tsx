@@ -5,6 +5,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
 import Reveal from './Reveal';
 
+export const revalidate = 0;
 export default async function Designs() {
   // We only take 3 for the home page to keep the initial payload light
   const designs = await prisma.tattooDesign.findMany({

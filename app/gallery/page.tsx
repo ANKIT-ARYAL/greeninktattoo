@@ -2,15 +2,18 @@ import React from 'react';
 import GalleryClient from '../components/GalleryClient';
 import { Sparkles } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
-import Reveal from '../components/Reveal'; // Import our universal wrapper
+import Reveal from '../components/Reveal';
+
+// Forces the page to fetch fresh data on every request
+export const revalidate = 0; 
 
 export default async function GalleryPage() {
-  // 1. Direct Database Access
+  // 1. Fetch data
   const designs = await prisma.tattooDesign.findMany({
     orderBy: { createdAt: 'desc' }
   });
 
-  // 2. Serialize data (converts Dates to Strings for Client Component safety)
+  // 2. Serialize
   const serializedDesigns = JSON.parse(JSON.stringify(designs));
 
   return (
@@ -35,10 +38,13 @@ export default async function GalleryPage() {
           </Reveal>
         </header>
 
-        {/* GALLERY GRID */}
-        <Reveal delay={0.4} direction="up">
+        {/* FIX: Removed <Reveal> from here. 
+            GalleryClient already uses motion.div for individual items.
+            Wrapping the whole grid often causes 'sticky' visibility issues.
+        */}
+        <div className="min-h-[600px]">
           <GalleryClient designs={serializedDesigns} />
-        </Reveal>
+        </div>
 
       </div>
     </div>

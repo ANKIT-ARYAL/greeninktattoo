@@ -21,6 +21,15 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
   const [visibleCount, setVisibleCount] = useState(6);
 
   const categories = ['All', 'Blackwork', 'Realism', 'Traditional', 'Japanese', 'Minimalist'];
+
+  // Helper to clean Instagram URLs and wrap them in a proxy
+  const getDisplayUrl = (url: string, width = 600) => {
+    if (!url.includes('instagram.com')) return url;
+    // Remove query params like ?igsh=... and trailing slashes
+    const cleanBase = url.split('?')[0].replace(/\/$/, "");
+    // Use weserv.nl to bypass hotlinking restrictions
+    return `https://images.weserv.nl/?url=${encodeURIComponent(cleanBase + "/media/?size=l")}&w=${width}&q=70&output=webp`;
+  };
   
   const filtered = useMemo(() => {
     let result = designs;
@@ -67,11 +76,8 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
       <div className={`grid gap-6 ${isFeatured ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
         <AnimatePresence mode="popLayout">
           {displayItems.map((design, index) => {
-            const isIG = design.imageUrl.includes('instagram.com');
-            const cleanUrl = design.imageUrl.split('?')[0].replace(/\/$/, "");
-            const displayUrl = isIG 
-              ? `https://images.weserv.nl/?url=${encodeURIComponent(cleanUrl + "/media/?size=l")}&w=500&q=65&output=webp` 
-              : design.imageUrl;
+            // APPLYING THE FIX HERE
+            const displayUrl = getDisplayUrl(design.imageUrl, 600);
 
             return (
               <motion.div 
@@ -87,7 +93,11 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
                   src={displayUrl} 
                   alt={design.title} 
                   loading={index < 3 ? "eager" : "lazy"}                
-                  className="relative z-10 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
+                  className="relative z-10 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                  onError={(e) => {
+                    // Fallback if the Instagram proxy fails
+                    e.currentTarget.src = "https://placehold.co/400x600/171717/white?text=View+Post";
+                  }}
                 />
                 <div className="absolute inset-0 z-20 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
                 <div className="absolute inset-0 z-30 flex flex-col justify-end p-8 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
@@ -111,7 +121,7 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
         </div>
       )}
 
-      {/* FIXED LIGHTBOX SECTION */}
+      {/* LIGHTBOX SECTION (Maintained original logic as requested) */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div 
@@ -146,24 +156,21 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
               className="relative max-w-lg w-full bg-neutral-900 rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* FIXED LIGHTBOX IMAGE LOGIC */}
-<div className="relative w-full aspect-[4/5] bg-black overflow-hidden flex items-center justify-center">
-  <Loader2 className="absolute animate-spin text-neutral-800" size={40} />
-  
-  <img 
-    key={selectedImage.id} // Forces re-render on nav
-    src={selectedImage.imageUrl.includes('instagram.com') 
-      ? `https://images.weserv.nl/?url=${encodeURIComponent(selectedImage.imageUrl.split('?')[0].replace(/\/$/, ""))}/media/?size=l&w=1000&q=80&output=webp` 
-      : selectedImage.imageUrl
-    } 
-    alt={selectedImage.title} 
-    className="relative z-10 w-full h-full object-cover transition-opacity duration-300"
-    // If it still fails, this handles the broken image error
-    onError={(e) => {
-      e.currentTarget.src = "https://www.placehold.it/800x1000?text=View+on+Instagram";
-    }}
-  />
-</div>
+              <div className="relative w-full aspect-[4/5] bg-black overflow-hidden flex items-center justify-center">
+                <Loader2 className="absolute animate-spin text-neutral-800" size={40} />
+                <img 
+                  key={selectedImage.id}
+                  src={selectedImage.imageUrl.includes('instagram.com') 
+                    ? `https://images.weserv.nl/?url=${encodeURIComponent(selectedImage.imageUrl.split('?')[0].replace(/\/$/, ""))}/media/?size=l&w=1000&q=80&output=webp` 
+                    : selectedImage.imageUrl
+                  } 
+                  alt={selectedImage.title} 
+                  className="relative z-10 w-full h-full object-cover transition-opacity duration-300"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://placehold.co/800x1000/171717/white?text=View+on+Instagram";
+                  }}
+                />
+              </div>
               
               <div className="p-10 bg-neutral-900 flex justify-between items-center border-t border-white/5">
                 <div>

@@ -67,7 +67,7 @@ export default function Hero() {
       </div>
 
       {/* Static Decorative Element (Fast load) */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 ">
         <span className="text-[8px] font-black uppercase tracking-[1em] text-white rotate-90 mb-8">Scroll</span>
         <div className="w-[1px] h-16 bg-gradient-to-b from-emerald-500 to-transparent"></div>
       </div>
