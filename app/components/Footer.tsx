@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Instagram, Facebook, Youtube, Mail, MapPin } from 'lucide-react';
+import { FaTiktok } from 'react-icons/fa6';
 import Reveal from './Reveal';
 
 export const Footer = () => {
@@ -32,8 +33,8 @@ export const Footer = () => {
             <div className="flex gap-4">
               {[
                 { icon: Instagram, href: 'https://instagram.com/anjit_tattoo' },
-                { icon: Facebook, href: '#' },
-                { icon: Youtube, href: 'https://youtube.com/...' }
+                { icon: Facebook, href: 'https://www.facebook.com/tattooanjit' },
+                { icon: FaTiktok, href: 'https://www.tiktok.com/@anjit_tattoo' }
               ].map((social, i) => (
                 <Reveal key={i} delay={i * 0.1} direction="up">
                   <a 
