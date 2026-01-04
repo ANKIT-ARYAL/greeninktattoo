@@ -1,3 +1,4 @@
+// components/Designs.tsx
 import React from 'react';
 import Link from 'next/link';
 import GalleryClient from './GalleryClient';
@@ -7,35 +8,52 @@ import Reveal from './Reveal';
 
 export const revalidate = 0;
 export default async function Designs() {
-  // We only take 3 for the home page to keep the initial payload light
   const designs = await prisma.tattooDesign.findMany({
     take: 6,
     orderBy: { createdAt: 'desc' },
-    select: { id: true, title: true, imageUrl: true, category: true } // Only fetch what's needed
+    select: { id: true, title: true, imageUrl: true, category: true }
   });
 
   const serializedDesigns = JSON.parse(JSON.stringify(designs));
 
   return (
-    <section className="py-32 bg-neutral-950">
-      <div className="max-w-7xl mx-auto px-6 md:px-20">
-        <Reveal direction="up" className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div className="space-y-4">
+    // Reduced padding on mobile (py-20) vs desktop (py-32)
+    <section className="py-20 md:py-32 bg-neutral-950">
+      {/* - max-w-7xl limits width on huge screens
+          - px-4 for small phones, px-8 for tablets, px-12+ for desktop
+      */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20">
+        
+        <Reveal direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-8">
+          <div className="space-y-3 md:space-y-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="text-emerald-500" size={14} />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">Portfolio</span>
+              <Sparkles className="text-emerald-500" size={12} />
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-500">
+                Portfolio
+              </span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-display font-bold text-white italic uppercase tracking-tighter">
-              Featured <span className="text-gray-700">Work</span>
+            {/* Fluid typography for the heading */}
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white italic uppercase tracking-tighter leading-none">
+              Featured <span className="text-neutral-800">Work</span>
             </h2>
           </div>
-          <Link href="/gallery" className="group flex items-center gap-3 text-white hover:text-emerald-500 transition-all font-black uppercase text-[10px] tracking-[0.3em] pb-2 border-b border-white/10">
-            Explore Full Gallery <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
+
+          {/* Link width is full on mobile for better touch target, auto on desktop */}
+          <Link 
+            href="/gallery" 
+            className="group w-full md:w-auto flex items-center justify-between md:justify-start gap-3 text-white hover:text-emerald-500 transition-all font-black uppercase text-[10px] tracking-[0.3em] pb-3 border-b border-white/10"
+          >
+            Explore Full Gallery 
+            <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
           </Link>
         </Reveal>
 
-        {/* This is where the heavy lifting happens */}
-        <GalleryClient designs={serializedDesigns} isFeatured={true} />
+        {/* Container for the gallery to handle its own internal spacing.
+            Make sure GalleryClient uses a responsive grid (e.g., grid-cols-1 md:grid-cols-2 lg:grid-cols-3)
+        */}
+        <div className="w-full">
+          <GalleryClient designs={serializedDesigns} isFeatured={true} />
+        </div>
       </div>
     </section>
   );

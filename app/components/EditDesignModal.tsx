@@ -38,14 +38,20 @@ export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: any) => 
             onChange={(e) => setFormData({...formData, title: e.target.value})}
           />
           <select 
-            className="w-full bg-black border border-white/5 rounded-xl px-4 py-3 text-white"
-            value={formData.category}
-            onChange={(e) => setFormData({...formData, category: e.target.value})}
-          >
-            <option value="Blackwork">Blackwork</option>
-            <option value="Realism">Realism</option>
-            <option value="Fine Line">Fine Line</option>
-          </select>
+  className="w-full bg-black border border-white/5 rounded-xl px-4 py-3 text-white focus:border-emerald-500 outline-none"
+  value={formData.category}
+  onChange={(e) => setFormData({...formData, category: e.target.value})}
+>
+  <option value="Blackwork / Black and Gray">Blackwork / Black and Gray</option>
+  <option value="Realism">Realism</option>
+  <option value="Traditional">Traditional</option>
+  <option value="Minimalist">Minimalist</option>
+  <option value="Fontwork and Linework">Fontwork and Linework</option>
+  <option value="Colorwork and New School">Colorwork and New School</option>
+  <option value="Mandala , Dot Work and Geomatrical">Mandala , Dot Work and Geometrical</option>
+  <option value="Cover up">Cover up</option>
+  <option value="Other">Other</option>
+</select>
           <input 
             className="w-full bg-black border border-white/5 rounded-xl px-4 py-3 text-white"
             value={formData.imageUrl}

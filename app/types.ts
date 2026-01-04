@@ -2,7 +2,7 @@
 export interface TattooDesign {
   id: string;
   title: string;
-  category: 'Blackwork' | 'Realism' | 'Traditional' | 'Japanese' | 'Minimalist' | 'Other';
+  category: 'Blackwork / Black and Gray' | 'Realism' | 'Traditional' | 'Fontwork and Linework' | 'Minimalist' | 'Colorwork and New School' | 'Mandala , Dot Work and Geomatrical' | 'Cover up' | 'Other';
   imageUrl: string;
   isFeatured: boolean; // Added for homepage control
   createdAt: number;

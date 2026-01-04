@@ -20,17 +20,17 @@ export const Navbar = () => {
     <>
       {/* --- TOP BAR (Desktop & Mobile Logo) --- */}
       <nav className="fixed top-0 left-0 right-0 z-[100] bg-black/60 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex items-center justify-between h-20 md:h-24">
+        <div className="max-w-7xl mx-auto px-4 md:px-12">
+          <div className="flex items-center justify-between h-16 md:h-24">
             
-            {/* Logo Section */}
+            {/* Logo Section - Scaled for mobile */}
             <div className="flex items-center">
               <Link href="/" className="relative hover:scale-105 transition-transform duration-300">
                 <Image 
                   src='/logo.png' 
                   alt='Anjit Tattoo Logo' 
-                  width={130} 
-                  height={40} 
+                  width={150} 
+                  height={150} 
                   className='invert brightness-200' 
                   priority
                 />
@@ -62,23 +62,24 @@ export const Navbar = () => {
               </a>
             </div>
 
-            {/* Mobile-Only Instagram (replaces hamburger) */}
+            {/* Mobile-Only Instagram */}
             <div className="md:hidden">
               <a href="https://instagram.com/anjittattoo" className="text-white p-2">
-                <Instagram size={22} strokeWidth={1.5} />
+                <Instagram size={20} strokeWidth={1.5} />
               </a>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* --- MOBILE BOTTOM NAV (Facebook Style) --- */}
+      {/* --- MOBILE BOTTOM NAV --- */}
       <nav className="fixed bottom-0 left-0 right-0 z-[100] md:hidden">
-        {/* Subtle Gradient Shadow to prevent content clashing */}
+        {/* Shadow Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-transparent -top-10 pointer-events-none" />
         
-        <div className="relative bg-black/80 backdrop-blur-3xl border-t border-white/10 px-8 pt-3 pb-8">
-          <div className="flex justify-between items-end max-w-md mx-auto">
+        {/* Adjusted padding for safe area insets on mobile devices (pb-6) */}
+        <div className="relative bg-black/80 backdrop-blur-3xl border-t border-white/10 px-4 sm:px-8 pt-3 pb-6">
+          <div className="flex justify-between items-center max-w-md mx-auto">
             {navLinks.map((link) => {
               const isActive = pathname === link.path;
               const Icon = link.icon;
@@ -87,19 +88,19 @@ export const Navbar = () => {
                 <Link 
                   key={link.path} 
                   href={link.path}
-                  className="flex flex-col items-center gap-1.5 transition-all active:scale-90"
+                  className="flex flex-col items-center gap-1 transition-all active:scale-90 flex-1"
                 >
-                  <div className={`relative p-2.5 rounded-2xl transition-all duration-500 ${
+                  <div className={`relative p-2 rounded-xl transition-all duration-500 ${
                     isActive 
-                      ? 'bg-emerald-500 text-black shadow-[0_0_20px_rgba(16,185,129,0.4)]' 
-                      : 'text-neutral-500 hover:text-neutral-300'
+                      ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
+                      : 'text-neutral-500'
                   }`}>
-                    <Icon size={20} strokeWidth={isActive ? 2.5 : 1.5} />
+                    <Icon size={18} strokeWidth={isActive ? 2.5 : 1.5} />
                     {isActive && (
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full border-2 border-emerald-500" />
+                      <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-white rounded-full border border-emerald-500" />
                     )}
                   </div>
-                  <span className={`text-[8px] font-black uppercase tracking-[0.2em] transition-colors duration-300 ${
+                  <span className={`text-[7px] font-black uppercase tracking-wider transition-colors duration-300 ${
                     isActive ? 'text-emerald-500' : 'text-neutral-600'
                   }`}>
                     {link.name}

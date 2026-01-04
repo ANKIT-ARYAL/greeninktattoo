@@ -10,13 +10,15 @@ export async function PATCH(
     const { id } = await params;
     const body = await req.json();
 
-    // Your Studio's official WhatsApp/Contact number
-    const ANJIT_TATTOO_CONTACT = "+977 9840015954"; // Replace with your actual number
+    const ANJIT_TATTOO_CONTACT = "+977 9840015954"; 
+    // Create a clickable WhatsApp link
+    const whatsappLink = `https://wa.me/${ANJIT_TATTOO_CONTACT.replace(/\s+/g, '')}`;
 
     const updated = await prisma.booking.update({
       where: { id: id },
       data: {
         status: body.status,
+        // Ensure we handle date updates correctly
         scheduledAt: body.scheduledAt ? new Date(body.scheduledAt) : undefined,
       },
     });
@@ -30,10 +32,17 @@ export async function PATCH(
         },
       });
 
+      // Format time specifically for Nepal timezone
+      const formattedDate = new Date(updated.scheduledAt).toLocaleString('en-US', {
+        timeZone: 'Asia/Kathmandu',
+        dateStyle: 'full',
+        timeStyle: 'short',
+      });
+
       const mailOptions = {
         from: `"Anjit Tattoo" <${process.env.EMAIL_USER}>`,
         to: updated.email,
-        replyTo: process.env.EMAIL_USER, // Ensuring they reply to your gmail
+        replyTo: process.env.EMAIL_USER,
         subject: 'Booking Confirmed - Anjit Tattoo',
         html: `
           <div style="background-color: #000; color: #fff; padding: 40px; font-family: sans-serif; border-radius: 20px; max-width: 600px; margin: auto; border: 1px solid #333;">
@@ -42,14 +51,14 @@ export async function PATCH(
             <p style="color: #ccc;">Your tattoo appointment has been officially confirmed. We have reserved the following time slot for you:</p>
             
             <div style="background: #111; padding: 24px; border: 1px solid #333; border-radius: 12px; font-size: 18px; font-weight: bold; color: #10b981; text-align: center; margin: 20px 0;">
-              ${new Date(updated.scheduledAt).toLocaleString([], { dateStyle: 'full', timeStyle: 'short' })}
+              ${formattedDate}
             </div>
             
             <p style="color: #ccc;">Please arrive 10 minutes early. If you need to reschedule or have questions, please reach out via WhatsApp.</p>
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #222;">
               <p style="font-size: 12px; color: #555; text-transform: uppercase; margin-bottom: 5px;">Studio Contact</p>
-              <p style="font-size: 16px; font-weight: bold; color: #fff; margin: 0;">WhatsApp: ${ANJIT_TATTOO_CONTACT}</p>
+              <a href="${whatsappLink}" style="font-size: 16px; font-weight: bold; color: #10b981; text-decoration: none;">WhatsApp: ${ANJIT_TATTOO_CONTACT}</a>
             </div>
 
             <p style="margin-top: 40px; font-size: 10px; color: #444; text-align: center; text-transform: uppercase; letter-spacing: 1px;">
@@ -78,6 +87,7 @@ export async function DELETE(
     await prisma.booking.delete({ where: { id: id } });
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error("DELETE_ERROR:", error);
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
 }

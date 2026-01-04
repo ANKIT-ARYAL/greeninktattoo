@@ -9,18 +9,19 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-black border-t border-white/5 pt-24 pb-12 px-6 md:px-20">
+    // Added pb-32 on mobile to avoid clashing with the Mobile Bottom Nav
+    <footer className="bg-black border-t border-white/5 pt-16 md:pt-24 pb-32 md:pb-12 px-6 md:px-20">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-16 md:mb-20">
           
           {/* BRANDING COLUMN */}
-          <div className="md:col-span-5 space-y-8">
+          <div className="md:col-span-5 space-y-6 md:space-y-8">
             <Reveal direction="none">
               <Image 
                 src="/logo.png" 
                 alt="Anjit Tattoo Logo" 
                 width={150} 
-                height={50} 
+                height={150} 
                 className="invert brightness-200 mb-6"
               />
               <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
@@ -72,24 +73,25 @@ export const Footer = () => {
               <div className="flex items-start gap-4 text-neutral-500">
                 <MapPin size={18} className="text-emerald-500 shrink-0" />
                 <p className="text-xs font-medium leading-relaxed italic">
-                  Chaksibari Marg, Thamel,<br />
+                  Bhagwati Bahal, Thamel,<br />
                   Kathmandu, Nepal
                 </p>
               </div>
               <div className="flex items-center gap-4 text-neutral-500">
                 <Mail size={18} className="text-emerald-500 shrink-0" />
-                <p className="text-xs font-medium tracking-wide">anjittattoo@gmail.com</p>
+                {/* Added truncate for long emails on mobile */}
+                <p className="text-xs font-medium tracking-wide truncate">anjittattoo@gmail.com</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* BOTTOM COPYRIGHT */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[9px] font-black uppercase tracking-[0.3em] text-neutral-700">
+        <div className="pt-10 md:pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 text-center md:text-left">
+          <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] text-neutral-700">
             © {currentYear} Anjit Tattoo Studio. All Rights Reserved.
           </p>
-          <p className="text-[9px] font-black uppercase tracking-[0.3em] text-neutral-800">
+          <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] text-neutral-800">
             Crafted with Precision in Nepal
           </p>
         </div>

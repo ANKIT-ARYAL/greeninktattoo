@@ -2,14 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Calendar, Clock, User, Phone, Mail, Trash2, CheckCircle2, 
-  XCircle, Loader2, Download, Eye, ExternalLink, CalendarClock, AlertCircle
+  XCircle, Loader2, Download, Eye, ExternalLink, CalendarClock, AlertCircle, FileText
 } from 'lucide-react';
 
 export default function BookingsAdminPage() {
   const [bookings, setBookings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  // State to track modified times before confirmation
   const [adjustedTimes, setAdjustedTimes] = useState<{ [key: string]: string }>({});
   const [actionLoading, setActionLoading] = useState<string | null>(null);
 
@@ -29,19 +27,43 @@ export default function BookingsAdminPage() {
     fetchBookings();
   }, []);
 
+  const formatForInput = (dateString: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+  };
+
   const downloadImage = (base64Data: string, fileName: string) => {
-    const link = document.createElement("a");
-    link.href = base64Data;
-    link.download = `design-${fileName.replace(/\s+/g, '-').toLowerCase()}.png`;
-    link.click();
+    try {
+      if (!base64Data.includes('base64,')) {
+        window.open(base64Data, '_blank');
+        return;
+      }
+      const parts = base64Data.split(';base64,');
+      const contentType = parts[0].split(':')[1];
+      const raw = window.atob(parts[1]);
+      const uInt8Array = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; ++i) { uInt8Array[i] = raw.charCodeAt(i); }
+      const blob = new Blob([uInt8Array], { type: contentType });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `anjit-tattoo-${fileName.replace(/\s+/g, '-').toLowerCase()}`;
+      link.click();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      const link = document.createElement("a");
+      link.href = base64Data;
+      link.download = "design.png";
+      link.click();
+    }
   };
 
   const handleUpdate = async (id: string, currentStatus: string, originalTime: string) => {
     setActionLoading(id);
     const newStatus = currentStatus === 'PENDING' ? 'CONFIRMED' : currentStatus;
-    // Use the adjusted time if changed, otherwise use original
     const finalTime = adjustedTimes[id] || originalTime;
-
     try {
       const res = await fetch(`/api/bookings/${id}`, {
         method: 'PATCH',
@@ -51,7 +73,6 @@ export default function BookingsAdminPage() {
           scheduledAt: new Date(finalTime).toISOString()
         })
       });
-
       if (res.ok) {
         if (newStatus === 'CONFIRMED') alert("Booking confirmed and email sent!");
         fetchBookings();
@@ -80,7 +101,7 @@ export default function BookingsAdminPage() {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <p className="text-xs font-bold text-neutral-500 uppercase tracking-[0.3em]">Live Feed</p>
+            <p className="text-xs font-bold text-neutral-500 uppercase tracking-[0.3em]">Studio Control</p>
           </div>
           <h1 className="text-6xl font-display font-bold uppercase italic tracking-tighter">Inquiries</h1>
         </div>
@@ -93,7 +114,7 @@ export default function BookingsAdminPage() {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-32 space-y-4">
           <Loader2 className="animate-spin text-neutral-800" size={40} />
-          <p className="text-neutral-500 font-bold uppercase text-[10px] tracking-widest">Decrypting Bookings...</p>
+          <p className="text-neutral-500 font-bold uppercase text-[10px] tracking-widest">Loading Records...</p>
         </div>
       ) : (
         <div className="grid gap-8">
@@ -104,7 +125,7 @@ export default function BookingsAdminPage() {
             >
               <div className="grid lg:grid-cols-12 gap-10 items-start">
                 
-                {/* 1. Profile & Info (Col 4) */}
+                {/* 1. Profile & Info */}
                 <div className="lg:col-span-4 space-y-6">
                   <div className="flex items-center gap-5">
                     <div className="w-16 h-16 rounded-full bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10 flex items-center justify-center text-2xl font-black italic text-white shadow-2xl">
@@ -121,80 +142,113 @@ export default function BookingsAdminPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-3 pt-4 border-t border-white/5">
-                    <div className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors cursor-pointer">
-                      <Phone size={16} className="text-neutral-700" />
-                      <span className="text-sm font-medium">{booking.contactNumber}</span>
+                  <div className="space-y-4 pt-4 border-t border-white/5">
+                    <div className="bg-black/20 p-4 rounded-2xl border border-white/5">
+                      <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-2">Requested Slot</p>
+                      <div className="flex items-center gap-3 text-emerald-500">
+                        <Calendar size={14} />
+                        <span className="text-sm font-bold uppercase tracking-tight">
+                          {new Date(booking.scheduledAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3 text-white mt-1">
+                        <Clock size={14} />
+                        <span className="text-lg font-display italic font-bold">
+                          {new Date(booking.scheduledAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-neutral-400 hover:text-white transition-colors cursor-pointer">
-                      <Mail size={16} className="text-neutral-700" />
-                      <span className="text-sm font-medium">{booking.email}</span>
+
+                    <div className="space-y-2 px-1">
+                        <div className="flex items-center gap-3 text-neutral-400">
+                          <Phone size={14} className="text-neutral-700" />
+                          <span className="text-xs font-medium">{booking.contactNumber}</span>
+                        </div>
+                        <div className="flex items-center gap-3 text-neutral-400">
+                          <Mail size={14} className="text-neutral-700" />
+                          <span className="text-xs font-medium">{booking.email}</span>
+                        </div>
                     </div>
                   </div>
                 </div>
 
-                {/* 2. Reference & Time Management (Col 5) */}
+                {/* 2. Reference & Description Management */}
                 <div className="lg:col-span-5 space-y-6">
-                  {/* Reference Display */}
-                  <div className="bg-black/40 rounded-3xl p-6 border border-white/5 relative overflow-hidden">
-                    <p className="text-[10px] font-bold text-neutral-600 uppercase mb-4 tracking-widest flex items-center gap-2">
-                      <Eye size={12}/> Art Reference
-                    </p>
-                    
-                    {booking.description?.startsWith('data:image') ? (
-                      <div className="flex items-center gap-6">
-                        <img 
-                          src={booking.description} 
-                          className="w-24 h-24 rounded-2xl object-cover border border-white/10 hover:scale-105 transition-transform cursor-pointer" 
-                          alt="Design" 
-                          onClick={() => window.open(booking.description, '_blank')}
-                        />
-                        <button 
-                          onClick={() => downloadImage(booking.description, booking.name)}
-                          className="flex items-center gap-2 text-[10px] font-black uppercase bg-white/5 hover:bg-white text-neutral-400 hover:text-black px-4 py-3 rounded-xl transition-all"
-                        >
-                          <Download size={14} /> Download
-                        </button>
-                      </div>
-                    ) : booking.description ? (
-                      <div className="space-y-4">
-                        <p className="text-xs text-neutral-400 italic break-all line-clamp-2">"{booking.description}"</p>
-                        <a 
-                          href={booking.description.startsWith('http') ? booking.description : `https://${booking.description}`} 
-                          target="_blank" 
-                          className="inline-flex items-center gap-2 text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-lg hover:bg-emerald-500 hover:text-black transition-all"
-                        >
-                          <ExternalLink size={12} /> External Link
-                        </a>
-                      </div>
-                    ) : (
-                      <p className="text-xs text-neutral-600 italic">No files or links provided.</p>
-                    )}
+                  <div className="bg-black/40 rounded-3xl p-6 border border-white/5 space-y-6">
+                    {/* IMAGE SECTION */}
+                    <div>
+                      <p className="text-[10px] font-bold text-neutral-600 uppercase mb-3 tracking-widest flex items-center gap-2">
+                        <Eye size={12}/> Art Reference
+                      </p>
+                      
+                      {/* Priority check for designData or Base64 description */}
+                      {(booking.designData || (booking.description && booking.description.startsWith('data:image'))) ? (
+                        <div className="flex flex-col sm:flex-row items-center gap-4">
+                          <img 
+                            src={booking.designData || booking.description} 
+                            className="w-20 h-20 rounded-xl object-cover border border-white/10 hover:scale-105 transition-transform cursor-pointer" 
+                            alt="Design" 
+                            onClick={() => {
+                              const imgWindow = window.open("");
+                              imgWindow?.document.write(`<img src="${booking.designData || booking.description}" style="max-width:100%">`);
+                            }}
+                          />
+                          <button 
+                            onClick={() => downloadImage(booking.designData || booking.description, booking.name)}
+                            className="flex items-center gap-2 text-[10px] font-black uppercase bg-white/5 hover:bg-white text-neutral-400 hover:text-black px-4 py-3 rounded-xl transition-all"
+                          >
+                            <Download size={14} /> Download Image
+                          </button>
+                        </div>
+                      ) : (
+                        <p className="text-[10px] text-neutral-700 uppercase font-bold italic">No image provided</p>
+                      )}
+                    </div>
+
+                    {/* TEXT DESCRIPTION SECTION */}
+                    <div className="pt-4 border-t border-white/5">
+                      <p className="text-[10px] font-bold text-neutral-600 uppercase mb-3 tracking-widest flex items-center gap-2">
+                        <FileText size={12}/> Idea Description
+                      </p>
+                      {booking.description && !booking.description.startsWith('data:image') ? (
+                        <div className="space-y-2">
+                          <p className="text-xs text-neutral-300 italic leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
+                            "{booking.description}"
+                          </p>
+                          {booking.description.includes('http') && (
+                            <a href={booking.description} target="_blank" className="inline-flex items-center gap-2 text-[10px] text-emerald-500 font-bold uppercase underline">
+                              <ExternalLink size={10}/> Open External Link
+                            </a>
+                          )}
+                        </div>
+                      ) : (
+                        <p className="text-[10px] text-neutral-700 uppercase font-bold italic">No text notes provided</p>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Date Adjustment Picker */}
+                  {/* Schedule Picker */}
                   <div className="bg-emerald-500/5 rounded-3xl p-6 border border-emerald-500/10">
                     <p className="text-[10px] font-bold text-emerald-500/50 uppercase mb-4 tracking-widest flex items-center gap-2">
-                      <CalendarClock size={12}/> Schedule Control
+                      <CalendarClock size={12}/> Confirm or Reschedule
                     </p>
                     <input 
                       type="datetime-local"
-                      defaultValue={new Date(booking.scheduledAt).toISOString().slice(0, 16)}
+                      defaultValue={formatForInput(booking.scheduledAt)}
                       onChange={(e) => setAdjustedTimes({ ...adjustedTimes, [booking.id]: e.target.value })}
                       className="w-full bg-black/40 border border-white/5 rounded-xl p-3 text-sm font-bold text-white focus:border-emerald-500 outline-none transition-all"
                     />
-                    <p className="text-[9px] text-neutral-500 mt-2 italic px-1">Changing this updates the email confirmation time.</p>
                   </div>
                 </div>
 
-                {/* 3. Action Hub (Col 3) */}
+                {/* 3. Action Hub */}
                 <div className="lg:col-span-3 flex flex-col justify-between gap-4 h-full">
                   <div className="space-y-3">
                     {booking.status === 'PENDING' ? (
                       <button 
                         onClick={() => handleUpdate(booking.id, 'PENDING', booking.scheduledAt)}
                         disabled={actionLoading === booking.id}
-                        className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-black py-5 rounded-2xl font-black uppercase text-[11px] tracking-[0.15em] transition-all flex items-center justify-center gap-3 shadow-xl shadow-emerald-500/10"
+                        className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-black py-5 rounded-2xl font-black uppercase text-[11px] tracking-[0.15em] transition-all flex items-center justify-center gap-3"
                       >
                         {actionLoading === booking.id ? <Loader2 className="animate-spin" size={18}/> : <CheckCircle2 size={18}/>}
                         Confirm & Email
@@ -202,10 +256,9 @@ export default function BookingsAdminPage() {
                     ) : (
                       <div className="w-full bg-white/5 border border-white/5 py-5 rounded-2xl flex items-center justify-center gap-2 text-emerald-500">
                         <CheckCircle2 size={16}/>
-                        <span className="text-[11px] font-black uppercase tracking-widest">Appointment Set</span>
+                        <span className="text-[11px] font-black uppercase tracking-widest">Confirmed Slot</span>
                       </div>
                     )}
-                    
                     <button 
                       onClick={() => handleUpdate(booking.id, 'REJECTED', booking.scheduledAt)}
                       className="w-full bg-neutral-900 hover:bg-red-500/10 border border-white/5 text-neutral-500 hover:text-red-500 py-4 rounded-2xl font-bold uppercase text-[10px] tracking-widest transition-all"
@@ -213,11 +266,7 @@ export default function BookingsAdminPage() {
                       Decline Request
                     </button>
                   </div>
-
-                  <button 
-                    onClick={() => handleDelete(booking.id)}
-                    className="flex items-center justify-center gap-2 text-neutral-700 hover:text-red-500 transition-colors text-[10px] font-bold uppercase tracking-widest"
-                  >
+                  <button onClick={() => handleDelete(booking.id)} className="flex items-center justify-center gap-2 text-neutral-700 hover:text-red-500 transition-colors text-[10px] font-bold uppercase tracking-widest">
                     <Trash2 size={14} /> Remove Entry
                   </button>
                 </div>
@@ -225,15 +274,6 @@ export default function BookingsAdminPage() {
               </div>
             </div>
           ))}
-        </div>
-      )}
-
-      {/* Empty State */}
-      {!loading && bookings.length === 0 && (
-        <div className="text-center py-40 bg-neutral-950 rounded-[3rem] border border-dashed border-white/5">
-          <Calendar size={60} className="mx-auto text-neutral-900 mb-6" />
-          <h2 className="text-2xl font-bold text-neutral-500 uppercase italic">Silence in the Studio</h2>
-          <p className="text-neutral-700 text-sm mt-2">New tattoo inquiries will manifest here.</p>
         </div>
       )}
     </div>

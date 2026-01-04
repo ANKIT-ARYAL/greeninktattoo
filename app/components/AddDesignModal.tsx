@@ -7,11 +7,21 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
   const [loading, setLoading] = useState(false);
   
   // Added fixed categories for the dropdown
-  const categories = ['Blackwork', 'Realism', 'Traditional', 'Japanese', 'Minimalist', 'Fine Line'];
+  const categories = [
+  'Blackwork / Black and Gray', 
+  'Realism', 
+  'Traditional', 
+  'Minimalist', 
+  'Fontwork and Linework',
+  'Colorwork and New School', 
+  'Mandala , Dot Work and Geomatrical', 
+  'Cover up',
+  'Other'
+];
 
   const [formData, setFormData] = useState({ 
     title: '', 
-    category: 'Blackwork', // Default selection
+    category: 'Other', // Default selection
     imageUrl: '' 
   });
 
@@ -35,7 +45,7 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
       if (res.ok) {
         onSuccess();
         onClose();
-        setFormData({ title: '', category: 'Blackwork', imageUrl: '' });
+        setFormData({ title: '', category: 'Other', imageUrl: '' });
       }
     } catch (err) {
       console.error("Save error:", err);

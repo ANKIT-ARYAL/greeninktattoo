@@ -17,32 +17,38 @@ export default async function GalleryPage() {
   const serializedDesigns = JSON.parse(JSON.stringify(designs));
 
   return (
-    <div className="min-h-screen bg-neutral-950 pt-32 pb-24 px-4 md:px-20">
+    // Reduced pt-32 to pt-24 on mobile to reduce initial empty space
+    <div className="min-h-screen bg-neutral-950 pt-24 md:pt-32 pb-16 md:pb-24 px-4 sm:px-8 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
         
         {/* ANIMATED HEADER */}
-        <header className="text-center mb-16">
+        <header className="text-center mb-10 md:mb-16">
           <Reveal direction="down">
-            <div className="flex justify-center items-center gap-2 mb-4">
-              <Sparkles className="text-emerald-500" size={16} />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">
+            <div className="flex justify-center items-center gap-2 mb-3 md:mb-4">
+              <Sparkles className="text-emerald-500 w-3.5 h-3.5 md:w-4 md:h-4" />
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-500">
                 The Archive
               </span>
             </div>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <h1 className="text-7xl md:text-9xl font-display font-bold text-white uppercase italic tracking-tighter leading-none">
-              Art on <span className="text-gray-700">Skin</span>
+            {/* - text-5xl for small mobile
+                - text-7xl for tablets
+                - text-9xl for desktop
+                - whitespace-pre-line or br helps control word breaks on narrow screens
+            */}
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-bold text-white uppercase italic tracking-tighter leading-[0.9] md:leading-none">
+              Art on <br className="block sm:hidden" /> 
+              <span className="text-neutral-800">Skin</span>
             </h1>
           </Reveal>
         </header>
 
-        {/* FIX: Removed <Reveal> from here. 
-            GalleryClient already uses motion.div for individual items.
-            Wrapping the whole grid often causes 'sticky' visibility issues.
+        {/* The min-height ensures no layout shift while data loads, 
+            but we lower it slightly for mobile screens. 
         */}
-        <div className="min-h-[600px]">
+        <div className="min-h-[400px] md:min-h-[600px]">
           <GalleryClient designs={serializedDesigns} />
         </div>
 
