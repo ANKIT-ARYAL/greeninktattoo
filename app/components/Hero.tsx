@@ -65,19 +65,16 @@ export default function Hero() {
 
       {/* 2. THE IMAGE: Optimized for LCP */}
       <div className="absolute lg:relative inset-0 lg:inset-auto h-full w-full lg:w-[42%] bg-neutral-900 overflow-hidden z-10 lg:z-20">
-        <Image 
-  src="/hero-opt.avif" 
-  alt="Anjit Tattoo Studio"             
-  fill
-  priority
-  fetchPriority="high"
-  loading="eager"
-  /* CRITICAL: This tells Next.js to resize the image for smaller screens 
-     so mobile users don't download the 950KB file */
-  sizes="(max-width: 768px) 100vw, 42vw" 
-  quality={75} 
-  className="w-full h-full object-cover"
-/>
+<img 
+    src="/hero-opt.avif" 
+    alt="Anjit Tattoo Studio"             
+    fetchPriority="high" // Critical for raw img tags
+    className="w-full h-full object-cover grayscale-[30%] brightness-90 lg:brightness-100"
+    style={{ 
+      contentVisibility: 'auto', // Optimization for modern browsers
+      aspectRatio: '16/9' 
+    }}
+  />
         <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 hidden lg:block" />
       </div>     
     </section>
