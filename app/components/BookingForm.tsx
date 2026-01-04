@@ -108,7 +108,7 @@ export const BookingForm: React.FC = () => {
   return (
     <form onSubmit={validateAndSubmit} className="max-w-xl mx-auto space-y-5 md:space-y-6 bg-neutral-900/50 backdrop-blur-xl p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/10 shadow-2xl">
       <div className="space-y-1 text-center">
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-white uppercase italic">Appointment Request</h2>
+        <h2 className="text-2xl md:text-3xl font-display font-bold text-emerald-500 uppercase italic">Appointment Request</h2>
         <div className="flex justify-center items-center gap-2">
             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             <p className="text-neutral-500 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em]">Shop Hours: 11AM — 8PM</p>
@@ -199,7 +199,7 @@ export const BookingForm: React.FC = () => {
         </div>
       </div>
 
-      <button disabled={loading} className="w-full py-4 md:py-5 bg-white text-black font-black uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl md:rounded-2xl hover:bg-emerald-500 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+      <button disabled={loading} className="w-full py-4 md:py-5 bg-emerald-500 text-black font-black uppercase tracking-[0.2em] text-xs md:text-sm rounded-xl md:rounded-2xl hover:bg-emerald-700 active:scale-[0.98] transition-all flex items-center justify-center gap-3">
         {loading ? <Loader2 className="animate-spin" size={20} /> : "Submit Booking"}
       </button>
     </form>

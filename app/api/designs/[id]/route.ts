@@ -40,6 +40,7 @@ export async function PUT(
         title: body.title,
         category: body.category,
         imageUrl: body.imageUrl,
+        isFeatured: body.isFeatured,
       },
     });
 

@@ -8,20 +8,23 @@ import {
 import LogoutButton from '../components/LogoutButton';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  // Check if the admin is logged in
   const cookieStore = await cookies();
   const isAuthenticated = cookieStore.has('admin_session');
 
-  // IF NOT LOGGED IN: Render the login page clean (no sidebar)
+  // 1. PUBLIC VIEW: No Sidebar, No Margins
   if (!isAuthenticated) {
-    return <>{children}</>;
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        {children}
+      </div>
+    );
   }
 
-  // IF LOGGED IN: Render the full dashboard shell with sidebar
+  // 2. PROTECTED VIEW: Sidebar + Offset Content
   return (
     <div className="min-h-screen bg-black flex text-neutral-400">
-      {/* --- SHARED SIDEBAR --- */}
-      <aside className="w-64 border-r border-white/5 bg-neutral-950 flex flex-col p-6 fixed h-full">
+      {/* SIDEBAR */}
+      <aside className="w-64 border-r border-white/5 bg-neutral-950 flex flex-col p-6 fixed h-full z-50">
         <div className="mb-10 px-2">
           <h1 className="text-white font-display font-bold text-xl tracking-tighter uppercase">
             Anjit <span className="text-neutral-600">Admin</span>
@@ -49,7 +52,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <LogoutButton />
       </aside>
 
-      {/* --- PAGE CONTENT AREA --- */}
+      {/* MAIN CONTENT - Only uses ml-64 when sidebar exists */}
       <main className="flex-1 ml-64 p-12">
         {children}
       </main>

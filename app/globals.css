@@ -73,3 +73,34 @@ main {
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }
 .delay-4 { animation-delay: 0.4s; }
+
+
+@theme {
+  --font-display: var(--font-syne), sans-serif;
+  --font-body: var(--font-space), sans-serif;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.04em; /* Tight tracking for that heavy look */
+  line-height: 0.85;
+}
+
+body {
+  font-family: var(--font-body);
+  letter-spacing: 0.01em;
+}
+
+/* Luxury Detail: Highlight the first letter or make sub-labels ultra-spaced */
+.tracking-ultra {
+  letter-spacing: 0.5em;
+  font-weight: 800;
+}
+/* Grainy Texture Overlay */
+.bg-grain {
+  background-image: url("https://res.cloudinary.com/du9xeasst/image/upload/v1612453535/grain_bg_up0vjw.png");
+  background-repeat: repeat;
+  opacity: 0.04; /* Keep it very subtle */
+  pointer-events: none;
+}

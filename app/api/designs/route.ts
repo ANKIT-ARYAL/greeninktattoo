@@ -23,6 +23,7 @@ export async function POST(req: Request) {
         title: body.title,
         imageUrl: body.imageUrl,
         category: body.category,
+        isFeatured: body.isFeatured || false,
       },
     });
     return NextResponse.json(newDesign);

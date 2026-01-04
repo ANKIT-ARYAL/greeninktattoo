@@ -18,8 +18,8 @@ export default async function GalleryPage() {
 
   return (
     // Reduced pt-32 to pt-24 on mobile to reduce initial empty space
-    <div className="min-h-screen bg-neutral-950 pt-24 md:pt-32 pb-16 md:pb-24 px-4 sm:px-8 md:px-12 lg:px-20">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-neutral-950 pt-24 md:pt-32 pb-16 md:pb-24 px-4 sm:px-8 md:px-12 lg:px-20 lg:pt-44">
+      <div className="mx-auto">
         
         {/* ANIMATED HEADER */}
         <header className="text-center mb-10 md:mb-16">
@@ -40,7 +40,7 @@ export default async function GalleryPage() {
             */}
             <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-bold text-white uppercase italic tracking-tighter leading-[0.9] md:leading-none">
               Art on <br className="block sm:hidden" /> 
-              <span className="text-neutral-800">Skin</span>
+              <span className="text-emerald-500">Skin</span>
             </h1>
           </Reveal>
         </header>

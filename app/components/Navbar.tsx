@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, Image as ImageIcon, Calendar, User, Instagram } from 'lucide-react';
+import { Home, Image as ImageIcon, Calendar, User, Instagram, BookOpen } from 'lucide-react';
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -13,102 +13,109 @@ export const Navbar = () => {
     { name: 'Gallery', path: '/gallery', icon: ImageIcon },
     { name: 'Book', path: '/contact', icon: Calendar },
     { name: 'About', path: '/about', icon: User },
-    { name: 'Blogs', path: '/blogs', icon: ImageIcon },
+    { name: 'Blogs', path: '/blogs', icon: BookOpen },
   ];
 
   return (
     <>
-      {/* --- TOP BAR (Desktop & Mobile Logo) --- */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] bg-black/60 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 md:px-12">
-          <div className="flex items-center justify-between h-16 md:h-24">
-            
-            {/* Logo Section - Scaled for mobile */}
-            <div className="flex items-center">
-              <Link href="/" className="relative hover:scale-105 transition-transform duration-300">
-                <Image 
-                  src='/logo.png' 
-                  alt='Anjit Tattoo Logo' 
-                  width={150} 
-                  height={150} 
-                  className='invert brightness-200' 
-                  priority
-                />
-              </Link>
-            </div>
+      {/* --- DESKTOP: GHOST NAVBAR --- */}
+      <nav className="hidden lg:block absolute top-0 left-0 right-0 z-[100] pt-10">
+        <div className="max-w-[1440px] mx-auto px-12 flex items-center justify-between">
+          
+          <div className="flex items-center">
+            <Link href="/" className="relative transition-transform duration-500 hover:scale-110 active:scale-95">
+              <Image 
+                src='/logo.png' 
+                alt='Anjit Tattoo' 
+                width={150} 
+                height={150} 
+                className="invert brightness-200 object-contain drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" 
+                priority
+              />
+            </Link>
+          </div>
 
-            {/* Desktop-Only Links */}
-            <div className="hidden md:flex items-center space-x-10">
+          <div className="flex items-center gap-16">
+            <div className="flex items-center gap-12">
               {navLinks.map((link) => {
                 const isActive = pathname === link.path;
                 return (
                   <Link
                     key={link.path}
-                    href={link.path}
-                    className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-300 hover:text-emerald-500 ${
-                      isActive ? 'text-emerald-500' : 'text-neutral-400'
+                    href={link.path}                    
+                    className={`group relative text-[18px] font-thin uppercase tracking-widest transition-all duration-300 ${
+                      isActive ? 'text-emerald-500' : 'text-white hover:text-emerald-500/80'
                     }`}
                   >
                     {link.name}
+                    <span className={`absolute -bottom-2 left-0 h-[1.5px] bg-emerald-500 transition-all duration-300 ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
                   </Link>
                 );
               })}
-              <a 
-                href="https://instagram.com/anjit_tattoo" 
-                target="_blank" 
-                className="text-neutral-400 hover:text-white transition-colors"
-              >
-                <Instagram size={18} />
-              </a>
             </div>
 
-            {/* Mobile-Only Instagram */}
-            <div className="md:hidden">
-              <a href="https://instagram.com/anjittattoo" className="text-white p-2">
-                <Instagram size={20} strokeWidth={1.5} />
+            {/* Ghost Actions */}
+            <div className="flex items-center gap-8 pl-12 border-l border-white/10">
+              <a href="https://instagram.com/anjit_tattoo" target="_blank" className="text-white hover:text-emerald-500 transition-colors">
+                <Instagram size={24} strokeWidth={1.5} />
               </a>
+              <Link 
+                href="/contact"
+                /* Matches nav link text size for consistency */
+                className="relative text-[12px] font-black uppercase tracking-widest text-black bg-emerald-500 px-6 py-3 rounded-full hover:bg-emerald-600 transition-all hover:scale-105"
+              >
+                Book Now
+              </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* --- MOBILE BOTTOM NAV --- */}
-      <nav className="fixed bottom-0 left-0 right-0 z-[100] md:hidden">
-        {/* Shadow Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-transparent -top-10 pointer-events-none" />
-        
-        {/* Adjusted padding for safe area insets on mobile devices (pb-6) */}
-        <div className="relative bg-black/80 backdrop-blur-3xl border-t border-white/10 px-4 sm:px-8 pt-3 pb-6">
-          <div className="flex justify-between items-center max-w-md mx-auto">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.path;
-              const Icon = link.icon;
+      {/* --- MOBILE: TOP BAR --- */}
+      <nav className="lg:hidden fixed top-0 left-0 right-0 z-[100] px-6 py-4 flex items-center justify-between pointer-events-none">
+        <Link href="/" className="pointer-events-auto">
+          <Image 
+            src='/logo.png' 
+            alt='Anjit Tattoo' 
+            width={100} 
+            height={100} 
+            className="invert brightness-200 object-contain" 
+          />
+        </Link>
+        <a href="https://instagram.com/anjit_tattoo" className="pointer-events-auto text-white">
+          <Instagram size={24} />
+        </a>
+      </nav>
 
-              return (
-                <Link 
-                  key={link.path} 
-                  href={link.path}
-                  className="flex flex-col items-center gap-1 transition-all active:scale-90 flex-1"
-                >
-                  <div className={`relative p-2 rounded-xl transition-all duration-500 ${
-                    isActive 
-                      ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
-                      : 'text-neutral-500'
-                  }`}>
-                    <Icon size={18} strokeWidth={isActive ? 2.5 : 1.5} />
-                    {isActive && (
-                      <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-white rounded-full border border-emerald-500" />
-                    )}
-                  </div>
-                  <span className={`text-[7px] font-black uppercase tracking-wider transition-colors duration-300 ${
-                    isActive ? 'text-emerald-500' : 'text-neutral-600'
-                  }`}>
-                    {link.name}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
+      {/* --- MOBILE: PERMANENT LABELS DOCK --- */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[100]">
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black via-black/90 to-transparent pointer-events-none" />
+        
+        <div className="relative px-4 pb-8 flex justify-between items-center w-full max-w-md mx-auto">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.path;
+            const Icon = link.icon;
+
+            return (
+              <Link 
+                key={link.path} 
+                href={link.path}
+                className={`flex-1 transition-all active:scale-75 ${isActive ? 'text-emerald-500' : 'text-white'}`}
+              >
+                <div className="flex flex-col items-center gap-1.5">
+                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="transition-all duration-300" />
+                   {/* Removed opacity-70 so inactive labels are solid white */}
+                   <span className="text-[8px] font-black uppercase tracking-widest text-center">
+                      {link.name}
+                   </span>
+                   {/* Minimal dot indicator for active tab */}
+                   {isActive && (
+                      <div className="w-1 h-1 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                   )}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </>

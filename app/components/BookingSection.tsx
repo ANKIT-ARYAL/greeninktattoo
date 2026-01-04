@@ -1,77 +1,92 @@
+'use client';
+import React from 'react';
 import { BookingForm } from "./BookingForm";
-import { Sparkles, ShieldCheck, Map } from "lucide-react";
+import { ShieldCheck, Zap } from "lucide-react";
 import Reveal from "./Reveal"; 
 
-export default function BookingSection() {
-  return (
-    <section className="relative py-20 md:py-32 overflow-hidden bg-neutral-950">
-      {/* BACKGROUND IMAGE OVERLAY */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/herobg.jpg" 
-          alt="Studio Ambiance" 
-          className="w-full h-full object-cover opacity-10 grayscale brightness-50"
-        />
-        {/* Changed gradient to adapt to vertical stacking on mobile */}
-        <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-neutral-950 via-neutral-950/90 to-transparent" />
-      </div>
+interface BookingSectionProps {
+  showGlow?: boolean;
+}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-20">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          
-          {/* LEFT SIDE: Content */}
-          <div className="flex-1 space-y-6 md:space-y-8">
-            <Reveal direction="right" className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Sparkles className="text-emerald-500" size={14} />
-                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">
-                  Reservations
-                </span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold italic uppercase tracking-tighter leading-[0.9] text-white">
-                Secure your <br />
-                <span className="text-emerald-500">Session</span>
-              </h2>
-              <p className="text-neutral-400 text-base md:text-lg max-w-md leading-relaxed font-medium">
-                Whether it's your first ink or a complex masterpiece, we provide a sterile, professional environment for your story.
-              </p>
-            </Reveal>
-
-            {/* Trust Badges - Stack on mobile, grid on sm+ */}
-            <Reveal direction="right" delay={0.2} className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 pt-4 md:pt-6">
-              <div className="flex items-center gap-4 group">
-                <div className="p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:border-emerald-500/50 transition-colors">
-                  <ShieldCheck className="text-emerald-500" size={20}/>
-                </div>
-                <div>
-                  <h4 className="text-white text-[10px] md:text-xs font-bold uppercase tracking-widest">Medical Grade</h4>
-                  <p className="text-neutral-500 text-[8px] md:text-[10px] uppercase font-black tracking-tighter">Hygiene Standards</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4 group">
-                <div className="p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:border-emerald-500/50 transition-colors">
-                  <Map className="text-emerald-500" size={20}/>
-                </div>
-                <div>
-                  <h4 className="text-white text-[10px] md:text-xs font-bold uppercase tracking-widest">Global Artistry</h4>
-                  <p className="text-neutral-500 text-[8px] md:text-[10px] uppercase font-black tracking-tighter">Nepal's Finest</p>
-                </div>
-              </div>
-            </Reveal>
+export default function BookingSection({ showGlow = false }: BookingSectionProps) {
+  return (    
+    <section className="relative w-[100vw] left-1/2 right-1/2 -ml-[50vw] overflow-hidden bg-[#050505]">
+      
+      {/* 1. SEAMLESS BACKGROUND (Zero Padding, Full Screen Width) */}
+      {showGlow && (
+        <div className="absolute inset-0 z-0 pointer-events-none flex">
+          {/* THE 40% EMERALD SIDE - Fixed Width */}
+          <div className="w-full h-full bg-emerald-900 relative">
+             {/* Edge glow to make the green feel richer */}
+             <div className="absolute inset-y-0 left-0 w-1/4 bg-emerald-900 blur-3xl" />
           </div>
+
+          {/* THE 60% BLACK SIDE */}
+          <div className="w-[60%] h-full bg-black" />
+
+          {/* THE HORIZONTAL BLEND: Merges the 40/60 split naturally */}
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 via-black/90 to-black" />
           
-          {/* RIGHT SIDE: Booking Form */}
-          <Reveal direction="left" delay={0.3} className="flex-1 w-full max-w-xl relative">
-            <div className="absolute -inset-4 bg-emerald-500/10 blur-3xl rounded-full opacity-50" />
-            
-            <div className="relative bg-neutral-900/40 backdrop-blur-xl p-6 sm:p-8 md:p-12 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/5 shadow-2xl">
-              <div className="mb-6 md:mb-8">
-                <h3 className="text-xl md:text-2xl font-display font-bold text-white uppercase italic">Inquiry Form</h3>
-                <div className="w-12 h-1 bg-emerald-500 mt-2" />
-              </div>
-              <BookingForm />
+          <div className="absolute inset-0 bg-grain opacity-[0.05]" />
+        </div>
+      )}
+      
+      {/* 2. CONTENT CONTAINER (Padding only inside here) */}
+      <div className="relative z-10 max-w-[1920px] mx-auto px-6 sm:px-12 lg:px-24 py-20 md:py-32">
+        
+        {/* THE BOX CONTAINER */}
+        <div className="flex flex-col border border-white/5 rounded-[2.5rem] overflow-hidden bg-black/20 backdrop-blur-3xl shadow-2xl">
+          
+          {/* Top Header Bar */}
+          <div className="w-full border-b border-white/5 px-8 md:px-16 py-8 flex justify-between items-center bg-white/[0.01]">
+            <div className="flex items-center gap-4">
+               <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)] animate-pulse" />
+               <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40">Consultation Unit</span>
             </div>
-          </Reveal>
+          </div>
+
+          <div className="flex flex-col lg:flex-row items-stretch gap-0">
+            {/* LEFT SIDE: 50% Content */}
+            <div className="w-full lg:w-1/2 p-8 md:p-16 lg:p-20 flex flex-col justify-start border-b lg:border-b-0 lg:border-r border-white/5">
+              <Reveal direction="right" className="space-y-10">
+                <h2 className="text-5xl md:text-7xl font-display font-bold italic uppercase tracking-tighter leading-[0.85] text-white">
+                  Secure <br />
+                  <span className="text-emerald-500">Your Session</span>
+                </h2>
+                
+                <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-body max-w-sm">
+                  Merging world-class precision with Kathmandu soul. Experience the highest medical-grade safety in an elite studio environment.
+                </p>
+
+                <div className="pt-4 space-y-6">
+                  <div className="flex items-center gap-5 group">
+                    <div className="p-2.5 rounded-full bg-emerald-500/10 text-emerald-500">
+                      <ShieldCheck size={16} />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-neutral-300 block transition-colors group-hover:text-emerald-500">Medical Grade Safety</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-5 group">
+                    <div className="p-2.5 rounded-full bg-emerald-500/10 text-emerald-500">
+                      <Zap size={16} />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-neutral-300 block transition-colors group-hover:text-emerald-500">Custom Originality</span>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+            
+            {/* RIGHT SIDE: 50% Form */}
+            <div className="w-full lg:w-1/2 p-8 md:p-16 lg:p-20 flex flex-col justify-start bg-black/40">
+              <Reveal direction="left" delay={0.2} className="w-full">
+                 <div className="mb-12">
+                    <h3 className="text-[10px] font-black text-white uppercase tracking-[0.4em]">Inquiry Form</h3>
+                    <div className="h-[2px] w-10 bg-emerald-500 mt-3" />
+                 </div>
+                 <BookingForm />
+              </Reveal>
+            </div>
+          </div>
 
         </div>
       </div>

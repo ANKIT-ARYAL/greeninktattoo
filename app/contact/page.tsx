@@ -36,7 +36,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-neutral-950 pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden">
+    <div className="relative min-h-screen bg-neutral-950 pt-24 md:pt-32 lg:mt-44 pb-16 md:pb-24 overflow-hidden">
       {/* Background Orbs - Scaled for mobile */}
       <motion.div 
         animate={{ 
@@ -72,7 +72,7 @@ export default function ContactPage() {
 
               <h1 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white uppercase italic tracking-tighter leading-[0.9] mb-6">
                 Let's Start <br />
-                <span className="text-neutral-800">Your Story</span>
+                <span className="text-emerald-500">Your Story</span>
               </h1>
               <p className="text-neutral-400 text-base md:text-lg font-medium leading-relaxed max-w-md">
                 Located in the vibrant heart of Thamel. We are ready to transform your ideas into permanent masterpieces.
@@ -155,7 +155,7 @@ export default function ContactPage() {
             <div className="absolute -inset-1 bg-gradient-to-tr from-emerald-500/20 to-white/5 blur-2xl opacity-20" />
             <div className="relative bg-neutral-900/80 backdrop-blur-xl border border-white/10 p-6 md:p-12 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl">
               <div className="mb-8 md:mb-10">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-white uppercase italic tracking-tighter">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-emerald-500 uppercase italic tracking-tighter">
                   Book an Appointment
                 </h2>
                 <p className="text-neutral-500 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-2">

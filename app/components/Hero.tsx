@@ -1,76 +1,102 @@
-// components/Hero.tsx
+'use client';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, MapPin } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-black">
-      {/* BACKGROUND AREA */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative h-[100svh] w-full bg-[#050505] overflow-hidden flex flex-col lg:flex-row">
+      
+      {/* GLOBAL GRAIN OVERLAY */}
+      <div className="absolute inset-0 z-40 bg-grain pointer-events-none" />
+
+      {/* 1. CONTENT COLUMN */}
+      <div className="relative z-30 h-full w-full lg:w-[58%] flex flex-col justify-center px-6 sm:px-12 lg:px-24 pt-32 lg:pt-40 pb-20 lg:pb-0 overflow-hidden">
+        
+        {/* MESH GRADIENT BACKDROP */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {/* This gradient ensures text legibility on mobile by darkening ONLY the text area, not the whole image */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent lg:bg-none" />
+          <div className="absolute top-[10%] -left-[10%] w-[60%] h-[60%] bg-emerald-500/10 rounded-full blur-[120px] mix-blend-screen animate-pulse" />
+        </div>
+
+        <div className="relative z-10 max-w-4xl space-y-10">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-3 bg-emerald-500/5 border border-emerald-500/10 w-fit px-5 py-2.5 rounded-full backdrop-blur-xl"
+          >
+            <MapPin size={12} className="text-emerald-500" />
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500/80">
+              Thamel • Kathmandu
+            </span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h1 className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[10rem] font-display font-bold uppercase italic leading-[0.8] tracking-tighter text-white">
+              Ink That <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-white to-gray-300">
+                Endures
+              </span>
+            </h1>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="max-w-md"
+          >
+            <p className="text-white lg:text-neutral-400 text-sm md:text-base leading-relaxed border-l border-emerald-500/30 pl-8 font-body drop-shadow-lg">
+              Anjit Tattoo merges ancestral soul with modern precision. Every line is a commitment to world-class artistry.
+            </p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="flex pt-6 gap-x-10"
+          >
+            <Link 
+              href="/contact" 
+              className="group flex items-center gap-4 bg-emerald-500 text-black px-10 py-5 rounded-full font-black uppercase text-[11px] tracking-widest hover:bg-emerald-700 transition-all shadow-xl shadow-emerald-500/20"
+            >
+              Book a Date <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform" />
+            </Link>
+            <Link 
+              href="/gallery" 
+              className="group flex items-center gap-4 bg-white text-black px-10 py-5 rounded-full font-black uppercase text-[11px] tracking-widest hover:bg-gray-300 transition-all shadow-xl shadow-emerald-500/20"
+            >
+              View Work <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform" />
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* 2. THE IMAGE: Same opacity for both mobile and desktop */}
+      <div className="absolute lg:relative inset-0 lg:inset-auto h-full w-full lg:w-[42%] bg-neutral-900 overflow-hidden z-10 lg:z-20">
         <Image 
-          src="/herobg.jpg" 
-          alt="Anjit Tattoo Studio Background"             
-          className="w-full h-full object-cover blur-[1px] opacity-40"
+          src="/hero.jpg" 
+          alt="Anjit Tattoo Studio Art"             
+          className="w-full h-full object-cover grayscale-[30%] brightness-90 lg:brightness-100 transition-all duration-1000 ease-in-out scale-105"
           fill
           priority 
-          sizes="100vw" // Essential for responsiveness: tells browser to expect full width
-          quality={90}
+          quality={100}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/80"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
-      </div>
-
-      {/* CONTENT AREA */}
-      <div className="relative z-10 text-center px-4 sm:px-6 max-w-[95vw] lg:max-w-7xl mx-auto pt-10 md:pt-20">
         
-        {/* Location Badge */}
-        <div className="animate-hero delay-1">
-          <span className="inline-block text-[9px] md:text-xs font-black tracking-[0.3em] md:tracking-[0.5em] text-emerald-500 uppercase mb-4 md:mb-6 bg-emerald-500/10 px-4 md:px-5 py-2 md:py-2.5 rounded-full border border-emerald-500/20 backdrop-blur-md whitespace-nowrap">
-            Thamel, Kathmandu • Nepal
-          </span>
-        </div>
-
-        {/* Responsive Heading: Uses fluid scaling logic */}
-        <div className="animate-hero delay-2">
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] xl:text-[11rem] font-display font-bold uppercase tracking-tighter mb-6 md:mb-8 text-white leading-[0.9] md:leading-[0.75]">
-            Ink That <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-500 italic">
-              Endures
-            </span>
-          </h1>
-        </div>
-
-        {/* Subtext: Capped width to prevent long lines on wide screens */}
-        <div className="animate-hero delay-3">
-          <p className="text-neutral-400 text-base md:text-lg lg:text-xl max-w-sm md:max-w-2xl mx-auto mb-8 md:mb-12 font-medium leading-relaxed">
-            Anjit Tattoo brings world-class artistry to the heart of Nepal. Custom designs and impeccable hygiene for your next masterpiece.
-          </p>
-        </div>
-
-        {/* Responsive Buttons: Stack on mobile, side-by-side on sm+ */}
-        <div className="animate-hero delay-4 flex flex-col sm:flex-row gap-4 md:gap-5 justify-center items-center">
-          <Link 
-            href="/contact" 
-            className="w-full sm:w-auto group relative px-8 md:px-12 py-4 md:py-6 bg-white text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.2em] transition-all hover:scale-105 active:scale-95 rounded-full overflow-hidden text-center"
-          >
-            <span className="relative z-10">Book Appointment</span>
-            <div className="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-          </Link>
-
-          <Link 
-            href="/gallery" 
-            className="w-full sm:w-auto px-8 md:px-12 py-4 md:py-6 bg-transparent border border-white/20 text-white font-black uppercase text-[10px] md:text-[11px] tracking-[0.2em] transition-all hover:bg-white hover:text-black hover:border-white rounded-full backdrop-blur-sm text-center"
-          >
-            View Gallery
-          </Link>
-        </div>
-      </div>
-
-      {/* STATIC DECORATION - Hidden on very small mobile screens to save space */}
-      <div className="hidden sm:flex absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex-col items-center gap-4">
-        <span className="text-[8px] font-black uppercase tracking-[1em] text-white rotate-90 mb-8">Scroll</span>
-        <div className="w-[1px] h-12 md:h-16 bg-gradient-to-b from-emerald-500 to-transparent"></div>
-      </div>
+        {/* Desktop-only side blend */}
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 hidden lg:block" />
+        
+        {/* Artistic Vignette - Subtle enough to keep the image clear */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10" />
+      </div>     
     </section>
   );
 }

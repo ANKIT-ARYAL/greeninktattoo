@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Loader2, Edit3, Image as ImageIcon, Instagram, X, Link as LinkIcon } from 'lucide-react';
-import { EditDesignModal } from '../../components/EditDesignModal'; // Assuming the path is correct
+import { Plus, Trash2, Loader2, Edit3, Instagram, Star } from 'lucide-react';
+import { EditDesignModal } from '../../components/EditDesignModal';
 import { AddDesignModal } from '@/app/components/AddDesignModal';
 
 interface Design {
@@ -9,14 +9,13 @@ interface Design {
   title: string;
   imageUrl: string;
   category: string;
+  isFeatured: boolean;
 }
 
 export default function DesignsAdminPage() {
   const [designs, setDesigns] = useState<Design[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  
-  // State for the Edit Modal
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [designToEdit, setDesignToEdit] = useState<Design | null>(null);
 
@@ -40,7 +39,19 @@ export default function DesignsAdminPage() {
     if (res.ok) setDesigns(prev => prev.filter(d => d.id !== id));
   };
 
-  // Function to trigger edit
+  const toggleFeatured = async (design: Design) => {
+    try {
+      const res = await fetch(`/api/designs/${design.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...design, isFeatured: !design.isFeatured }),
+      });
+      if (res.ok) fetchDesigns();
+    } catch (err) {
+      console.error("Toggle featured error:", err);
+    }
+  };
+
   const handleEditClick = (design: Design) => {
     setDesignToEdit(design);
     setIsEditModalOpen(true);
@@ -95,6 +106,11 @@ export default function DesignsAdminPage() {
                       <Instagram size={14} className="text-white" />
                     </div>
                   )}
+                  {design.isFeatured && (
+                    <div className="absolute top-6 left-6 bg-emerald-500 p-2.5 rounded-2xl shadow-2xl">
+                      <Star size={14} className="text-black" fill="black" />
+                    </div>
+                  )}
                 </div>
 
                 <div className="p-7 flex justify-between items-center bg-neutral-900/50 backdrop-blur-md">
@@ -103,7 +119,13 @@ export default function DesignsAdminPage() {
                     <p className="text-[9px] text-emerald-500 font-black uppercase tracking-[0.2em] mt-1.5">{design.category}</p>
                   </div>
                   <div className="flex gap-1">
-                    {/* EDIT BUTTON */}
+                    <button 
+                      onClick={() => toggleFeatured(design)} 
+                      className={`p-3 transition-colors ${design.isFeatured ? 'text-emerald-500' : 'text-neutral-600 hover:text-white'}`}
+                      title="Toggle Featured"
+                    >
+                      <Star size={18} fill={design.isFeatured ? "currentColor" : "none"} />
+                    </button>
                     <button 
                       onClick={() => handleEditClick(design)} 
                       className="p-3 text-neutral-600 hover:text-emerald-500 transition-colors"
@@ -111,7 +133,6 @@ export default function DesignsAdminPage() {
                     >
                       <Edit3 size={18} />
                     </button>
-                    {/* DELETE BUTTON */}
                     <button 
                       onClick={() => handleDelete(design.id)} 
                       className="p-3 text-neutral-600 hover:text-red-500 transition-colors"
@@ -127,14 +148,12 @@ export default function DesignsAdminPage() {
         </div>
       )}
 
-      {/* ADD MODAL */}
       <AddDesignModal 
         isOpen={isAddModalOpen} 
         onClose={() => setIsAddModalOpen(false)} 
         onSuccess={fetchDesigns} 
       />
 
-      {/* EDIT MODAL - Triggered when designToEdit is set */}
       {isEditModalOpen && designToEdit && (
         <EditDesignModal 
           design={designToEdit}
@@ -149,4 +168,3 @@ export default function DesignsAdminPage() {
     </div>
   );
 }
-

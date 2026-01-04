@@ -134,7 +134,7 @@ export default function GalleryClient({ designs, isFeatured = false }: GalleryCl
           <div className="flex justify-center mt-12 md:mt-20 px-4">
             <button 
               onClick={() => setVisibleCount(prev => prev + 6)}
-              className="group w-full md:w-auto flex items-center justify-center gap-4 px-12 py-5 md:py-6 bg-white text-black rounded-full font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] hover:bg-emerald-500 transition-all active:scale-95"
+              className="group w-full md:w-auto flex items-center justify-center gap-4 px-12 py-5 md:py-6 bg-emerald-500 text-black rounded-full font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] hover:bg-emerald-700 transition-all active:scale-95"
             >
               <Plus className="w-4 h-4" /> Load More Art
             </button>

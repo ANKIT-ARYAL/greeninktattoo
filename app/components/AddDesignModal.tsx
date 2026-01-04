@@ -1,35 +1,34 @@
 'use client';
 import React, { useState } from 'react';
-import { X, Instagram, Image as ImageIcon, Link as LinkIcon, Loader2, ChevronDown } from 'lucide-react';
+import { X, Instagram, Image as ImageIcon, Link as LinkIcon, Loader2, ChevronDown, Star } from 'lucide-react';
 
 export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
   const [mode, setMode] = useState<'upload' | 'instagram'>('upload');
   const [loading, setLoading] = useState(false);
   
-  // Added fixed categories for the dropdown
   const categories = [
-  'Blackwork / Black and Gray', 
-  'Realism', 
-  'Traditional', 
-  'Minimalist', 
-  'Fontwork and Linework',
-  'Colorwork and New School', 
-  'Mandala , Dot Work and Geomatrical', 
-  'Cover up',
-  'Other'
-];
+    'Blackwork / Black and Gray', 
+    'Realism', 
+    'Traditional', 
+    'Minimalist', 
+    'Fontwork and Linework',
+    'Colorwork and New School', 
+    'Mandala , Dot Work and Geomatrical', 
+    'Cover up',
+    'Other'
+  ];
 
   const [formData, setFormData] = useState({ 
     title: '', 
-    category: 'Other', // Default selection
-    imageUrl: '' 
+    category: 'Other',
+    imageUrl: '',
+    isFeatured: false
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Clean Instagram URL if needed
     let finalUrl = formData.imageUrl;
     if (mode === 'instagram' && finalUrl.includes('instagram.com')) {
       finalUrl = finalUrl.split('?')[0].replace(/\/$/, "");
@@ -45,7 +44,7 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
       if (res.ok) {
         onSuccess();
         onClose();
-        setFormData({ title: '', category: 'Other', imageUrl: '' });
+        setFormData({ title: '', category: 'Other', imageUrl: '', isFeatured: false });
       }
     } catch (err) {
       console.error("Save error:", err);
@@ -64,7 +63,6 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
           <button onClick={onClose} className="text-neutral-500 hover:text-white transition-colors"><X size={28}/></button>
         </div>
 
-        {/* Choice Toggle */}
         <div className="flex p-1.5 bg-black rounded-2xl mb-8 border border-white/5">
           <button 
             type="button"
@@ -83,7 +81,6 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
           <div className="space-y-2">
             <label className="text-[9px] font-black uppercase text-neutral-500 tracking-[0.3em] ml-2">Work Title</label>
             <input 
@@ -95,7 +92,6 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
             />
           </div>
 
-          {/* CATEGORY DROPDOWN */}
           <div className="space-y-2">
             <label className="text-[9px] font-black uppercase text-neutral-500 tracking-[0.3em] ml-2">Style Category</label>
             <div className="relative">
@@ -106,9 +102,7 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
               >
                 {categories.map((cat) => (
-                  <option key={cat} value={cat} className="bg-neutral-900 text-white">
-                    {cat}
-                  </option>
+                  <option key={cat} value={cat} className="bg-neutral-900 text-white">{cat}</option>
                 ))}
               </select>
               <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-500">
@@ -117,7 +111,6 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
             </div>
           </div>
           
-          {/* Image Link */}
           <div className="space-y-2">
             <label className="text-[9px] font-black uppercase text-neutral-500 tracking-[0.3em] ml-2">
               {mode === 'instagram' ? 'Instagram URL' : 'Image URL'}
@@ -135,6 +128,23 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: any) {
               </div>
             </div>
           </div>
+
+          {/* Featured Toggle */}
+          <label className="flex items-center gap-3 cursor-pointer group bg-black/40 p-4 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition-all">
+            <input 
+              type="checkbox"
+              className="hidden"
+              checked={formData.isFeatured}
+              onChange={(e) => setFormData({...formData, isFeatured: e.target.checked})}
+            />
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${formData.isFeatured ? 'bg-emerald-500 text-black' : 'bg-neutral-800 text-neutral-500'}`}>
+              <Star size={18} fill={formData.isFeatured ? "currentColor" : "none"} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-black uppercase tracking-widest text-white">Feature on Home</span>
+              <span className="text-[8px] text-neutral-500 uppercase tracking-wider">Show this in the hero slider</span>
+            </div>
+          </label>
 
           <button 
             disabled={loading}
