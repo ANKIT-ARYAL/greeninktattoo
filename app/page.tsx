@@ -25,7 +25,7 @@ export default async function Page() {
               Curated Portfolio
             </span>
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white uppercase italic tracking-tighter leading-tight">
-              Featured <span className="text-neutral-800">Work</span>
+              Featured <span className="text-emerald-500">Work</span>
             </h2>
           </div>
           <p className="text-neutral-500 text-[10px] font-black uppercase tracking-widest border-l border-white/10 pl-4 hidden md:block">

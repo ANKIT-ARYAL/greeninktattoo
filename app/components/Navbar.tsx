@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Home, Image as ImageIcon, Calendar, User, Instagram, BookOpen } from 'lucide-react';
+import { Home, Image as ImageIcon, User, Instagram, BookOpen } from 'lucide-react';
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -11,7 +11,6 @@ export const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'Gallery', path: '/gallery', icon: ImageIcon },
-    { name: 'Book', path: '/contact', icon: Calendar },
     { name: 'About', path: '/about', icon: User },
     { name: 'Blogs', path: '/blogs', icon: BookOpen },
   ];
@@ -54,14 +53,12 @@ export const Navbar = () => {
               })}
             </div>
 
-            {/* Ghost Actions */}
             <div className="flex items-center gap-8 pl-12 border-l border-white/10">
               <a href="https://instagram.com/anjit_tattoo" target="_blank" className="text-white hover:text-emerald-500 transition-colors">
                 <Instagram size={24} strokeWidth={1.5} />
               </a>
               <Link 
                 href="/contact"
-                /* Matches nav link text size for consistency */
                 className="relative text-[12px] font-black uppercase tracking-widest text-black bg-emerald-500 px-6 py-3 rounded-full hover:bg-emerald-600 transition-all hover:scale-105"
               >
                 Book Now
@@ -82,9 +79,19 @@ export const Navbar = () => {
             className="invert brightness-200 object-contain" 
           />
         </Link>
-        <a href="https://instagram.com/anjit_tattoo" className="pointer-events-auto text-white">
-          <Instagram size={24} />
-        </a>
+        
+        {/* Mobile Actions: Instagram + Book Now Button */}
+        <div className="flex items-center gap-4 pointer-events-auto">
+          <a href="https://instagram.com/anjit_tattoo" className="text-white p-2">
+            <Instagram size={22} />
+          </a>
+          <Link 
+            href="/contact"
+            className="text-[10px] font-black uppercase tracking-widest text-black bg-emerald-500 px-5 py-2.5 rounded-full active:scale-95 transition-transform"
+          >
+            Book Now
+          </Link>
+        </div>
       </nav>
 
       {/* --- MOBILE: PERMANENT LABELS DOCK --- */}
@@ -104,11 +111,9 @@ export const Navbar = () => {
               >
                 <div className="flex flex-col items-center gap-1.5">
                    <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="transition-all duration-300" />
-                   {/* Removed opacity-70 so inactive labels are solid white */}
                    <span className="text-[8px] font-black uppercase tracking-widest text-center">
                       {link.name}
                    </span>
-                   {/* Minimal dot indicator for active tab */}
                    {isActive && (
                       <div className="w-1 h-1 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
                    )}

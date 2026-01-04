@@ -29,7 +29,7 @@ export default async function BlogsPage() {
           </Reveal>
           <Reveal delay={0.2}>
             {/* Massive single-line title with Emerald accent */}
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-display font-bold text-white uppercase italic tracking-tighter leading-[0.8]">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-bold text-white uppercase italic tracking-tighter leading-[0.9] md:leading-none">
               The <span className="text-emerald-500">Journal</span>
             </h1>
           </Reveal>
