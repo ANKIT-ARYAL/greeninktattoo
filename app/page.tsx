@@ -6,6 +6,7 @@ import ReviewSlider from './components/Reviews';
 import FeaturedSlider from './components/FeaturedSlider';
 import { prisma } from '@/lib/prisma';
 
+export const revalidate = 0;
 export default async function Page() {
   // Fetch only featured designs from the DB
   const featuredWork = await prisma.tattooDesign.findMany({
