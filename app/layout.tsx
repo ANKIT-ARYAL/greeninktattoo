@@ -1,26 +1,35 @@
+// /Users/ankitaryal/anjit-tattoo/app/layout.tsx
 import './globals.css';
 import React from 'react';
-
+import { Fraunces, Inter } from 'next/font/google';
 import ScrollToTop from './components/ScrollToTop';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 
+// Define the fonts
+const headingFont = Fraunces({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-tattoo', // This creates a CSS variable
+});
+
+const bodyFont = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
+
 export const metadata = {
   title: 'Anjit Tattoo',
   description: 'Premium tattoo artistry in the heart of Nepal.',
-  icons: {
-    icon: '/icon.png', // This points to your new, cropped, transparent file
-    apple: '/apple-touch-icon.png',
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="bg-neutral-950 text-white font-sans antialiased selection:bg-emerald-500 selection:text-black">
+    // Inject the variables here
+    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable} scroll-smooth`}>
+      <body className="bg-neutral-950 text-white font-sans antialiased">
         <ScrollToTop />
         <Navbar />
-        {/* We move overflow-x-hidden here to avoid breaking IntersectionObservers on the body */}
         <main className="relative min-h-screen w-full overflow-x-hidden">
           {children}
         </main>

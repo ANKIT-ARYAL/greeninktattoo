@@ -1,37 +1,99 @@
 @import "tailwindcss";
 
-/* 1. Standardizing Theme Colors */
+/* 1. TAILWIND THEME CONFIGURATION (v4) */
+@theme {
+  /* Bridges Next.js Google Fonts with Tailwind classes */
+  --font-display: var(--font-tattoo);
+  --font-sans: var(--font-inter);
+  
+  /* Custom Utilities */
+  --tracking-ultra: 0.5em;
+  
+  /* Transition timings */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 2. BASE VARIABLES & THEME */
 :root {
-  --background: #0a0a0a; /* Dark background as base */
+  --background: #0a0a0a;
   --foreground: #ffffff;
   --emerald-500: #10b981;
 }
 
-/* 2. Preventing Layout Shift & Ghost Scrolling */
+/* 3. CORE STYLES */
 html {
-  /* Prevents the page from shifting left/right when a scrollbar appears */
   scrollbar-gutter: stable;
-  /* Ensures 100% height is respected */
   height: -webkit-fill-available;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  /* Prevents the "bounce" scroll effect on iOS that breaks fixed Navbars */
   overscroll-behavior-y: none;
-  /* Fixes mobile height issues */
   min-height: 100vh;
   min-height: -webkit-fill-available;
+  /* Applying the Inter font variable globally */
+  font-family: var(--font-inter), ui-sans-serif, system-ui;
+  letter-spacing: 0.01em;
 }
 
-/* 3. Smooth Container Transitions */
+/* Typography Overrides */
+h1, h2, h3, .font-display {
+  font-family: var(--font-tattoo), serif;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+}
+
+/* 4. ANIMATIONS */
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero {
+  animation: heroFadeInUp 0.8s var(--ease-out-expo) forwards;
+  opacity: 0;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+/* 5. UTILITY CLASSES */
+
+/* Luxury Detail: Spaced out text for sub-labels */
+.tracking-ultra {
+  letter-spacing: var(--tracking-ultra);
+  font-weight: 800;
+}
+
+/* Grainy Texture Overlay */
+.bg-grain {
+  background-image: url("https://res.cloudinary.com/du9xeasst/image/upload/v1612453535/grain_bg_up0vjw.png");
+  background-repeat: repeat;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Prevent horizontal scroll on reveal animations */
+.reveal-container {
+  overflow: hidden;
+}
+
+/* Smooth Main Content Transition */
 main {
-  /* Makes sure content doesn't 'pop' in too aggressively */
   transition: opacity 0.3s ease-in-out;
 }
 
-/* 4. Customizing Scrollbar (Optional but looks premium) */
+/* 6. CUSTOM SCROLLBAR */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -47,60 +109,4 @@ main {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--emerald-500);
-}
-
-/* 5. Hide horizontal scroll caused by Framer Motion Reveal */
-.reveal-container {
-  overflow: hidden;
-}
-@keyframes heroFadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-hero {
-  animation: heroFadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  opacity: 0; /* Start hidden, animation will bring it in */
-}
-
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-
-
-@theme {
-  --font-display: var(--font-syne), sans-serif;
-  --font-body: var(--font-space), sans-serif;
-}
-
-h1, h2, h3, .font-display {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: -0.04em; /* Tight tracking for that heavy look */
-  line-height: 0.85;
-}
-
-body {
-  font-family: var(--font-body);
-  letter-spacing: 0.01em;
-}
-
-/* Luxury Detail: Highlight the first letter or make sub-labels ultra-spaced */
-.tracking-ultra {
-  letter-spacing: 0.5em;
-  font-weight: 800;
-}
-/* Grainy Texture Overlay */
-.bg-grain {
-  background-image: url("https://res.cloudinary.com/du9xeasst/image/upload/v1612453535/grain_bg_up0vjw.png");
-  background-repeat: repeat;
-  opacity: 0.04; /* Keep it very subtle */
-  pointer-events: none;
 }

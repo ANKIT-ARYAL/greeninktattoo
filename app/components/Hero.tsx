@@ -28,12 +28,12 @@ export default function Hero() {
           </StaticReveal>
 
           <StaticReveal delay="delay-1">
-            <h1 className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[10rem] font-display font-bold uppercase italic leading-[0.8] tracking-tighter text-white">
-              Ink That <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-white to-neutral-600">
-                Endures
-              </span>
-            </h1>
+            <h1 className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] font-display leading-[0.9] tracking-tight text-white">
+  Ink that <br />
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-white to-neutral-600">
+    Endures
+  </span>
+</h1>
           </StaticReveal>
 
           <StaticReveal delay="delay-2">
