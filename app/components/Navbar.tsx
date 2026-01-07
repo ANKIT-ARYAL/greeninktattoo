@@ -26,8 +26,8 @@ export const Navbar = () => {
               <Image 
                 src='/logo.png' 
                 alt='Anjit Tattoo' 
-                width={150} 
-                height={150} 
+                width={200} 
+                height={200} 
                 className="invert brightness-200 object-contain drop-shadow-[0_0_15px_rgba(0,0,0,0.5)]" 
                 priority
               />
@@ -74,8 +74,8 @@ export const Navbar = () => {
           <Image 
             src='/logo.png' 
             alt='Anjit Tattoo' 
-            width={100} 
-            height={100} 
+            width={150} 
+            height={150} 
             className="invert brightness-200 object-contain" 
           />
         </Link>
