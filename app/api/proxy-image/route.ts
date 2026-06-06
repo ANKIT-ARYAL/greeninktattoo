@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     headers.set('Cache-Control', 'public, max-age=31536000, immutable');
 
     return new NextResponse(blob, { headers });
-  } catch (error) {
+  } catch {
     return new Response('Failed to fetch image', { status: 500 });
   }
 }

@@ -14,7 +14,7 @@ export async function proxy(request: NextRequest) {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       await jwtVerify(token, secret);
       return NextResponse.next();
-    } catch (err) {
+    } catch {
       // If token is invalid, kick back to login
       return NextResponse.redirect(new URL('/admin', request.url));
     }
@@ -27,7 +27,7 @@ export async function proxy(request: NextRequest) {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       await jwtVerify(token, secret);
       return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-    } catch (err) {
+    } catch {
       // Token invalid, let them stay on /admin to log in again
       return NextResponse.next();
     }

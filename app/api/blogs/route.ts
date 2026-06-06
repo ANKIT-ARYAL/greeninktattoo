@@ -11,8 +11,8 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(posts);
-  } catch (error) {
-    console.error("GET BLOGS ERROR:", error);
+  } catch {
+    console.error("GET BLOGS ERROR: unknown error");
     return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
   }
 }
@@ -37,8 +37,8 @@ export async function POST(req: Request) {
     });
     
     return NextResponse.json(post);
-  } catch (error) {
-    console.error("POST BLOG ERROR:", error);
+  } catch {
+    console.error("POST BLOG ERROR: unknown error");
     return NextResponse.json({ error: "Failed to create post" }, { status: 500 });
   }
 }

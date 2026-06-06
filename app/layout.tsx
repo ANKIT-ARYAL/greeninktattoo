@@ -1,35 +1,31 @@
-// /Users/ankitaryal/anjit-tattoo/app/layout.tsx
-import './globals.css';
-import React from 'react';
-import { Fraunces, Inter } from 'next/font/google';
-import ScrollToTop from './components/ScrollToTop';
-import { LayoutWrapper } from './components/LayoutWrapper'; // We will create this
+// app/layout.tsx
+import "./globals.css";
+import localFont from 'next/font/local';
+import { LayoutWrapper } from "./components/LayoutWrapper";
 
-const headingFont = Fraunces({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-tattoo',
+const customHeaderFont = localFont({
+  src: './fonts/SixCaps-Regular.ttf',
+  variable: '--font-header',
+  display: 'swap',
 });
 
-const bodyFont = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-export const metadata = {
-  title: 'Anjit Tattoo',
-  description: 'Premium tattoo artistry in the heart of Nepal.',
-};
-
+// app/layout.tsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable} scroll-smooth`}>
-      <body className="bg-neutral-950 text-white font-sans antialiased">
-        <ScrollToTop />
-        {/* We use a Wrapper to handle the conditional Navbar/Footer logic */}
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
+    <html lang="en" className={`${customHeaderFont.variable}`}>
+      <body className="bg-black text-white">
+        
+        {/* Global Background Layer - The ONLY place this should exist */}
+        <div className="fixed inset-0 -z-50 bg-[#050505]">
+          <div className="absolute inset-0 bg-[url('/hero.jpg')] bg-cover bg-center opacity-10" />
+        </div>        
+
+        {/* Page Content */}
+        <main className="relative z-10 w-full">
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
+        </main>        
       </body>
     </html>
   );

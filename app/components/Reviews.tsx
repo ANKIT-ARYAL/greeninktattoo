@@ -1,33 +1,16 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote, Star, CheckCircle } from 'lucide-react';
 
 const REVIEWS = [
-  {
-    id: 1,
-    name: "Andrew Warren",
-    role: "Verified Client",
-    text: "I had an amazing experience getting a tattoo from Anjit! He’s incredibly talented, with great attention to detail and a real passion for his work. The design turned out even better than I imagined, and the whole process was smooth and comfortable.",
-  },
-  {
-    id: 2,
-    name: "Ajaya Karki",
-    role: "Local Guide",
-    text: "Loved the work that he did. It was amazing beyond what I had imagined. This was my second visit to ANJIT TATTOO. I am amazed at the work that they do... They are very professional.",
-  },
-  {
-    id: 3,
-    name: "Filip Mitricevic",
-    role: "Verified Client",
-    text: "I had the best tattooing experience of my life so far with Anjit. I am thrilled with the design and the finished product. But I've never been to a studio that dedicates so much attention to the process and hygiene.",
-  },
-  {
-    id: 4,
-    name: "Monika J. Vaidya",
-    role: "Customer",
-    text: "I had a fantastic experience at ANJIT TATTOO. The studio is clean, and the staff are professional and friendly. ANJIT ji did an amazing job on my tattoo. Highly recommend!",
-  }
+  { name: "Niko Chelsea", text: "Sanjay is very professional and helped me creating all the artworks and ideas... Highly recommended." },
+  { name: "Nabu Chaudhary", text: "Really amazing and talented artist ever seen highly recommended guys 🔥🔥🔥🔥🔥" },
+  { name: "Kristina Balami", text: "Super talented artist. very good work. clean shop n excellent service." },
+  { name: "Ashok Bahadur Thapa Magar", text: "Very friendly and high experience. I am very surprised to get and work with him." },
+  { name: "Swornim Mandal", text: "Worth every rupee and highly recommend green ink whoever wants to exceed their expectations." },
+  { name: "Prakrit Roka", text: "The living legend as a Tattoo Artist !! Mark my word, this guy is super duper dope." },
+  { name: "Bibek Shrestha", text: "One art with lot of meaning which came out to be the finest! Highly recommended!" },
+  { name: "punk skull", text: "Very great work at a reasonable price." }
 ];
 
 export default function ReviewSlider() {
@@ -37,69 +20,56 @@ export default function ReviewSlider() {
     setIndex((prev) => (prev + 1 >= REVIEWS.length ? 0 : prev + 1));
   }, []);
 
-  const prevReview = () => {
-    setIndex((prev) => (prev - 1 < 0 ? REVIEWS.length - 1 : prev - 1));
-  };
-
   useEffect(() => {
     const timer = setInterval(nextReview, 6000);
     return () => clearInterval(timer);
   }, [nextReview]);
 
-  // Safety Guard for Next.js 16/Turbopack
-  if (!REVIEWS[index]) return null;
-
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* BACKGROUND: Emerald Mesh & Gradient */}
-      <div className="absolute inset-0 bg-[#050505] z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.08),transparent_70%)] z-0" />
-      
-      <motion.div 
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full z-0"
-      />
-
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <h2 className="text-4xl md:text-6xl font-display font-bold text-white uppercase italic mb-12">
-          The <span className="text-emerald-500">Reviews</span>
-        </h2>
-
-        <div className="relative min-h-[300px] flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="w-full flex flex-col items-center"
-            >
-              <Quote className="text-emerald-500/20 mb-6" size={40} />
-              <p className="text-lg md:text-xl text-neutral-300 italic leading-relaxed max-w-2xl mb-8">
-                "{REVIEWS[index].text}"
-              </p>
-              
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-2 text-white font-bold uppercase tracking-widest text-xs">
-                  {REVIEWS[index].name} <CheckCircle size={14} className="text-emerald-500" />
-                </div>
-                <span className="text-neutral-500 text-[9px] uppercase tracking-[0.3em] mt-1">{REVIEWS[index].role}</span>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Custom Progress Dots */}
-        <div className="flex justify-center gap-2 mt-12">
-          {REVIEWS.map((_, i) => (
-            <div 
-              key={i} 
-              className={`h-1 transition-all duration-500 rounded-full ${i === index ? 'w-8 bg-emerald-500' : 'w-2 bg-white/10'}`} 
-            />
-          ))}
-        </div>
+    <div className="w-full flex flex-col pt-12">
+      {/* 3D Container with Perspective */}
+      <div className="relative min-h-[250px] flex items-center overflow-visible" style={{ perspective: '1200px' }}>
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={index}
+            // 3D Motion Logic: Entering from deep space, rotating from the X axis
+            initial={{ opacity: 0, rotateX: -45, z: -300, y: 50 }}
+            animate={{ opacity: 1, rotateX: 0, z: 0, y: 0 }}
+            exit={{ opacity: 0, rotateX: 45, z: 300, y: -50 }}
+            transition={{ 
+              duration: 0.8, 
+              ease: [0.16, 1, 0.3, 1] // Custom cubic-bezier for a more "physical" feel
+            }}
+            className="w-full space-y-6 origin-center"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <p className="text-white/90 text-2xl font-light leading-relaxed tracking-tight">
+              "{REVIEWS[index].text}"
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="h-[2px] w-8 bg-[#26ff00]" />
+              <span className="text-[10px] text-white font-black uppercase tracking-[0.3em]">
+                {REVIEWS[index].name}
+              </span>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </section>
+
+      {/* Progress Indicators */}
+      <div className="flex gap-2 mt-8">
+        {REVIEWS.map((_, i) => (
+          <motion.div 
+            key={i} 
+            className="h-[2px] bg-white/20"
+            animate={{ 
+              width: i === index ? 40 : 16,
+              backgroundColor: i === index ? '#26ff00' : 'rgba(255,255,255,0.2)'
+            }}
+            transition={{ duration: 0.4 }}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

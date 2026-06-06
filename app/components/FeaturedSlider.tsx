@@ -1,88 +1,54 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
+import { Autoplay, EffectCoverflow } from 'swiper/modules';
+import { motion } from 'framer-motion';
 
-// Import Swiper styles
 import 'swiper/css';
+import 'swiper/css/autoplay';
 import 'swiper/css/effect-coverflow';
 
-interface Design {
-  id: string;
-  title: string;
-  imageUrl: string;
-  category: string;
-}
-
-export default function FeaturedSlider({ designs }: { designs: Design[] }) {
-  const getDisplayUrl = (url: string) => {
-    if (!url.includes('instagram.com')) return url;
-    const cleanBase = url.split('?')[0].replace(/\/$/, "");
-    return `https://images.weserv.nl/?url=${encodeURIComponent(cleanBase + "/media/?size=l")}&w=1000&q=80&output=webp`;
-  };
+export default function FeaturedGrid({ designs }: { designs: any[] }) {
+  if (!designs?.length) return null;
 
   return (
-    <div className="relative py-10 featured-slider-container">
+    <div className="w-full py-20 overflow-visible [perspective:2000px]">
       <Swiper
         modules={[Autoplay, EffectCoverflow]}
-        effect={'coverflow'}
+        effect={"coverflow"}
         grabCursor={true}
         centeredSlides={true}
         loop={true}
-        slidesPerView={'auto'}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 2.5,
-          slideShadows: false,
-        }}
-        className="w-full"
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        slidesPerView={1.2}
+        breakpoints={{ 768: { slidesPerView: 2.5 }, 1024: { slidesPerView: 3 } }}
+        coverflowEffect={{ rotate: 20, stretch: 0, depth: 200, modifier: 1, slideShadows: true }}
+        className="w-full h-[700px]"
       >
         {designs.map((design) => (
-          <SwiperSlide key={design.id} className="max-w-[300px] md:max-w-[500px]">
+          <SwiperSlide key={design.id} className="flex items-center justify-center">
             {({ isActive }) => (
-              <div 
-                className={`relative aspect-[3/4] rounded-[2.5rem] md:rounded-[4rem] overflow-hidden transition-all duration-700 ease-in-out border border-white/10 ${
-                  isActive 
-                    ? 'scale-100 blur-0 opacity-100 shadow-[0_0_50px_rgba(16,185,129,0.2)]' 
-                    : 'scale-90 blur-md opacity-40'
-                }`}
+              <motion.div 
+                animate={{ 
+                  filter: isActive ? "blur(0px) brightness(1)" : "blur(4px) brightness(0.4)",
+                  scale: isActive ? 1 : 0.9,
+                  z: isActive ? 20 : 0
+                }}
+                className="relative w-full h-[600px] border border-white/20 shadow-[0_0_50px_rgba(0,0,0,0.8)] preserve-3d"
               >
-                <img 
-                  src={getDisplayUrl(design.imageUrl)} 
-                  alt={design.title}
-                  className="w-full h-full object-cover"
-                />
-                
-                {/* Overlay - Only visible when focused */}
-                <div className={`absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent transition-opacity duration-700 ${isActive ? 'opacity-90' : 'opacity-0'}`} />
-                
-                {/* Content - Only visible when focused */}
-                <div className={`absolute inset-0 flex flex-col justify-end p-8 md:p-14 transition-all duration-700 ${isActive ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                  <span className="text-emerald-500 text-[9px] md:text-[11px] font-black uppercase tracking-[0.5em] mb-3">
-                    {design.category}
-                  </span>
-                  <h3 className="text-3xl md:text-5xl font-display font-bold text-white uppercase italic tracking-tighter leading-none">
-                    {design.title}
-                  </h3>
+                <div className="absolute inset-0 border border-white/20 pointer-events-none" />
+                <Image src={design.imageUrl} fill className="object-cover" alt={design.title} />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-30" />
+                <div className="absolute bottom-10 left-10 z-20">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#26ff00] mb-2">{design.category}</p>
+                  <h3 className="text-3xl font-black text-white uppercase tracking-tight">{design.title}</h3>
                 </div>
-              </div>
+              </motion.div>
             )}
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* Custom Styles for Swiper */}
-      <style jsx global>{`
-        .featured-slider-container .swiper {
-          overflow: visible !important;
-        }
-      `}</style>
     </div>
   );
 }

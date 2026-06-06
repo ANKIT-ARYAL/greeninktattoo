@@ -9,7 +9,7 @@ export async function GET() {
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(designs);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
   }
 }
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       },
     });
     return NextResponse.json(newDesign);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Failed to create" }, { status: 500 });
   }
 }

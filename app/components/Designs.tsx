@@ -27,13 +27,13 @@ export default async function Designs() {
         <Reveal direction="up" className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-8">
           <div className="space-y-3 md:space-y-4">
             <div className="flex items-center gap-2">
-              <Sparkles className="text-emerald-500" size={12} />
+              <Sparkles className="text-[#26ff00]" size={12} />
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-neutral-500">
                 Portfolio
               </span>
             </div>
             {/* Fluid typography for the heading */}
-            <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-bold text-white italic uppercase tracking-tighter leading-none">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-header text-white  uppercase tracking-widerer leading-none">
               Featured <span className="text-neutral-800">Work</span>
             </h2>
           </div>
@@ -41,7 +41,7 @@ export default async function Designs() {
           {/* Link width is full on mobile for better touch target, auto on desktop */}
           <Link 
             href="/gallery" 
-            className="group w-full md:w-auto flex items-center justify-between md:justify-start gap-3 text-white hover:text-emerald-500 transition-all font-black uppercase text-[10px] tracking-[0.3em] pb-3 border-b border-white/10"
+            className="group w-full md:w-auto flex items-center justify-between md:justify-start gap-3 text-white hover:text-[#26ff00] transition-all font-black uppercase text-[10px] tracking-[0.3em] pb-3 border-b border-white/10"
           >
             Explore Full Gallery 
             <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />

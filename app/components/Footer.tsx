@@ -1,99 +1,71 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
+import { Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
-import { Instagram, Facebook, Youtube, Mail, MapPin } from 'lucide-react';
-import { FaTiktok } from 'react-icons/fa6';
-import Reveal from './Reveal';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    // Added pb-32 on mobile to avoid clashing with the Mobile Bottom Nav
-    <footer className="bg-black border-t border-white/5 pt-16 md:pt-24 pb-32 md:pb-12 px-6 md:px-20">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 mb-16 md:mb-20">
+    <footer className="border-t border-white/10 pt-20 pb-12 px-6 md:px-24 ">
+      <div className="max-w-[1920px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           
-          {/* BRANDING COLUMN */}
-          <div className="md:col-span-5 space-y-6 md:space-y-8">
-            <Reveal direction="none">
-              <Image 
-                src="/logo.png" 
-                alt="Anjit Tattoo Logo" 
-                width={150} 
-                height={150} 
-                className="invert brightness-200 mb-6"
-              />
-              <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
-                Kathmandu's premier destination for custom tattooing. 
-                Merging traditional discipline with modern artistry 
-                in the heart of Thamel.
-              </p>
-            </Reveal>
-
-            <div className="flex gap-4">
-              {[
-                { icon: Instagram, href: 'https://instagram.com/anjit_tattoo' },
-                { icon: Facebook, href: 'https://www.facebook.com/tattooanjit' },
-                { icon: FaTiktok, href: 'https://www.tiktok.com/@anjit_tattoo' }
-              ].map((social, i) => (
-                <Reveal key={i} delay={i * 0.1} direction="up">
-                  <a 
-                    href={social.href} 
-                    className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-neutral-400 hover:text-white hover:border-emerald-500 transition-all duration-300"
-                  >
-                    <social.icon size={18} />
-                  </a>
-                </Reveal>
-              ))}
-            </div>
+          {/* BRAND */}
+          <div className="col-span-1 md:col-span-2 space-y-8">
+            <Image 
+               src='/logo.png' 
+               alt='Green Ink Studio' 
+               width={150} 
+               height={75} 
+               className="grayscale hover:grayscale-0 transition-all duration-500" 
+            />
+            <p className="text-neutral-500 text-[10px] uppercase tracking-[0.2em] max-w-xs leading-relaxed">
+              Kathmandu’s premier destination for custom ink. Merging traditional discipline with modern artistic precision.
+            </p>
           </div>
 
-          {/* QUICK LINKS */}
-          <div className="md:col-span-3 space-y-6">
-            <h4 className="text-white text-[10px] font-black uppercase tracking-[0.4em]">Navigation</h4>
+          {/* NAV */}
+          <div className="space-y-6">
+            <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-[#26ff00]">Navigation</h4>
             <ul className="space-y-4">
-              {['Home', 'Gallery', 'About', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link 
-                    href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                    className="text-neutral-500 hover:text-emerald-500 text-xs font-bold uppercase tracking-widest transition-colors"
-                  >
-                    {item}
+              {[
+                { name: 'Home', path: '/' },
+                { name: 'Gallery', path: '/gallery' },
+                { name: 'About', path: '/about' },
+                { name: 'Contact', path: '/contact' }
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link href={link.path} className="group flex items-center text-[10px] text-white hover:text-[#26ff00] uppercase tracking-[0.2em] transition-colors">
+                    {link.name}
+                    <ArrowUpRight size={10} className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* STUDIO INFO */}
-          <div className="md:col-span-4 space-y-6">
-            <h4 className="text-white text-[10px] font-black uppercase tracking-[0.4em]">Visit Studio</h4>
+          {/* CONTACT */}
+          <div className="space-y-6">
+            <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-[#26ff00]">Studio</h4>
             <div className="space-y-4">
-              <div className="flex items-start gap-4 text-neutral-500">
-                <MapPin size={18} className="text-emerald-500 shrink-0" />
-                <p className="text-xs font-medium leading-relaxed italic">
-                  Bhagwati Bahal, Thamel,<br />
-                  Kathmandu, Nepal
-                </p>
+              <div className="flex items-start gap-3 text-[10px] text-white uppercase tracking-[0.2em]">
+                <MapPin size={12} className="text-[#26ff00] shrink-0 mt-0.5" />
+                Thamel, Kathmandu
               </div>
-              <div className="flex items-center gap-4 text-neutral-500">
-                <Mail size={18} className="text-emerald-500 shrink-0" />
-                {/* Added truncate for long emails on mobile */}
-                <p className="text-xs font-medium tracking-wide truncate">anjittattoo@gmail.com</p>
-              </div>
+              <a href="https://wa.me/9779840015954" target="_blank" rel="noreferrer noopener" className="flex items-center gap-3 text-[10px] text-white hover:text-[#26ff00] transition-colors uppercase tracking-[0.2em]">
+                <Phone size={12} className="text-[#26ff00] shrink-0" />
+                WhatsApp: +977 9840015954
+              </a>
             </div>
           </div>
         </div>
 
-        {/* BOTTOM COPYRIGHT */}
-        <div className="pt-10 md:pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 text-center md:text-left">
-          <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] text-neutral-700">
-            © {currentYear} Anjit Tattoo Studio. All Rights Reserved.
-          </p>
-          <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] text-neutral-800">
-            Crafted with Precision in Nepal
-          </p>
+        {/* BOTTOM */}
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between gap-6 text-[9px] font-black uppercase tracking-[0.3em] text-neutral-600">
+          <p>© {currentYear} Green Ink Tattoo. Kathmandu.</p>
+          <p>Precision Engineering</p>
         </div>
       </div>
     </footer>

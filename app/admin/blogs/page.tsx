@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Loader2, Edit3, Image as ImageIcon, X, FileText, Calendar } from 'lucide-react';
+import Image from 'next/image';
+import { Plus, Trash2, Loader2, Edit3, Calendar } from 'lucide-react';
 import AddBlogModal from '@/app/components/AddBlogModal';
 import EditBlogModal from '@/app/components/EditBlogModal';
 
@@ -9,7 +10,7 @@ interface Blog {
   title: string;
   excerpt: string;
   content: string;
-  imageUrl: string;
+  image: string;
   createdAt: string;
 }
 
@@ -43,8 +44,8 @@ export default function BlogsAdminPage() {
     <div className="min-h-screen bg-black p-8 lg:p-12 space-y-10">
       <header className="flex justify-between items-end max-w-7xl mx-auto w-full">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-2">Editorial Control</p>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-white uppercase italic tracking-tighter">Blog Manager</h1>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#26ff00] mb-2">Editorial Control</p>
+          <h1 className="text-4xl md:text-5xl font-display font-header text-white uppercase  tracking-widerer">Blog Manager</h1>
         </div>
         <button 
           onClick={() => setIsAddModalOpen(true)}
@@ -56,7 +57,7 @@ export default function BlogsAdminPage() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-40">
-          <Loader2 className="animate-spin text-emerald-500 mb-4" size={40} />
+          <Loader2 className="animate-spin text-[#26ff00] mb-4" size={40} />
           <p className="text-neutral-500 text-[10px] font-black uppercase tracking-widest">Accessing Archives...</p>
         </div>
       ) : (
@@ -64,29 +65,32 @@ export default function BlogsAdminPage() {
           {blogs.map((blog) => (
             <div key={blog.id} className="group bg-neutral-900 border border-white/5 rounded-[2.5rem] overflow-hidden hover:border-white/20 transition-all duration-500 flex flex-col md:flex-row">
               <div className="md:w-48 aspect-square md:aspect-auto overflow-hidden bg-black relative">
-                <img 
-                  src={blog.imageUrl || "https://placehold.co/400x400/171717/white?text=Blog"} 
+                <Image 
+                  src={blog.image || "https://placehold.co/400x400/171717/white?text=Blog"} 
                   alt={blog.title} 
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 400px"
+                  className="object-cover opacity-60 group-hover:opacity-100 transition-all duration-700"
+                  unoptimized
                 />
               </div>
 
               <div className="p-8 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <Calendar size={12} className="text-emerald-500" />
+                    <Calendar size={12} className="text-[#26ff00]" />
                     <span className="text-[9px] text-neutral-500 font-black uppercase tracking-widest">
                       {new Date(blog.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <h3 className="text-white font-bold text-xl uppercase italic tracking-tighter line-clamp-1 mb-2">{blog.title}</h3>
+                  <h3 className="text-white font-header text-2xl uppercase  tracking-wider line-clamp-1 mb-2">{blog.title}</h3>
                   <p className="text-neutral-500 text-xs line-clamp-2 leading-relaxed">{blog.excerpt}</p>
                 </div>
 
                 <div className="flex justify-end gap-2 mt-6">
                   <button 
                     onClick={() => setBlogToEdit(blog)}
-                    className="p-3 bg-white/5 text-neutral-400 hover:text-emerald-500 hover:bg-white/10 rounded-xl transition-all"
+                    className="p-3 bg-white/5 text-neutral-400 hover:text-[#26ff00] hover:bg-white/10 rounded-xl transition-all"
                   >
                     <Edit3 size={18} />
                   </button>

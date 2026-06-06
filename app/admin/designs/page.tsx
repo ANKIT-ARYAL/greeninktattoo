@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { Plus, Trash2, Loader2, Edit3, Instagram, Star } from 'lucide-react';
 import { EditDesignModal } from '../../components/EditDesignModal';
 import { AddDesignModal } from '@/app/components/AddDesignModal';
@@ -61,8 +62,8 @@ export default function DesignsAdminPage() {
     <div className="min-h-screen bg-black p-8 lg:p-12 space-y-10">
       <header className="flex justify-between items-end max-w-7xl mx-auto w-full">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-2">Gallery Control</p>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-white uppercase italic tracking-tighter">Portfolio Manager</h1>
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#26ff00] mb-2">Gallery Control</p>
+          <h1 className="text-4xl md:text-5xl font-display font-header text-white uppercase  tracking-widerer">Portfolio Manager</h1>
         </div>
         <button 
           onClick={() => setIsAddModalOpen(true)}
@@ -74,7 +75,7 @@ export default function DesignsAdminPage() {
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-40">
-          <Loader2 className="animate-spin text-emerald-500 mb-4" size={40} />
+          <Loader2 className="animate-spin text-[#26ff00] mb-4" size={40} />
           <p className="text-neutral-500 text-[10px] font-black uppercase tracking-widest">Loading Studio Assets...</p>
         </div>
       ) : (
@@ -92,14 +93,13 @@ export default function DesignsAdminPage() {
             return (
               <div key={design.id} className="group bg-neutral-900 border border-white/5 rounded-[2.5rem] overflow-hidden hover:border-white/20 transition-all duration-500">
                 <div className="aspect-[4/5] overflow-hidden bg-black relative flex items-center justify-center">
-                  <img 
+                  <Image 
                     src={displayUrl} 
                     alt={design.title} 
-                    className="w-full h-full object-cover transition-all duration-1000"
-                    onError={(e) => {
-                       e.currentTarget.src = "https://www.instagram.com/static/images/ico/favicon-192.png/b306a2d9f771.png";
-                       e.currentTarget.className = "w-10 h-10 object-contain opacity-10";
-                    }}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-cover transition-all duration-1000"
+                    unoptimized
                   />
                   {isIG && (
                     <div className="absolute top-6 right-6 bg-black/60 backdrop-blur-xl p-2.5 rounded-2xl border border-white/10 shadow-2xl">
@@ -115,20 +115,20 @@ export default function DesignsAdminPage() {
 
                 <div className="p-7 flex justify-between items-center bg-neutral-900/50 backdrop-blur-md">
                   <div className="min-w-0">
-                    <h3 className="text-white font-bold text-sm truncate uppercase italic tracking-tighter">{design.title}</h3>
-                    <p className="text-[9px] text-emerald-500 font-black uppercase tracking-[0.2em] mt-1.5">{design.category}</p>
+                    <h3 className="text-white font-header text-sm truncate uppercase  tracking-widerer">{design.title}</h3>
+                    <p className="text-[9px] text-[#26ff00] font-black uppercase tracking-[0.2em] mt-1.5">{design.category}</p>
                   </div>
                   <div className="flex gap-1">
                     <button 
                       onClick={() => toggleFeatured(design)} 
-                      className={`p-3 transition-colors ${design.isFeatured ? 'text-emerald-500' : 'text-neutral-600 hover:text-white'}`}
+                      className={`p-3 transition-colors ${design.isFeatured ? 'text-[#26ff00]' : 'text-neutral-600 hover:text-white'}`}
                       title="Toggle Featured"
                     >
                       <Star size={18} fill={design.isFeatured ? "currentColor" : "none"} />
                     </button>
                     <button 
                       onClick={() => handleEditClick(design)} 
-                      className="p-3 text-neutral-600 hover:text-emerald-500 transition-colors"
+                      className="p-3 text-neutral-600 hover:text-[#26ff00] transition-colors"
                       title="Edit Design"
                     >
                       <Edit3 size={18} />

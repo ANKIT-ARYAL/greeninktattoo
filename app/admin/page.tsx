@@ -25,8 +25,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-6">
       <form onSubmit={handleLogin} className="max-w-md w-full bg-neutral-900 p-8 rounded-3xl border border-white/5 space-y-6">
-        <h1 className="text-white text-2xl font-bold italic uppercase tracking-tighter">Admin Access</h1>
-        {error && <p className="text-red-500 text-xs font-bold uppercase">{error}</p>}
+        <h1 className="text-white text-5xl font-header  uppercase tracking-wider">Admin Access</h1>
+        {error && <p className="text-red-500 text-xs font-header uppercase">{error}</p>}
         <input 
           type="text" 
           placeholder="Username" 
@@ -39,7 +39,7 @@ export default function LoginPage() {
           className="w-full bg-black p-4 rounded-xl text-white outline-none border border-white/5 focus:border-emerald-500"
           onChange={(e) => setCreds({...creds, password: e.target.value})}
         />
-        <button className="w-full bg-white text-black py-4 rounded-xl font-bold uppercase tracking-widest">Enter</button>
+        <button className="w-full bg-white text-black py-4 rounded-xl font-header uppercase tracking-widest">Enter</button>
       </form>
     </div>
   );

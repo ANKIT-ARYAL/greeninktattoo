@@ -26,8 +26,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {/* SIDEBAR */}
       <aside className="w-64 border-r border-white/5 bg-neutral-950 flex flex-col p-6 fixed h-full z-50">
         <div className="mb-10 px-2">
-          <h1 className="text-white font-display font-bold text-xl tracking-tighter uppercase">
-            Anjit <span className="text-emerald-500 ml-2">Tattoo</span>
+          <h1 className="text-white font-display font-header text-xl tracking-widerer uppercase">
+            Anjit <span className="text-[#26ff00] ml-2">Tattoo</span>
           </h1>
         </div>
 

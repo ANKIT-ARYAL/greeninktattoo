@@ -1,82 +1,70 @@
-import React from 'react';
+'use client';
+import { motion, useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowUpRight, MapPin } from 'lucide-react';
-import StaticReveal from './StaticReveal';
 
-export default function Hero() {
+export default function HeroReveal({ designs = [] }: { designs?: any[] }) {
+  const controls = {
+    header: useAnimation(),
+    cta: useAnimation(),
+  };
+
+  // Sequence: Cards -> Header -> CTA
+  const triggerReveal = async () => {
+    await controls.header.start({ opacity: 1, y: 0 });
+    await controls.cta.start({ opacity: 1, y: 0 });
+  };
+
   return (
-    <section className="relative h-[100svh] w-full bg-[#050505] overflow-hidden flex flex-col lg:flex-row">
-      <div className="absolute inset-0 z-40 bg-grain pointer-events-none opacity-20" />
+    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-8 pt-20 pb-20">
+      
+      {/* 1. HEADER (Visual Top, Animates Second) */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={controls.header}
+        className="z-10 text-center mb-12"
+      >
+        <h1 className="text-6xl md:text-8xl font-header text-white uppercase tracking-wider">
+          The Kind of Tattoo
+        </h1>
+        <p className="text-[#26ff00] uppercase tracking-[0.3em] font-bold">You won't regret.</p>
+        <p className='text-neutral-500 py-5'>Exclusive tattoos by appointment only.</p>
+      </motion.div>
 
-      {/* 1. CONTENT COLUMN */}
-      <div className="relative z-30 h-full w-full lg:w-[58%] flex flex-col justify-center px-6 sm:px-12 lg:px-24 pt-32 lg:pt-40 pb-20 lg:pb-0">
-        
-        {/* Optimized Backdrop: Using a simple div instead of complex blur filters for faster paint */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent lg:bg-none" />
-        </div>
+      {/* 2. CARDS (Visual Middle, Animates First) */}
+      <div className="z-20 flex items-center justify-center w-full gap-4 [perspective:2000px] mb-16">
+        {designs?.slice(0, 7).map((design, i) => {
+          const offset = i - 3;
+          const isLast = i === designs.slice(0, 7).length - 1;
 
-        <div className="relative z-10 max-w-4xl space-y-8 md:space-y-10">
-          <StaticReveal>
-            <div className="flex items-center gap-3 bg-white/5 border border-white/10 w-fit px-5 py-2.5 rounded-full">
-              <MapPin size={12} className="text-emerald-500" />
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">
-                Thamel • Kathmandu
-              </span>
-            </div>
-          </StaticReveal>
-
-          <StaticReveal delay="delay-1">
-            <h1 className="text-6xl sm:text-7xl lg:text-[7.5rem] xl:text-[9rem] font-display leading-[0.9] tracking-tight text-white">
-  Ink that <br />
-  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-white to-neutral-600">
-    Endures
-  </span>
-</h1>
-          </StaticReveal>
-
-          <StaticReveal delay="delay-2">
-            <div className="max-w-md">
-              <p className="text-white/90 lg:text-neutral-400 text-sm md:text-base leading-relaxed border-l border-emerald-500/50 pl-8 font-sans">
-                Anjit Tattoo merges ancestral soul with modern precision. Every line is a commitment to world-class artistry.
-              </p>
-            </div>
-          </StaticReveal>
-
-          <StaticReveal delay="delay-3">
-            <div className="flex flex-wrap pt-4 gap-6">
-              <Link 
-                href="/contact" 
-                className="group flex items-center gap-4 bg-emerald-500 text-black px-10 py-5 rounded-full font-black uppercase text-[11px] tracking-widest hover:bg-emerald-400 transition-colors"
-              >
-                Book Now <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform" />
-              </Link>
-              <Link 
-                href="/gallery" 
-                className="group flex items-center gap-4 bg-white/5 border border-white/10 text-white px-10 py-5 rounded-full font-black uppercase text-[11px] tracking-widest hover:bg-white/10 transition-colors"
-              >
-                View Work <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform" />
-              </Link>
-            </div>
-          </StaticReveal>
-        </div>
+          return (
+            <motion.div
+              key={design.id}
+              initial={{ opacity: 0, rotateY: offset * 10, z: Math.abs(offset) * -40, scale: 0.8 }}
+              animate={{ opacity: 1, rotateY: offset * 10, z: Math.abs(offset) * -40, scale: 1 }}
+              transition={{ delay: (3 - Math.abs(offset)) * 0.1, duration: 0.8 }}
+              onAnimationComplete={() => isLast && triggerReveal()}
+              className="w-[240px] h-[360px] rounded-[24px] overflow-hidden border border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.8)] origin-center shrink-0"
+            >
+              <img src={design.imageUrl} className="w-full h-full object-cover" alt="Tattoo Design" />
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* 2. THE IMAGE: Optimized for LCP */}
-      <div className="absolute lg:relative inset-0 lg:inset-auto h-full w-full lg:w-[42%] bg-neutral-900 overflow-hidden z-10 lg:z-20">
-<img 
-    src="/hero-opt.avif" 
-    alt="Anjit Tattoo Studio"             
-    fetchPriority="high" // Critical for raw img tags
-    className="w-full h-full object-cover grayscale-[30%] brightness-90 lg:brightness-100"
-    style={{ 
-      contentVisibility: 'auto', // Optimization for modern browsers
-      aspectRatio: '16/9' 
-    }}
-  />
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 hidden lg:block" />
-      </div>     
+      {/* 3. CTA (Visual Bottom, Animates Last) */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={controls.cta}
+        className="z-30 flex gap-6"
+      >
+        <Link href="/contact" className="bg-white text-black px-10 py-4 uppercase font-black hover:scale-105 transition-transform">
+          Book Now
+        </Link>
+        <Link href="/gallery" className="bg-transparent text-white border border-white px-10 py-4 uppercase font-black hover:bg-white hover:text-black transition-all">
+          Gallery
+        </Link>
+      </motion.div>
     </section>
   );
 }

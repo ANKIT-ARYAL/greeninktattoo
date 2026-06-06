@@ -2,9 +2,24 @@
 import React, { useState } from 'react';
 import { X, Loader2, Star, ChevronDown } from 'lucide-react';
 
-export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: any) => {
+interface EditDesignModalProps {
+  design: {
+    id: string;
+    title: string;
+    category: string;
+    imageUrl: string;
+    isFeatured: boolean;
+  };
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: EditDesignModalProps) => {
   const [formData, setFormData] = useState(design);
   const [loading, setLoading] = useState(false);
+  if (!isOpen) return null;
+
 
   const categories = [
     'Blackwork / Black and Gray', 
@@ -39,7 +54,7 @@ export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: any) => 
     <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
       <div className="w-full max-w-lg bg-neutral-900 border border-white/10 rounded-[2.5rem] p-10 shadow-2xl">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-display font-bold text-white uppercase italic tracking-tighter">Edit Work</h2>
+          <h2 className="text-2xl font-display font-header text-white uppercase  tracking-widerer">Edit Work</h2>
           <button onClick={onClose} className="text-neutral-500 hover:text-white transition-colors"><X size={24} /></button>
         </div>
         

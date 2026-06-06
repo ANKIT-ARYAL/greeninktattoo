@@ -1,12 +1,11 @@
 'use client';
-import React from 'react';
-import AboutSection from '../components/AboutSection';
+import About from '../components/About';
 
 export default function AboutPage() {
   return (
     // Increased pt-48 to ensure it clears the 150px logo/navbar
-    <div className="relative min-h-screen bg-neutral-950 pt-40 md:pt-48 lg:pt-56 pb-16 md:pb-24 overflow-hidden">
-      <AboutSection />
+    <div className="relative min-h-screen bg-neutral-950 pb-16 md:pb-24 overflow-hidden">
+      <About />
     </div>
   );
 }

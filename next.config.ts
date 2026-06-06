@@ -1,29 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // 1. Enable AVIF support for the highest compression
-    formats: ['image/avif', 'image/webp'],
-    
-    // 2. Define breakpoints so Next.js creates smaller images for mobile
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'img.youtube.com',
+        hostname: 'affzzhjtrmopmkoronqc.supabase.co', // Use your project URL
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.madrabbit.com',
         port: '',
-        pathname: '/vi/**',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'scontent.cdninstagram.com',
+        hostname: 'i.ytimg.com', // Add this entry
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
+        hostname: 'mantratattoo.us',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
-};
-
-module.exports = nextConfig;
+}
+module.exports = nextConfig

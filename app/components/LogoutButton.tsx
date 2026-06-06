@@ -11,7 +11,7 @@ export default function LogoutButton() {
     // 2. If you are using custom cookies, you'd call an API to clear them:
     try {
       // Example for custom session clearing
-      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      await fetch('/api/auth/logout', { method: 'POST' });
       
       // Redirect to home or login page
       router.push('/');

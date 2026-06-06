@@ -1,12 +1,24 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { 
-  Calendar, Clock, User, Phone, Mail, Trash2, CheckCircle2, 
-  XCircle, Loader2, Download, Eye, ExternalLink, CalendarClock, AlertCircle, FileText
+  Calendar, Clock, Phone, Mail, Trash2, CheckCircle2, 
+  Loader2, Download, Eye, ExternalLink, CalendarClock, FileText
 } from 'lucide-react';
 
+interface Booking {
+  id: string;
+  name: string;
+  contactNumber: string;
+  email?: string;
+  description?: string;
+  designData?: string;
+  scheduledAt: string;
+  status: string;
+}
+
 export default function BookingsAdminPage() {
-  const [bookings, setBookings] = useState<any[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [adjustedTimes, setAdjustedTimes] = useState<{ [key: string]: string }>({});
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -16,8 +28,8 @@ export default function BookingsAdminPage() {
       const res = await fetch('/api/bookings');
       const data = await res.json();
       if (Array.isArray(data)) setBookings(data);
-    } catch (err) {
-      console.error("Fetch error:", err);
+    } catch (_err) {
+      console.error("Fetch error:", _err);
     } finally {
       setLoading(false);
     }
@@ -52,7 +64,7 @@ export default function BookingsAdminPage() {
       link.download = `anjit-tattoo-${fileName.replace(/\s+/g, '-').toLowerCase()}`;
       link.click();
       window.URL.revokeObjectURL(url);
-    } catch (err) {
+    } catch {
       const link = document.createElement("a");
       link.href = base64Data;
       link.download = "design.png";
@@ -74,10 +86,10 @@ export default function BookingsAdminPage() {
         })
       });
       if (res.ok) {
-        if (newStatus === 'CONFIRMED') alert("Booking confirmed and email sent!");
+        if (newStatus === 'CONFIRMED') alert("Booking confirmed and notification sent!");
         fetchBookings();
       }
-    } catch (err) {
+    } catch {
       alert("Error updating booking.");
     } finally {
       setActionLoading(null);
@@ -89,7 +101,7 @@ export default function BookingsAdminPage() {
     try {
       const res = await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
       if (res.ok) fetchBookings();
-    } catch (err) {
+    } catch {
       alert("Delete failed");
     }
   };
@@ -101,20 +113,20 @@ export default function BookingsAdminPage() {
         <div>
           <div className="flex items-center gap-2 mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <p className="text-xs font-bold text-neutral-500 uppercase tracking-[0.3em]">Studio Control</p>
+            <p className="text-xs font-header text-neutral-500 uppercase tracking-[0.3em]">Studio Control</p>
           </div>
-          <h1 className="text-6xl font-display font-bold uppercase italic tracking-tighter">Inquiries</h1>
+          <h1 className="text-6xl font-display font-header uppercase  tracking-widerer">Inquiries</h1>
         </div>
         <div className="text-right">
-          <p className="text-3xl font-display font-bold text-neutral-800 uppercase italic leading-none">{bookings.length}</p>
-          <p className="text-[10px] font-bold text-neutral-600 uppercase tracking-widest">Total Requests</p>
+          <p className="text-3xl font-display font-header text-neutral-800 uppercase  leading-none">{bookings.length}</p>
+          <p className="text-[10px] font-header text-neutral-600 uppercase tracking-widest">Total Requests</p>
         </div>
       </header>
 
       {loading ? (
         <div className="flex flex-col items-center justify-center py-32 space-y-4">
           <Loader2 className="animate-spin text-neutral-800" size={40} />
-          <p className="text-neutral-500 font-bold uppercase text-[10px] tracking-widest">Loading Records...</p>
+          <p className="text-neutral-500 font-header uppercase text-[10px] tracking-widest">Loading Records...</p>
         </div>
       ) : (
         <div className="grid gap-8">
@@ -128,12 +140,12 @@ export default function BookingsAdminPage() {
                 {/* 1. Profile & Info */}
                 <div className="lg:col-span-4 space-y-6">
                   <div className="flex items-center gap-5">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10 flex items-center justify-center text-2xl font-black italic text-white shadow-2xl">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10 flex items-center justify-center text-2xl font-black  text-white shadow-2xl">
                       {booking.name[0]}
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold tracking-tight">{booking.name}</h3>
-                      <div className={`mt-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter ${
+                      <h3 className="text-2xl font-header tracking-wider">{booking.name}</h3>
+                      <div className={`mt-1 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widerer ${
                         booking.status === 'CONFIRMED' ? 'bg-emerald-500 text-black' : 'bg-amber-500 text-black'
                       }`}>
                         {booking.status === 'CONFIRMED' ? <CheckCircle2 size={10}/> : <Clock size={10}/>}
@@ -144,16 +156,16 @@ export default function BookingsAdminPage() {
 
                   <div className="space-y-4 pt-4 border-t border-white/5">
                     <div className="bg-black/20 p-4 rounded-2xl border border-white/5">
-                      <p className="text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-2">Requested Slot</p>
-                      <div className="flex items-center gap-3 text-emerald-500">
+                      <p className="text-[9px] font-header text-neutral-500 uppercase tracking-widest mb-2">Requested Slot</p>
+                      <div className="flex items-center gap-3 text-[#26ff00]">
                         <Calendar size={14} />
-                        <span className="text-sm font-bold uppercase tracking-tight">
+                        <span className="text-sm font-header uppercase tracking-wider">
                           {new Date(booking.scheduledAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </span>
                       </div>
                       <div className="flex items-center gap-3 text-white mt-1">
                         <Clock size={14} />
-                        <span className="text-lg font-display italic font-bold">
+                        <span className="text-lg font-display  font-header">
                           {new Date(booking.scheduledAt).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
@@ -177,66 +189,76 @@ export default function BookingsAdminPage() {
                   <div className="bg-black/40 rounded-3xl p-6 border border-white/5 space-y-6">
                     {/* IMAGE SECTION */}
                     <div>
-                      <p className="text-[10px] font-bold text-neutral-600 uppercase mb-3 tracking-widest flex items-center gap-2">
+                      <p className="text-[10px] font-header text-neutral-600 uppercase mb-3 tracking-widest flex items-center gap-2">
                         <Eye size={12}/> Art Reference
                       </p>
                       
                       {/* Priority check for designData or Base64 description */}
                       {(booking.designData || (booking.description && booking.description.startsWith('data:image'))) ? (
                         <div className="flex flex-col sm:flex-row items-center gap-4">
-                          <img 
-                            src={booking.designData || booking.description} 
-                            className="w-20 h-20 rounded-xl object-cover border border-white/10 hover:scale-105 transition-transform cursor-pointer" 
-                            alt="Design" 
+                          <div className="relative w-20 h-20 rounded-xl overflow-hidden border border-white/10 hover:scale-105 transition-transform cursor-pointer">
+                            <Image 
+                              src={booking.designData || booking.description!} 
+                              alt="Design" 
+                              fill
+                              sizes="80px"
+                              className="object-cover"
+                              unoptimized
+                            />
+                          </div>
+                          <button 
                             onClick={() => {
                               const imgWindow = window.open("");
                               imgWindow?.document.write(`<img src="${booking.designData || booking.description}" style="max-width:100%">`);
                             }}
-                          />
+                            className="flex items-center gap-2 text-[10px] font-black uppercase bg-white/5 hover:bg-white text-neutral-400 hover:text-black px-4 py-3 rounded-xl transition-all"
+                          >
+                            <Eye size={14} /> View Image
+                          </button>
                           <button 
-                            onClick={() => downloadImage(booking.designData || booking.description, booking.name)}
+                            onClick={() => downloadImage(booking.designData || booking.description!, booking.name)}
                             className="flex items-center gap-2 text-[10px] font-black uppercase bg-white/5 hover:bg-white text-neutral-400 hover:text-black px-4 py-3 rounded-xl transition-all"
                           >
                             <Download size={14} /> Download Image
                           </button>
                         </div>
                       ) : (
-                        <p className="text-[10px] text-neutral-700 uppercase font-bold italic">No image provided</p>
+                        <p className="text-[10px] text-neutral-700 uppercase font-header ">No image provided</p>
                       )}
                     </div>
 
                     {/* TEXT DESCRIPTION SECTION */}
                     <div className="pt-4 border-t border-white/5">
-                      <p className="text-[10px] font-bold text-neutral-600 uppercase mb-3 tracking-widest flex items-center gap-2">
+                      <p className="text-[10px] font-header text-neutral-600 uppercase mb-3 tracking-widest flex items-center gap-2">
                         <FileText size={12}/> Idea Description
                       </p>
                       {booking.description && !booking.description.startsWith('data:image') ? (
                         <div className="space-y-2">
-                          <p className="text-xs text-neutral-300 italic leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
-                            "{booking.description}"
+                          <p className="text-xs text-neutral-300  leading-relaxed bg-white/5 p-3 rounded-xl border border-white/5">
+                            {booking.description}
                           </p>
                           {booking.description.includes('http') && (
-                            <a href={booking.description} target="_blank" className="inline-flex items-center gap-2 text-[10px] text-emerald-500 font-bold uppercase underline">
+                            <a href={booking.description} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-2 text-[10px] text-[#26ff00] font-header uppercase underline">
                               <ExternalLink size={10}/> Open External Link
                             </a>
                           )}
                         </div>
                       ) : (
-                        <p className="text-[10px] text-neutral-700 uppercase font-bold italic">No text notes provided</p>
+                        <p className="text-[10px] text-neutral-700 uppercase font-header ">No text notes provided</p>
                       )}
                     </div>
                   </div>
 
                   {/* Schedule Picker */}
                   <div className="bg-emerald-500/5 rounded-3xl p-6 border border-emerald-500/10">
-                    <p className="text-[10px] font-bold text-emerald-500/50 uppercase mb-4 tracking-widest flex items-center gap-2">
+                    <p className="text-[10px] font-header text-[#26ff00]/50 uppercase mb-4 tracking-widest flex items-center gap-2">
                       <CalendarClock size={12}/> Confirm or Reschedule
                     </p>
                     <input 
                       type="datetime-local"
                       defaultValue={formatForInput(booking.scheduledAt)}
                       onChange={(e) => setAdjustedTimes({ ...adjustedTimes, [booking.id]: e.target.value })}
-                      className="w-full bg-black/40 border border-white/5 rounded-xl p-3 text-sm font-bold text-white focus:border-emerald-500 outline-none transition-all"
+                      className="w-full bg-black/40 border border-white/5 rounded-xl p-3 text-sm font-header text-white focus:border-emerald-500 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -251,22 +273,22 @@ export default function BookingsAdminPage() {
                         className="w-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-black py-5 rounded-2xl font-black uppercase text-[11px] tracking-[0.15em] transition-all flex items-center justify-center gap-3"
                       >
                         {actionLoading === booking.id ? <Loader2 className="animate-spin" size={18}/> : <CheckCircle2 size={18}/>}
-                        Confirm & Email
+                        Confirm & Send Message
                       </button>
                     ) : (
-                      <div className="w-full bg-white/5 border border-white/5 py-5 rounded-2xl flex items-center justify-center gap-2 text-emerald-500">
+                      <div className="w-full bg-white/5 border border-white/5 py-5 rounded-2xl flex items-center justify-center gap-2 text-[#26ff00]">
                         <CheckCircle2 size={16}/>
                         <span className="text-[11px] font-black uppercase tracking-widest">Confirmed Slot</span>
                       </div>
                     )}
                     <button 
                       onClick={() => handleUpdate(booking.id, 'REJECTED', booking.scheduledAt)}
-                      className="w-full bg-neutral-900 hover:bg-red-500/10 border border-white/5 text-neutral-500 hover:text-red-500 py-4 rounded-2xl font-bold uppercase text-[10px] tracking-widest transition-all"
+                      className="w-full bg-neutral-900 hover:bg-red-500/10 border border-white/5 text-neutral-500 hover:text-red-500 py-4 rounded-2xl font-header uppercase text-[10px] tracking-widest transition-all"
                     >
                       Decline Request
                     </button>
                   </div>
-                  <button onClick={() => handleDelete(booking.id)} className="flex items-center justify-center gap-2 text-neutral-700 hover:text-red-500 transition-colors text-[10px] font-bold uppercase tracking-widest">
+                  <button onClick={() => handleDelete(booking.id)} className="flex items-center justify-center gap-2 text-neutral-700 hover:text-red-500 transition-colors text-[10px] font-header uppercase tracking-widest">
                     <Trash2 size={14} /> Remove Entry
                   </button>
                 </div>

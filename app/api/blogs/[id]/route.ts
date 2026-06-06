@@ -11,7 +11,7 @@ export async function DELETE(
       where: { id: id }, // Delete by ID
     });
     return NextResponse.json({ message: "Post deleted" });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Delete failed" }, { status: 500 });
   }
 }
@@ -38,8 +38,7 @@ export async function PUT(
     });
     
     return NextResponse.json(updatedPost);
-  } catch (error) {
-    console.error("PUT BLOG ERROR:", error);
+  } catch {
     return NextResponse.json({ error: "Update failed" }, { status: 500 });
   }
 }

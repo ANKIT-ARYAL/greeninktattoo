@@ -1,13 +1,19 @@
 import { Loader2, X } from "lucide-react";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
-export default function AddBlogModal({ isOpen, onClose, onSuccess }: any) {
+interface AddBlogModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+export default function AddBlogModal({ isOpen, onClose, onSuccess }: AddBlogModalProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ title: '', excerpt: '', content: '', imageUrl: '' });
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -30,7 +36,7 @@ export default function AddBlogModal({ isOpen, onClose, onSuccess }: any) {
       <div className="bg-neutral-900 border border-white/10 w-full max-w-2xl rounded-[3rem] overflow-hidden">
         <div className="p-10 max-h-[90vh] overflow-y-auto custom-scrollbar">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-display font-bold text-white uppercase italic tracking-tighter">New Article</h2>
+            <h2 className="text-3xl font-display font-header text-white uppercase  tracking-widerer">New Article</h2>
             <button onClick={onClose} className="text-neutral-500 hover:text-white"><X size={28}/></button>
           </div>
 

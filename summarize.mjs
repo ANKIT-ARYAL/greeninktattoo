@@ -18,7 +18,7 @@ function buildTree(dir, prefix = '') {
         tree += buildTree(filePath, `${prefix}${isLast ? '    ' : '│   '}`);
       }
     });
-  } catch (e) { return 'Error building tree'; }
+  } catch { return 'Error building tree'; }
   return tree;
 }
 

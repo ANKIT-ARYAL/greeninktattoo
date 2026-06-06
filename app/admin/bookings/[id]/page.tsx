@@ -7,11 +7,9 @@ import {
   Calendar, 
   Clock, 
   Phone, 
-  User, 
   MessageSquare, 
   Instagram,
   ExternalLink,
-  MapPin
 } from 'lucide-react';
 
 export default async function BookingDetailsPage({ params }: { params: { id: string } }) {
@@ -46,7 +44,7 @@ export default async function BookingDetailsPage({ params }: { params: { id: str
         {/* BACK BUTTON */}
         <Link 
           href="/admin" 
-          className="inline-flex items-center gap-2 text-neutral-500 hover:text-emerald-500 transition-colors mb-12 group"
+          className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#26ff00] transition-colors mb-12 group"
         >
           <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
           <span className="text-[10px] font-black uppercase tracking-[0.3em]">Back to Dashboard</span>
@@ -59,26 +57,26 @@ export default async function BookingDetailsPage({ params }: { params: { id: str
             <header>
               <div className="flex items-center gap-3 mb-4">
                 <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                  booking.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500' : 'bg-emerald-500/10 text-emerald-500'
+                  booking.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500' : 'bg-emerald-500/10 text-[#26ff00]'
                 }`}>
                   {booking.status} Inquiry
                 </span>
-                <span className="text-neutral-600 text-[10px] font-bold uppercase tracking-widest">
+                <span className="text-neutral-600 text-[10px] font-header uppercase tracking-widest">
                   ID: {booking.id.slice(-6)}
                 </span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-display font-bold italic uppercase tracking-tighter leading-none">
+              <h1 className="text-5xl md:text-7xl font-display font-header  uppercase tracking-widerer leading-none">
                 {booking.name}
               </h1>
             </header>
 
             <section className="space-y-6">
-              <h3 className="flex items-center gap-2 text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em]">
+              <h3 className="flex items-center gap-2 text-[#26ff00] text-[10px] font-black uppercase tracking-[0.4em]">
                 <MessageSquare size={14} /> The Vision
               </h3>
               <div className="bg-neutral-900/50 border border-white/5 p-8 rounded-[2.5rem]">
-                <p className="text-neutral-300 text-lg leading-relaxed italic">
-                  "{booking.description || 'No description provided for this project.'}"
+                <p className="text-neutral-300 text-lg leading-relaxed ">
+                  {booking.description || 'No description provided for this project.'}
                 </p>
               </div>
             </section>
@@ -90,26 +88,26 @@ export default async function BookingDetailsPage({ params }: { params: { id: str
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <Calendar className="text-emerald-500 mt-1" size={18} />
+                  <Calendar className="text-[#26ff00] mt-1" size={18} />
                   <div>
                     <p className="text-[9px] font-black text-neutral-500 uppercase tracking-widest">Date Requested</p>
-                    <p className="text-sm font-bold">{dateStr}</p>
+                    <p className="text-sm font-header">{dateStr}</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Clock className="text-emerald-500 mt-1" size={18} />
+                  <Clock className="text-[#26ff00] mt-1" size={18} />
                   <div>
                     <p className="text-[9px] font-black text-neutral-500 uppercase tracking-widest">Preferred Time</p>
-                    <p className="text-sm font-bold">{timeStr}</p>
+                    <p className="text-sm font-header">{timeStr}</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Phone className="text-emerald-500 mt-1" size={18} />
+                  <Phone className="text-[#26ff00] mt-1" size={18} />
                   <div>
                     <p className="text-[9px] font-black text-neutral-500 uppercase tracking-widest">Contact Number</p>
-                    <p className="text-sm font-bold">{booking.contactNumber}</p>
+                    <p className="text-sm font-header">{booking.contactNumber}</p>
                   </div>
                 </div>
               </div>
@@ -132,10 +130,10 @@ export default async function BookingDetailsPage({ params }: { params: { id: str
 
             {/* QUICK PREVIEW IF THEY ATTACHED IMAGES (Placeholder logic) */}
             <div className="bg-emerald-500/5 border border-emerald-500/10 p-6 rounded-[2rem] flex items-center gap-4">
-              <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-500">
+              <div className="p-3 bg-emerald-500/10 rounded-xl text-[#26ff00]">
                 <Instagram size={20} />
               </div>
-              <p className="text-[10px] font-bold text-neutral-400 leading-tight uppercase tracking-wider">
+              <p className="text-[10px] font-header text-neutral-400 leading-tight uppercase tracking-wider">
                 Check client profile for style reference
               </p>
             </div>

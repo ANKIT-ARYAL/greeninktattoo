@@ -1,11 +1,27 @@
 import { Loader2, X, Image as ImageIcon, AlignLeft, Type, FileText } from "lucide-react";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 
-export default function EditBlogModal({ blog, isOpen, onClose, onSuccess }: any) {
+interface EditBlogModalProps {
+  blog: {
+    id: string;
+    title: string;
+    excerpt: string;
+    content: string;
+    image?: string;
+    imageUrl?: string;
+  };
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+export default function EditBlogModal({ blog, isOpen, onClose, onSuccess }: EditBlogModalProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(blog);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  if (!isOpen) return null;
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -37,8 +53,8 @@ export default function EditBlogModal({ blog, isOpen, onClose, onSuccess }: any)
           
           <div className="flex justify-between items-center mb-10">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-1">Editor</p>
-              <h2 className="text-3xl font-display font-bold text-white uppercase italic tracking-tighter">Edit Article</h2>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#26ff00] mb-1">Editor</p>
+              <h2 className="text-3xl font-display font-header text-white uppercase  tracking-widerer">Edit Article</h2>
             </div>
             <button onClick={onClose} className="p-3 bg-white/5 rounded-full text-neutral-500 hover:text-white transition-colors">
               <X size={24}/>

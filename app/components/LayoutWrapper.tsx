@@ -2,30 +2,33 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { Navbar } from './Navbar';
+import  Navbar  from './Navbar';
 import { Footer } from './Footer';
 
+
+// LayoutWrapper.tsx
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   
-  // Check if the current path starts with /admin
   const isAdminPath = pathname?.startsWith('/admin');
+  // Define routes that manage their own navbar
+  const isCustomNavbarPage = pathname === '/about'; 
 
   if (isAdminPath) {
-    return (
-      <main className="relative min-h-screen w-full">
-        {children}
-      </main>
-    );
+    return <main className="relative min-h-screen w-full">{children}</main>;
   }
 
   return (
     <>
-      <Navbar />
-      <main className="relative min-h-screen w-full overflow-x-hidden">
+      {/* Only show global navbar if it's not a custom page */}
+      {!isCustomNavbarPage && <Navbar />}
+      
+      <main className="relative min-h-screen w-full overflow-x-hidden">        
         {children}
       </main>
       <Footer />
     </>
   );
 }
+
+ 

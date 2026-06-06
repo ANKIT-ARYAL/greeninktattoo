@@ -1,112 +1,46 @@
 @import "tailwindcss";
 
-/* 1. TAILWIND THEME CONFIGURATION (v4) */
-@theme {
-  /* Bridges Next.js Google Fonts with Tailwind classes */
-  --font-display: var(--font-tattoo);
-  --font-sans: var(--font-inter);
-  
-  /* Custom Utilities */
-  --tracking-ultra: 0.5em;
-  
-  /* Transition timings */
-  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* 2. BASE VARIABLES & THEME */
 :root {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --emerald-500: #10b981;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-/* 3. CORE STYLES */
-html {
-  scrollbar-gutter: stable;
-  height: -webkit-fill-available;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 body {
-  background-color: var(--background);
+  background: var(--background);
   color: var(--foreground);
-  overscroll-behavior-y: none;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  /* Applying the Inter font variable globally */
-  font-family: var(--font-inter), ui-sans-serif, system-ui;
-  letter-spacing: 0.01em;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Typography Overrides */
-h1, h2, h3, .font-display {
-  font-family: var(--font-tattoo), serif;
-  text-transform: uppercase;
-  letter-spacing: -0.04em;
-  line-height: 0.85;
+.font-header {
+  font-family: var(--font-header), Arial, Helvetica, sans-serif;
 }
 
-/* 4. ANIMATIONS */
-@keyframes heroFadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+html {
+  scroll-behavior: smooth;
+}
+.preserve-3d { transform-style: preserve-3d; }
+
+@layer utilities {
+  .preserve-3d { transform-style: preserve-3d; }
+  .perspective-1000 { perspective: 1000px; }
+  .translate-z-50 { transform: translateZ(50px); }
+}
+/* Add to your global CSS */
+.stage {
+  perspective: 2000px;
+  transform-style: preserve-3d;
 }
 
-.animate-hero {
-  animation: heroFadeInUp 0.8s var(--ease-out-expo) forwards;
-  opacity: 0;
-}
-
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-
-/* 5. UTILITY CLASSES */
-
-/* Luxury Detail: Spaced out text for sub-labels */
-.tracking-ultra {
-  letter-spacing: var(--tracking-ultra);
-  font-weight: 800;
-}
-
-/* Grainy Texture Overlay */
-.bg-grain {
-  background-image: url("https://res.cloudinary.com/du9xeasst/image/upload/v1612453535/grain_bg_up0vjw.png");
-  background-repeat: repeat;
-  opacity: 0.04;
-  pointer-events: none;
-}
-
-/* Prevent horizontal scroll on reveal animations */
-.reveal-container {
-  overflow: hidden;
-}
-
-/* Smooth Main Content Transition */
 main {
-  transition: opacity 0.3s ease-in-out;
+  /* This prevents the 3D tilt from creating sharp, jagged edges */
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
-/* 6. CUSTOM SCROLLBAR */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--emerald-500);
-}

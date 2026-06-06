@@ -7,11 +7,8 @@ import {
   Calendar, 
   ChevronRight,
   Clock,
-  User,
   AlertCircle,
   Phone,
-  Mail,
-  Tag
 } from 'lucide-react';
 import { BookingRequest } from '../../types';
 
@@ -29,8 +26,8 @@ export default function AdminDashboard() {
         } else {
           setBookings([]);
         }
-      } catch (err) {
-        setBookings([]); 
+      } catch {
+        setBookings([]);
       } finally {
         setLoading(false);
       }
@@ -43,13 +40,13 @@ export default function AdminDashboard() {
       <main className="flex-1 p-12">
         <header className="flex justify-between items-end mb-12">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-500 mb-2">Control Center</p>
-            <h2 className="text-4xl font-display font-bold text-white uppercase italic">Overview</h2>
+            <p className="text-xl font-header uppercase tracking-wider mb-2">Control Center</p>
+            <h2 className="text-4xl font-display font-header text-white tracking-wider uppercase ">Overview</h2>
           </div>
           
           <div className="bg-neutral-900 border border-white/5 px-6 py-4 rounded-2xl">
             <p className="text-[10px] font-black text-neutral-500 uppercase tracking-widest mb-1">Total Inquiries</p>
-            <p className="text-3xl font-display font-bold text-white leading-none">
+            <p className="text-3xl font-display font-header text-white tracking-wider">
               {bookings.length}
             </p>
           </div>
@@ -64,7 +61,7 @@ export default function AdminDashboard() {
                </div>
                <ChevronRight size={20} className="text-neutral-700 group-hover:text-white transition-colors" />
             </div>
-            <h3 className="text-white font-bold text-xl mb-2 italic uppercase">Portfolio</h3>
+            <h3 className="text-white font-header text-xl mb-2 tracking-wider uppercase">Portfolio</h3>
             <p className="text-sm text-neutral-500">Update your latest tattoo works and gallery items.</p>
           </Link>
 
@@ -75,7 +72,7 @@ export default function AdminDashboard() {
                </div>
                <ChevronRight size={20} className="text-neutral-700 group-hover:text-white transition-colors" />
             </div>
-            <h3 className="text-white font-bold text-xl mb-2 italic uppercase">Journal</h3>
+            <h3 className="text-white font-header text-xl mb-2 tracking-wider uppercase">Journal</h3>
             <p className="text-sm text-neutral-500">Write aftercare guides and studio news.</p>
           </Link>
         </div>
@@ -83,8 +80,8 @@ export default function AdminDashboard() {
         {/* SIMPLE BOOKING LIST */}
         <div className="bg-neutral-950 border border-white/5 rounded-[3rem] overflow-hidden">
           <div className="p-8 border-b border-white/5 flex items-center justify-between">
-            <h3 className="text-lg font-display font-bold text-white uppercase italic tracking-tight flex items-center gap-3">
-              <Calendar size={20} className="text-emerald-500" /> Recent Inquiries
+            <h3 className="text-lg font-display font-header text-white uppercase  tracking-wider flex items-center gap-3">
+              <Calendar size={20} className="text-[#26ff00]" /> Recent Inquiries
             </h3>
           </div>
           
@@ -98,15 +95,15 @@ export default function AdminDashboard() {
                 {bookings.map((booking) => (
                   <Link key={booking.id} href={`/admin/bookings/${booking.id}`} className="bg-neutral-900/50 border border-white/5 p-6 rounded-3xl flex flex-wrap items-center justify-between gap-6">
                     <div className="flex items-center gap-6">
-                      <div className="h-12 w-12 bg-white/5 rounded-2xl flex items-center justify-center text-white font-bold">
+                      <div className="h-12 w-12 bg-white/5 rounded-2xl flex items-center justify-center text-white font-header">
                         {booking.name.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="text-white font-bold text-lg leading-none mb-2">{booking.name}</h4>
+                        <h4 className="text-white font-header text-lg leading-none mb-2">{booking.name}</h4>
                         <div className="flex flex-wrap gap-4 text-[11px] font-medium uppercase tracking-wider text-neutral-500">
-                          <span className="flex items-center gap-1.5"><Phone size={12} className="text-emerald-500"/> {booking.contactNumber}</span>
-                          <span className="flex items-center gap-1.5"><Clock size={12} className="text-emerald-500"/> {new Date(booking.scheduledAt).toLocaleDateString()}</span>
-                          <span className={`px-2 py-0.5 rounded-md text-[9px] ${booking.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500' : 'bg-emerald-500/10 text-emerald-500'}`}>
+                          <span className="flex items-center gap-1.5"><Phone size={12} className="text-[#26ff00]"/> {booking.contactNumber}</span>
+                          <span className="flex items-center gap-1.5"><Clock size={12} className="text-[#26ff00]"/> {new Date(booking.scheduledAt).toLocaleDateString()}</span>
+                          <span className={`px-2 py-0.5 rounded-md text-[9px] ${booking.status === 'PENDING' ? 'bg-orange-500/10 text-orange-500' : 'bg-emerald-500/10 text-[#26ff00]'}`}>
                             {booking.status}
                           </span>
                         </div>
@@ -116,7 +113,7 @@ export default function AdminDashboard() {
                     {/* Simplified info view - No action buttons */}
                     <div className="hidden lg:block text-right">
                        <p className="text-[10px] text-neutral-600 uppercase font-black tracking-widest mb-1 text-right">Message Preview</p>
-                       <p className="text-sm text-neutral-400 italic max-w-xs truncate">"{booking.description || 'No details provided'}"</p>
+                       <p className="text-sm text-neutral-400  max-w-xs truncate">{booking.description || 'No details provided'}</p>
                     </div>
                   </Link>
                 ))}
@@ -124,7 +121,7 @@ export default function AdminDashboard() {
             ) : (
               <div className="py-20 text-center">
                 <AlertCircle size={40} className="mx-auto text-neutral-800 mb-4" />
-                <p className="text-neutral-600 font-bold uppercase text-xs tracking-widest">No Recent Inquiries</p>
+                <p className="text-neutral-600 font-header uppercase text-xs tracking-widest">No Recent Inquiries</p>
               </div>
             )}
           </div>
