@@ -3,6 +3,8 @@ import GalleryClient from '../components/GalleryClient';
 import { prisma } from '@/lib/prisma';
 import StageWrapper from '../components/StageWrapper';
 
+export const dynamic = 'force-dynamic';
+
 async function getDesigns() {
   try {
     return await prisma.tattooDesign.findMany({

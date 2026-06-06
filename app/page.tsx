@@ -8,6 +8,7 @@ import Faqs from './components/Faqs';
 import StageWrapper from './components/StageWrapper';
 import ProcessSection from './components/ProcessSection';
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function Page() {

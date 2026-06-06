@@ -6,6 +6,7 @@ import { Calendar, ArrowRight, Clock } from 'lucide-react';
 import Reveal from '../components/Reveal';
 import BlogCard3D from '../components/BlogCard3D';
 
+export const dynamic = 'force-dynamic';
 // ISR set to 1 hour (revalidate every 3600 seconds)
 export const revalidate = 3600;
 

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { ChevronLeft, Calendar, User, Share2 } from 'lucide-react';
 import Reveal from '@/app/components/Reveal';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await prisma.post.findUnique({ where: { slug: slug } });
