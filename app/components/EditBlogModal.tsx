@@ -53,7 +53,7 @@ export default function EditBlogModal({ blog, isOpen, onClose, onSuccess }: Edit
           
           <div className="flex justify-between items-center mb-10">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#26ff00] mb-1">Editor</p>
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white mb-1">Editor</p>
               <h2 className="text-3xl font-display font-header text-white uppercase  tracking-widerer">Edit Article</h2>
             </div>
             <button onClick={onClose} className="p-3 bg-white/5 rounded-full text-neutral-500 hover:text-white transition-colors">

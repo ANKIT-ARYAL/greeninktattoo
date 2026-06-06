@@ -2,6 +2,10 @@
 import "./globals.css";
 import localFont from 'next/font/local';
 import { LayoutWrapper } from "./components/LayoutWrapper";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const customHeaderFont = localFont({
   src: './fonts/SixCaps-Regular.ttf',
@@ -12,7 +16,7 @@ const customHeaderFont = localFont({
 // app/layout.tsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${customHeaderFont.variable}`}>
+    <html lang="en" className={cn(customHeaderFont.variable, "font-sans", geist.variable)}>
       <body className="bg-black text-white">
         
         {/* Global Background Layer - The ONLY place this should exist */}

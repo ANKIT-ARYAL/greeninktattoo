@@ -154,7 +154,7 @@ export const BookingForm: React.FC = () => {
 
         <div className="relative z-10 grid grid-cols-2 gap-8">
           <div className="relative group">
-            <CalendarIcon className="absolute left-0 top-1/2 -translate-y-1/2 text-[#26ff00]" size={16} />
+            <CalendarIcon className="absolute left-0 top-1/2 -translate-y-1/2 text-white" size={16} />
             <input
               name="date"
               type="date"
@@ -165,7 +165,7 @@ export const BookingForm: React.FC = () => {
             />
           </div>
           <div className="relative group">
-            <Clock className="absolute left-0 top-1/2 -translate-y-1/2 text-[#26ff00]" size={16} />
+            <Clock className="absolute left-0 top-1/2 -translate-y-1/2 text-white" size={16} />
             <select
               name="time"
               value={formData.time}
@@ -186,7 +186,7 @@ export const BookingForm: React.FC = () => {
             </div>
           ) : (
             <div onClick={() => fileInputRef.current?.click()} className="border border-dashed border-white/20 p-8 flex flex-col items-center justify-center cursor-pointer hover:bg-[#26ff00]/5 transition-all">
-              <Upload size={20} className="mb-3 text-[#26ff00]" />
+              <Upload size={20} className="mb-3 text-white" />
               <span className="text-[9px] uppercase tracking-widest text-neutral-500">Attach Reference</span>
               <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleFileChange} />
             </div>
@@ -213,7 +213,7 @@ export const BookingForm: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.02, z: 20 }}
           disabled={loading}
-          className="w-full py-4 bg-[#26ff00] text-black font-black uppercase tracking-[0.2em] text-[12px] relative z-10"
+          className="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-[12px] relative z-10"
         >
           {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : 'Submit Booking Request'}
         </motion.button>
@@ -224,7 +224,7 @@ export const BookingForm: React.FC = () => {
 
 const FormInput = ({ icon: Icon, ...props }: any) => (
   <div className="relative group">
-    <Icon className="absolute left-0 top-1/2 -translate-y-1/2 text-[#26ff00]" size={16} />
+    <Icon className="absolute left-0 top-1/2 -translate-y-1/2 text-white" size={16} />
     <input
       {...props}
       className="w-full bg-transparent border-b border-white/20 p-4 pl-12 text-white text-[10px] focus:border-[#26ff00] outline-none transition-all placeholder:text-neutral-600 uppercase tracking-widest"

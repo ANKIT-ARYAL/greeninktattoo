@@ -24,7 +24,7 @@ export default async function BlogsPage() {
         <header className="mb-24 flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/10 pb-12">
           <div>
             <Reveal direction="down">
-              <p className="text-[9px] font-black uppercase tracking-[0.6em] text-[#26ff00] mb-6">Insights & Artistry</p>
+              <p className="text-[9px] font-black uppercase tracking-[0.6em] text-white mb-6">Insights & Artistry</p>
             </Reveal>
             <Reveal delay={0.2}>
               <h1 className="text-7xl md:text-9xl font-header text-white uppercase tracking-wider leading-[0.9]">
@@ -59,17 +59,17 @@ export default async function BlogsPage() {
 
                   <div className="flex items-center gap-6 mb-6 text-[10px] font-black uppercase tracking-widest text-white">
                     <span className="flex items-center gap-2">
-                      <Calendar size={12} className="text-[#26ff00]" />
+                      <Calendar size={12} className="text-white" />
                       {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </span>
                     <span className="flex items-center gap-2">
-                      <Clock size={12} className="text-[#26ff00]" />
+                      <Clock size={12} className="text-white" />
                       {/* Ensure 'readTime' exists in your DB schema */}
                       {Math.ceil(post.content.split(' ').length / 200)} min
                     </span>
                   </div>
 
-                  <h3 className="text-4xl font-header text-white uppercase tracking-wider mb-6 group-hover:text-[#26ff00] transition-colors line-clamp-2 leading-tight">
+                  <h3 className="text-4xl font-header text-white uppercase tracking-wider mb-6 group-hover:text-white transition-colors line-clamp-2 leading-tight">
                     {post.title}
                   </h3>
                   
@@ -78,7 +78,7 @@ export default async function BlogsPage() {
                   </p>
 <Link href={`/blogs/${post.slug}`} className="mt-auto flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-[0.3em] group-hover:gap-5 transition-all">
                   
-                    Read Article <ArrowRight size={14} className="text-[#26ff00]" />
+                    Read Article <ArrowRight size={14} className="text-white" />
                   </Link>
                 </article>
               </BlogCard3D>

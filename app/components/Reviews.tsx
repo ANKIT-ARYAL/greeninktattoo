@@ -1,75 +1,33 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { TestimonialsColumn } from '../components/ui/testimonials-columns-1';
 
 const REVIEWS = [
-  { name: "Niko Chelsea", text: "Sanjay is very professional and helped me creating all the artworks and ideas... Highly recommended." },
-  { name: "Nabu Chaudhary", text: "Really amazing and talented artist ever seen highly recommended guys 🔥🔥🔥🔥🔥" },
-  { name: "Kristina Balami", text: "Super talented artist. very good work. clean shop n excellent service." },
-  { name: "Ashok Bahadur Thapa Magar", text: "Very friendly and high experience. I am very surprised to get and work with him." },
-  { name: "Swornim Mandal", text: "Worth every rupee and highly recommend green ink whoever wants to exceed their expectations." },
-  { name: "Prakrit Roka", text: "The living legend as a Tattoo Artist !! Mark my word, this guy is super duper dope." },
-  { name: "Bibek Shrestha", text: "One art with lot of meaning which came out to be the finest! Highly recommended!" },
-  { name: "punk skull", text: "Very great work at a reasonable price." }
+  { text: "Sanjay is very professional and helped me creating all the artworks and ideas... Highly recommended.", image: "https://i.pravatar.cc/150?u=1", name: "Niko Chelsea", role: "Client" },
+  { text: "Really amazing and talented artist ever seen highly recommended guys 🔥🔥🔥🔥🔥", image: "https://i.pravatar.cc/150?u=2", name: "Nabu Chaudhary", role: "Client" },
+  { text: "Super talented artist. very good work. clean shop n excellent service.", image: "https://i.pravatar.cc/150?u=3", name: "Kristina Balami", role: "Client" },
+  { text: "Very friendly and high experience. I am very surprised to get and work with him.", image: "https://i.pravatar.cc/150?u=4", name: "Ashok B. Thapa", role: "Client" },
+  { text: "Worth every rupee and highly recommend green ink whoever wants to exceed expectations.", image: "https://i.pravatar.cc/150?u=5", name: "Swornim Mandal", role: "Client" },
+  { text: "The living legend as a Tattoo Artist !! Mark my word, this guy is super duper dope.", image: "https://i.pravatar.cc/150?u=6", name: "Prakrit Roka", role: "Client" }
 ];
 
 export default function ReviewSlider() {
-  const [index, setIndex] = useState(0);
-
-  const nextReview = useCallback(() => {
-    setIndex((prev) => (prev + 1 >= REVIEWS.length ? 0 : prev + 1));
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(nextReview, 6000);
-    return () => clearInterval(timer);
-  }, [nextReview]);
+  // Split data into 2 columns for the UI
+  const col1 = REVIEWS.slice(0, 2);
+  const col2 = REVIEWS.slice(2, 4);
+  const col3 = REVIEWS.slice(4, 6);
 
   return (
-    <div className="w-full flex flex-col pt-12">
-      {/* 3D Container with Perspective */}
-      <div className="relative min-h-[250px] flex items-center overflow-visible" style={{ perspective: '1200px' }}>
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={index}
-            // 3D Motion Logic: Entering from deep space, rotating from the X axis
-            initial={{ opacity: 0, rotateX: -45, z: -300, y: 50 }}
-            animate={{ opacity: 1, rotateX: 0, z: 0, y: 0 }}
-            exit={{ opacity: 0, rotateX: 45, z: 300, y: -50 }}
-            transition={{ 
-              duration: 0.8, 
-              ease: [0.16, 1, 0.3, 1] // Custom cubic-bezier for a more "physical" feel
-            }}
-            className="w-full space-y-6 origin-center"
-            style={{ transformStyle: 'preserve-3d' }}
-          >
-            <p className="text-white/90 text-2xl font-light leading-relaxed tracking-tight">
-              "{REVIEWS[index].text}"
-            </p>
-            <div className="flex items-center gap-4">
-              <div className="h-[2px] w-8 bg-[#26ff00]" />
-              <span className="text-[10px] text-white font-black uppercase tracking-[0.3em]">
-                {REVIEWS[index].name}
-              </span>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+    <section className=" py-20 overflow-hidden">
+      <div className="container mx-auto px-6">
+        
+        {/* Masked Scroll Area */}
+        <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)] max-h-[600px] overflow-hidden">
+          <TestimonialsColumn testimonials={col1} duration={15} />
+          <TestimonialsColumn testimonials={col2} className="hidden md:block" duration={19} />
+          <TestimonialsColumn testimonials={col3} className="hidden md:block" duration={23} />
+        </div>
       </div>
-
-      {/* Progress Indicators */}
-      <div className="flex gap-2 mt-8">
-        {REVIEWS.map((_, i) => (
-          <motion.div 
-            key={i} 
-            className="h-[2px] bg-white/20"
-            animate={{ 
-              width: i === index ? 40 : 16,
-              backgroundColor: i === index ? '#26ff00' : 'rgba(255,255,255,0.2)'
-            }}
-            transition={{ duration: 0.4 }}
-          />
-        ))}
-      </div>
-    </div>
+    </section>
   );
 }

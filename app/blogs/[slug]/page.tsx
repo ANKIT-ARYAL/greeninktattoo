@@ -20,7 +20,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         
         {/* BACK BUTTON */}
         <Reveal direction="down">
-          <Link href="/blogs" className="inline-flex items-center gap-3 text-neutral-400 hover:text-[#26ff00] transition-colors mb-16 group">
+          <Link href="/blogs" className="inline-flex items-center gap-3 text-neutral-400 hover:text-white transition-colors mb-16 group">
             <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em]">Back to Journal</span>
           </Link>
@@ -30,7 +30,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <header className="mb-20">
           <Reveal delay={0.1}>
             <div className="flex items-center gap-6 mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-white/60">
-              <span className="flex items-center gap-2 text-[#26ff00]">
+              <span className="flex items-center gap-2 text-white">
                  <Calendar size={12} /> {new Date(post.createdAt).toLocaleDateString()}
               </span>
               <span className="w-1 h-1 rounded-full bg-white/20" />

@@ -15,25 +15,32 @@ export default function Navbar({ transparent = true }: NavbarProps) {
     <>
       {/* FORCE VISIBLE NAV */}
       <nav className={`fixed top-0 left-0 w-full z-[9999] flex items-center justify-between px-6 md:px-16 py-6 ${transparent ? 'bg-transparent' : 'bg-black/80'}`}>
+        <div className='flex flex-col items-center justify-center'>
         <Link href="/" className="z-[10000]">
            {/* If logo is invisible, change src to a known working path */}
-           <Image src='/logo-2.png' alt='Logo' width={80} height={40} />
+           <Image src='/logo.png' alt='Logo' width={120} height={120} className="w-16 h-16 md:w-[120px] md:h-[120px]" />
         </Link>
+        <p className="hidden md:block text-2xl font-header uppercase tracking-widest text-white mt-3">
+      Green Ink Tattoo
+    </p>
+        </div>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
           {['Gallery', 'About', 'Blogs'].map((link) => (
-            <Link key={link} href={`/${link.toLowerCase()}`} className="text-[10px] uppercase tracking-[0.2em] text-white hover:text-[#26ff00] cursor-pointer">
+            <Link key={link} href={`/${link.toLowerCase()}`} className="text-[10px] uppercase tracking-[0.2em] text-white hover:text-white cursor-pointer hover:scale-110 transition-all">
               {link}
             </Link>
           ))}
-          <Link href='/contact' className="bg-white text-black px-6 py-3 uppercase font-black text-[10px] tracking-[0.2em]">Book Now</Link>
+          <Link href='/contact' className="bg-white text-black px-6 py-3 uppercase font-black text-[10px] tracking-[0.2em] hover:bg-gray-200 hover:scale-110 transition-all">
+            Book Now
+          </Link>
         </div>
 
         {/* Mobile Toggle - Force contrast */}
         <button 
           onClick={() => setMenuOpen(true)} 
-          className="md:hidden text-[#26ff00] font-black uppercase text-[12px] z-[10000] p-4 border border-[#26ff00]"
+          className="md:hidden text-white absolute top-10 right-6 font-black uppercase text-[12px] z-[10000] p-4 border border-white"
         >
           MENU
         </button>
@@ -48,21 +55,22 @@ export default function Navbar({ transparent = true }: NavbarProps) {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[20000] bg-black/95 backdrop-blur-sm overflow-y-auto"
           >
-            <div className="relative min-h-screen w-full px-6 py-8 flex flex-col items-center justify-center gap-10 text-center">
+            <div className="relative min-h-screen w-full px-6 py-8 flex flex-col items-center justify-center text-center">
               <button
                 onClick={() => setMenuOpen(false)}
-                className="absolute top-6 right-6 rounded-full border border-white/20 bg-white/10 px-4 py-3 text-sm font-black uppercase tracking-[0.2em] text-white hover:bg-white/20 transition"
+                className="absolute top-10 right-6  border border-white/20 bg-white/10 px-4 py-3 text-sm font-black uppercase tracking-[0.2em] text-white hover:bg-white/20 transition"
               >
                 Close
               </button>
 
               <div className="space-y-8">
-                {['Gallery', 'About', 'Blogs', 'Book Now'].map((link) => (
+                {['Home', 'Gallery', 'About', 'Blogs', 'Book Now'].map((link) => (
                   <Link
                     key={link}
-                    href={link === 'Book Now' ? '/contact' : `/${link.toLowerCase()}`}
+                    
+                    href={link === 'Home' ? '/' : link === 'Book Now' ? '/contact' : `/${link.toLowerCase()}`}
                     onClick={() => setMenuOpen(false)}
-                    className={`block text-4xl font-black uppercase transition-colors ${link === 'Book Now' ? 'text-black bg-white px-10 py-4 rounded-full' : 'text-white hover:text-[#26ff00]'}`}
+                    className={`block text-xl font-black uppercase transition-all ${link === 'Book Now' ? 'text-black bg-white px-10 py-4 ' : 'text-white hover:text-gray-500 hover:scale-110 transition-all'}`}
                   >
                     {link}
                   </Link>

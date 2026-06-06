@@ -32,8 +32,8 @@ export default function ContactPage() {
           >
             <div>
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#26ff00]">Inquiry & Booking</span>
-                <div className={`flex items-center gap-1.5 px-3 py-1 border ${isOpen ? 'border-emerald-500/30 text-[#26ff00]' : 'border-red-500/30 text-red-400'}`}>
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">Inquiry & Booking</span>
+                <div className={`flex items-center gap-1.5 px-3 py-1 border ${isOpen ? 'border-emerald-500/30 text-white' : 'border-red-500/30 text-red-400'}`}>
                   {isOpen ? <CheckCircle2 size={10} /> : <XCircle size={10} />}
                   <span className="text-[8px] font-black uppercase tracking-widest">{isOpen ? 'Open Now' : 'Closed'}</span>
                 </div>
@@ -41,7 +41,7 @@ export default function ContactPage() {
 
               <h1 className="text-6xl md:text-8xl font-header text-white uppercase tracking-wider leading-[0.9] mb-8">
                 Let's Start <br/> 
-                <span className="text-[#26ff00]">Your Story</span>
+                <span className="text-white">Your Story</span>
               </h1>
               <p className="text-neutral-400 text-lg leading-relaxed max-w-sm">
                 Located in the heart of Thamel. Custom ink, precise execution, and a environment built for your vision.
@@ -56,7 +56,7 @@ export default function ContactPage() {
                 { icon: Clock, title: 'Opening Hours', desc: '11:00 AM — 08:00 PM' }
               ].map((item, i) => (
                 <div key={i} className="group p-6 border border-white/10 hover:border-white/20 transition-all flex items-start gap-6">
-                  <div className="text-[#26ff00] mt-1"><item.icon size={18} /></div>
+                  <div className="text-white mt-1"><item.icon size={18} /></div>
                   <div>
                     <h3 className="text-[10px] font-black uppercase tracking-widest text-white mb-1">{item.title}</h3>
                     <p className="text-neutral-500 text-sm">{item.desc}</p>
@@ -75,7 +75,7 @@ export default function ContactPage() {
           >
             <div className="mb-10">
               <h2 className="text-3xl font-header text-white uppercase tracking-wider">Book an Appointment</h2>
-              <p className="text-[#26ff00] text-[10px] font-black uppercase tracking-[0.3em] mt-2">Response within 24 hours</p>
+              <p className="text-white text-[10px] font-black uppercase tracking-[0.3em] mt-2">Response within 24 hours</p>
             </div>
             <BookingForm />
           </motion.div>

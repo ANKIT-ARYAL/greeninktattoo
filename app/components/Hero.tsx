@@ -16,7 +16,7 @@ export default function HeroReveal({ designs = [] }: { designs?: any[] }) {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-8 pt-20 pb-20">
+    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-8 pt-32 md:pt-20 pb-20">
       
       {/* 1. HEADER (Visual Top, Animates Second) */}
       <motion.div
@@ -27,7 +27,7 @@ export default function HeroReveal({ designs = [] }: { designs?: any[] }) {
         <h1 className="text-6xl md:text-8xl font-header text-white uppercase tracking-wider">
           The Kind of Tattoo
         </h1>
-        <p className="text-[#26ff00] uppercase tracking-[0.3em] font-bold">You won't regret.</p>
+        <p className="text-white uppercase tracking-[0.3em] font-bold">You won't regret.</p>
         <p className='text-neutral-500 py-5'>Exclusive tattoos by appointment only.</p>
       </motion.div>
 
@@ -58,10 +58,10 @@ export default function HeroReveal({ designs = [] }: { designs?: any[] }) {
         animate={controls.cta}
         className="z-30 flex gap-6"
       >
-        <Link href="/contact" className="bg-white text-black px-10 py-4 uppercase font-black hover:scale-105 transition-transform">
+        <Link href="/contact" className="bg-white text-black px-10 py-4 uppercase font-black hover:scale-105 transition-all">
           Book Now
         </Link>
-        <Link href="/gallery" className="bg-transparent text-white border border-white px-10 py-4 uppercase font-black hover:bg-white hover:text-black transition-all">
+        <Link href="/gallery" className="bg-transparent text-white border border-white px-10 py-4 uppercase font-black hover:scale-105 transition-all">
           Gallery
         </Link>
       </motion.div>

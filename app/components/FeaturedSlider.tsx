@@ -41,7 +41,7 @@ export default function FeaturedGrid({ designs }: { designs: any[] }) {
                 <Image src={design.imageUrl} fill className="object-cover" alt={design.title} />
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-30" />
                 <div className="absolute bottom-10 left-10 z-20">
-                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#26ff00] mb-2">{design.category}</p>
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-white mb-2">{design.category}</p>
                   <h3 className="text-3xl font-black text-white uppercase tracking-tight">{design.title}</h3>
                 </div>
               </motion.div>

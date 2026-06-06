@@ -57,7 +57,7 @@ function GalleryCard({ design, index }: { design: Design; index: number }) {
         
         {/* Overlay */}
         <div className="absolute inset-0  opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 md:p-8">
-          <span className="text-[#26ff00] text-[9px] font-black uppercase tracking-[0.3em] mb-1">
+          <span className="text-white text-[9px] font-black uppercase tracking-[0.3em] mb-1">
             {design.category}
           </span>
           <h3 className="text-xl md:text-2xl font-header text-white uppercase tracking-wider leading-none">
