@@ -12,8 +12,8 @@ export default function ProcessSection() {
   return (
     <section className="py-24 relative">
       <div className="max-w-6xl mx-auto px-8 relative">
-        {/* SVG Path: Connects 01(Right) -> 02(Left) -> 03(Right) -> 04(Left) */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 1600">
+        {/* SVG Path: Hidden on mobile, visible on desktop */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 " viewBox="0 0 1000 1600">
           <path 
             d="M 850 150 Q 200 350 200 650 T 850 1000 T 200 1350" 
             stroke="#dc2626" 
@@ -22,22 +22,22 @@ export default function ProcessSection() {
           />
         </svg>
 
-        {/* Header Block */}
-        <div className="absolute top-0 left-8 w-[300px] z-10">
-          <div className="sticky top-24">
-            <h2 className="text-7xl font-header uppercase text-white mb-8">From<br />Idea To Ink</h2>
+        {/* Header Block: Adjusted for mobile stacking */}
+        <div className="relative md:absolute top-0 left-0 md:left-8 w-full md:w-[300px] z-10 mb-16 md:mb-0">
+          <div className="md:sticky top-24">
+            <h2 className="text-5xl md:text-7xl font-header uppercase text-white mb-8">From<br />Idea To Ink</h2>
             <p className="text-white/60 max-w-sm leading-relaxed">
               Here’s how we bring your tattoo to life, guiding you through every step of the process from start to finish, ensuring your vision becomes a stunning reality.
             </p>
           </div>
         </div>
 
-        {/* Cards Flow */}
-        <div className="flex flex-col gap-40 pt-10">
+        {/* Cards Flow: Centered on mobile */}
+        <div className="flex flex-col gap-20 md:gap-40 pt-10">
           {steps.map((step, i) => (
             <div 
               key={step.id} 
-              className={`flex w-full ${i % 2 === 0 ? 'justify-end' : 'justify-start'}`}
+              className={`flex w-full ${i % 2 === 0 ? 'justify-end' : 'justify-start'} justify-center md:justify-end md:even:justify-start`}
             >
               <StepCard number={step.id} title={step.title} desc={step.desc} />
             </div>
