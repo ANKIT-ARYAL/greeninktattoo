@@ -28,7 +28,7 @@ export default async function Page() {
   return (
     <main className="relative min-h-screen w-full">
       <StageWrapper>
-        <Hero designs={featuredWork}/>
+        <Hero />
         <AboutSection />
         <OnTheBoard works={allWorks} />
         <ProcessSection />
