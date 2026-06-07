@@ -12,13 +12,8 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function Page() {
-  // Fetch featured work for Hero
-  const featuredWork = await prisma.tattooDesign.findMany({
-    where: { isFeatured: true },
-    orderBy: { createdAt: 'desc' },
-    take: 7,
-  });
-
+  
+  
   // Fetch all work for "On The Board"
   const allWorks = await prisma.tattooDesign.findMany({
     orderBy: { createdAt: 'desc' },

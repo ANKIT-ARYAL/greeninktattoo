@@ -35,7 +35,7 @@ export default async function GalleryPage() {
         <header className="relative px-6 md:px-12 pt-32 pb-20 border-b border-white/10 flex flex-col items-center">
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none" />
           
-          <h1 className="text-6xl md:text-9xl font-header text-center text-white uppercase tracking-wider relative z-10">
+          <h1 className="text-6xl md:text-9xl font-pirata  text-center text-white uppercase tracking-wider relative z-10">
             Portfolio
           </h1>
           <div className="mt-8 flex items-center gap-6">

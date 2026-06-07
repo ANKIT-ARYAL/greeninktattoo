@@ -133,7 +133,7 @@ export const BookingForm: React.FC = () => {
         x.set(0);
         y.set(0);
       }}
-      className="w-full"
+      className="w-full font-allura"
     >
       <motion.form
         onSubmit={validateAndSubmit}
@@ -213,7 +213,7 @@ export const BookingForm: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.02, z: 20 }}
           disabled={loading}
-          className="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-[12px] relative z-10"
+          className="w-full py-4 bg-emerald-700 text-white uppercase tracking-[0.2em] text-[12px] relative z-10"
         >
           {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : 'Submit Booking Request'}
         </motion.button>

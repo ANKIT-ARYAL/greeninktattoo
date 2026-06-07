@@ -21,19 +21,16 @@ export default async function BlogsPage() {
       <div className="w-full">
         
         {/* REFINED HEADER */}
-        <header className="mb-24 flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/10 pb-12">
-          <div>
-            <Reveal direction="down">
-              <p className="text-[9px] font-black uppercase tracking-[0.6em] text-white mb-6">Insights & Artistry</p>
-            </Reveal>
+        <header className="mb-24 flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/10 pb-12 mt-10">
+          <div>            
             <Reveal delay={0.2}>
-              <h1 className="text-7xl md:text-9xl font-header text-white uppercase tracking-wider leading-[0.9]">
-                The Journal
+              <h1 className="text-7xl md:text-9xl font-pirata text-white uppercase tracking-wider leading-[0.9]">
+                The <span className='text-emerald-700'>Journal</span>
               </h1>
             </Reveal>
           </div>
           <Reveal delay={0.4}>
-            <p className="text-neutral-500 text-sm max-w-xs mt-6 md:mt-0">
+            <p className="text-neutral-500 text-sm max-w-xs mt-6 md:mt-0 font-allura">
               Technique, philosophy, and the evolution of the craft. Updated regularly from Kathmandu.
             </p>
           </Reveal>
@@ -57,7 +54,7 @@ export default async function BlogsPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
 
-                  <div className="flex items-center gap-6 mb-6 text-[10px] font-black uppercase tracking-widest text-white">
+                  <div className="flex items-center gap-6 mb-6 text-[10px] font-allura uppercase tracking-widest text-white">
                     <span className="flex items-center gap-2">
                       <Calendar size={12} className="text-white" />
                       {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
@@ -69,16 +66,16 @@ export default async function BlogsPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-4xl font-header text-white uppercase tracking-wider mb-6 group-hover:text-white transition-colors line-clamp-2 leading-tight">
+                  <h3 className="text-4xl font-pirata text-white uppercase tracking-wider mb-6 group-hover:text-white transition-colors line-clamp-2 leading-tight">
                     {post.title}
                   </h3>
                   
-                  <p className="text-neutral-400 text-sm leading-relaxed mb-8 line-clamp-3">
+                  <p className="text-neutral-400 text-sm font-allura leading-relaxed mb-8 line-clamp-3">
                     {post.excerpt}
                   </p>
 <Link href={`/blogs/${post.slug}`} className="mt-auto flex items-center gap-3 text-white text-[10px] font-black uppercase tracking-[0.3em] group-hover:gap-5 transition-all">
                   
-                    Read Article <ArrowRight size={14} className="text-white" />
+                    Read Article <ArrowRight size={14} className="text-white font-allura" />
                   </Link>
                 </article>
               </BlogCard3D>

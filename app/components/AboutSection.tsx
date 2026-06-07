@@ -17,9 +17,9 @@ export default function AboutSection() {
 
         {/* Right: Content & Experience */}
         <div className="lg:col-span-8 flex flex-col gap-12">
-          <h3 className="text-5xl font-allura uppercase tracking-wider">Meet The Artist</h3>
+          <h3 className="text-5xl font-pirata uppercase tracking-wider">Meet The<span className='text-emerald-700'> Artist</span></h3>
           
-          <div className="space-y-8">
+          <div className="space-y-8 font-allura">
             {[
               {
                 text: "Before tattooing, I filled sketchbooks with bold, abstract designs. Black ink felt powerful and timeless. My love for drawing evolved into an obsession with skin as a living canvas."
@@ -39,7 +39,7 @@ export default function AboutSection() {
                 className="flex gap-4 items-start"
               >
                 <span className="text-gray-400 text-2xl mt-1">✦</span>
-                <p className="text-neutral-400 text-lg leading-relaxed max-w-2xl">{item.text}</p>
+                <p className="text-neutral-400 text-lg leading-relaxed max-w-2xl font-allura">{item.text}</p>
               </motion.div>
             ))}
           </div>

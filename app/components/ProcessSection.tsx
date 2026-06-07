@@ -25,8 +25,8 @@ export default function ProcessSection() {
         {/* Header Block: Adjusted for mobile stacking */}
         <div className="relative md:absolute top-0 left-0 md:left-8 w-full md:w-[300px] z-10 mb-16 md:mb-0">
           <div className="md:sticky top-24">
-            <h2 className="text-5xl md:text-7xl font-header uppercase text-white mb-8">From<br />Idea To Ink</h2>
-            <p className="text-white/60 max-w-sm leading-relaxed">
+            <h2 className="text-5xl md:text-7xl font-pirata uppercase text-white mb-8">From<br /><span className='text-emerald-700'>Idea To Ink</span></h2>
+            <p className="text-white/60 max-w-sm font-allura leading-relaxed">
               Here’s how we bring your tattoo to life, guiding you through every step of the process from start to finish, ensuring your vision becomes a stunning reality.
             </p>
           </div>

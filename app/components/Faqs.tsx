@@ -20,8 +20,8 @@ export default function Faqs() {
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Header Section */}
         <div className="mb-16">
-          <h2 className="text-6xl md:text-7xl font-header uppercase text-white mb-4">Frequently Asked Questions</h2>
-          <p className="text-white/50">A few things you might want to know before booking.</p>
+          <h2 className="text-6xl md:text-7xl font-pirata uppercase text-white mb-4">Frequently Asked <span className='text-emerald-700'>Questions</span></h2>
+          <p className="text-white/50 font-allura">A few things you might want to know before booking.</p>
         </div>
 
         {/* Grid Layout (2 Columns) */}
@@ -36,7 +36,7 @@ export default function Faqs() {
                   onClick={() => setActiveIndex(activeIndex === i ? null : i)}
                   className="w-full flex justify-between items-center px-8 py-5 text-white hover:bg-white/5 transition-colors"
                 >
-                  <span className="text-sm uppercase tracking-wider">{item.q}</span>
+                  <span className="text-sm uppercase font-allura tracking-wider">{item.q}</span>
                   <motion.span 
                     animate={{ rotate: activeIndex === i ? 45 : 0 }}
                     className="text-white text-xl"

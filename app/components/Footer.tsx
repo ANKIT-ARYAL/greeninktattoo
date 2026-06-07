@@ -8,7 +8,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 pt-20 pb-12 px-6 md:px-24 ">
+    <footer className="border-t border-white/10 pt-20 pb-12 px-6 md:px-24 font-allura">
       <div className="max-w-[1920px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           
@@ -28,7 +28,7 @@ export const Footer = () => {
 
           {/* NAV */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-white">Navigation</h4>
+            <h4 className="text-xl uppercase text-emerald-700">Navigation</h4>
             <ul className="space-y-4">
               {[
                 { name: 'Home', path: '/' },
@@ -48,7 +48,7 @@ export const Footer = () => {
 
           {/* CONTACT */}
           <div className="space-y-6">
-            <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-white">Studio</h4>
+            <h4 className="text-xl uppercase text-emerald-700">Studio</h4>
             <div className="space-y-4">
               <div className="flex items-start gap-3 text-[10px] text-white uppercase tracking-[0.2em]">
                 <MapPin size={12} className="text-white shrink-0 mt-0.5" />

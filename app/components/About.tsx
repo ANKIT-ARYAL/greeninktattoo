@@ -21,12 +21,12 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/60 z-0" />
         
         <div className="relative z-10 max-w-5xl translate-z-[100px] mb-12">
-          <h1 className="text-6xl md:text-9xl font-header uppercase tracking-wider text-white drop-shadow-2xl">
-            SANJAY <br/><span className='mt-5'> BALAMI</span>
+          <h1 className="text-6xl md:text-9xl font-pirata uppercase tracking-wider text-white drop-shadow-2xl">
+            SANJAY <br/><span className='mt-5 text-emerald-700'> BALAMI</span>
           </h1>
           <div className="mt-8 flex items-center gap-6">
             <span className="h-[1px] w-12 bg-[#26ff00]" />
-            <p className="text-white/80 uppercase tracking-[0.3em] text-[10px] font-bold">
+            <p className="text-white/80 uppercase tracking-[0.3em] text-[10px] font-allura">
               Professional Tattoo Artist // Kathmandu
             </p>
           </div>
@@ -38,10 +38,10 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 border border-white/10 preserve-3d">
           <article className="p-12 lg:p-24 border-b lg:border-b-0 lg:border-r border-white/10 ">
             <StaticReveal>
-              <h2 className="flex items-center gap-3 text-7xl font-header uppercase tracking-wider mb-8">
-                <Sparkles size={12} /> Expert Profile
+              <h2 className="flex items-center gap-3 text-7xl font-pirata uppercase tracking-wider mb-8">
+                <Sparkles size={12} /> Expert's <span className='text-emerald-700'>Profile</span>
               </h2>
-              <div className="space-y-8 text-neutral-400 text-sm leading-relaxed max-w-md font-light">
+              <div className="space-y-8 text-neutral-400 text-sm leading-relaxed max-w-md font-allura">
                 <p>With over a decade of technical practice, <strong>Sanjay Balami</strong> has defined the standard for high-contrast realism in Kathmandu.</p>
                 <p>Specializing in complex custom designs, Sanjay operates on a principle of absolute precision.</p>
                 <p className=" italic">"Precision is the only variable that matters."</p>

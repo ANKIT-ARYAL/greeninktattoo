@@ -10,8 +10,8 @@ export default function OnTheBoard({ works = [] }: { works?: any[] }) {
   return (
     <section className="py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-8">
-        <h2 className="text-7xl font-header uppercase text-white mb-20 text-center tracking-wider">
-          On The Board
+        <h2 className="text-7xl font-pirata uppercase text-white mb-20 text-center tracking-wider">
+          On The <span className='text-emerald-700'>Board</span>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

@@ -22,12 +22,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <Reveal direction="down">
           <Link href="/blogs" className="inline-flex items-center gap-3 text-neutral-400 hover:text-white transition-colors mb-16 group">
             <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em]">Back to Journal</span>
+            <span className="text-[18px] font-allura uppercase tracking-[0.4em]">Back to Journal</span>
           </Link>
         </Reveal>
 
         {/* HEADER */}
-        <header className="mb-20">
+        <header className="mb-20 font-allura">
           <Reveal delay={0.1}>
             <div className="flex items-center gap-6 mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-white/60">
               <span className="flex items-center gap-2 text-white">
@@ -35,13 +35,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </span>
               <span className="w-1 h-1 rounded-full bg-white/20" />
               <span className="flex items-center gap-2">
-                <User size={12} /> {post.author}
+                <User size={12} /> GreenInk Tattoo
               </span>
             </div>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <h1 className="text-5xl md:text-8xl lg:text-9xl font-header text-white uppercase tracking-wider leading-[0.9] mb-10">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-pirata text-white uppercase tracking-wider leading-[0.9] mb-10">
               {post.title}
             </h1>
           </Reveal>
@@ -70,7 +70,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* CUSTOM CONTENT STYLING (Replacing default 'prose') */}
         <Reveal delay={0.5}>
-          <div className="max-w-4xl space-y-10 text-neutral-400 font-light text-lg md:text-xl leading-relaxed">
+          <div className="max-w-4xl space-y-10 text-neutral-400 font-allura text-lg md:text-xl leading-relaxed">
             {post.content.split('\n').map((paragraph, i) => (
               paragraph ? (
                 <p key={i} className=" first-letter:font-black first-letter:float-left">
@@ -82,7 +82,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </Reveal>
 
         {/* FOOTER */}
-        <footer className="mt-32 pt-16 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">                 
+        <footer className="mt-32 pt-16 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8 font-allura">                 
           <button className="flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 rounded-none text-[10px] font-black uppercase tracking-[0.3em] text-white transition-all">
             <Share2 size={14} /> Share Article
           </button>
