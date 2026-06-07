@@ -149,7 +149,17 @@ main {
   body {
     @apply bg-background text-foreground;
   }
-  html {
-    @apply font-sans;
-  }
+  
+}
+
+.font-pirata {
+  font-family: var(--font-Pirata_One), serif;
+}
+
+.font-allura{
+font-family: var(--font-Cinzel), serif;
+}
+
+.font-blackops{
+  font-family: var(--font-Black_Ops_One), serif;
 }

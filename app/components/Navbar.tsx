@@ -20,19 +20,19 @@ export default function Navbar({ transparent = true }: NavbarProps) {
            {/* If logo is invisible, change src to a known working path */}
            <Image src='/logo.png' alt='Logo' width={120} height={120} className="w-16 h-16 md:w-[120px] md:h-[120px]" />
         </Link>
-        <p className="hidden md:block text-2xl font-header uppercase tracking-widest text-white mt-3">
-      Green Ink Tattoo
+        <p className="hidden md:block text-2xl font-pirata uppercase tracking-widest text-emerald-700 mt-3">
+      Green Ink <span className='text-white'>Tattoo</span>
     </p>
         </div>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
           {['Gallery', 'About', 'Blogs'].map((link) => (
-            <Link key={link} href={`/${link.toLowerCase()}`} className="text-[10px] uppercase tracking-[0.2em] text-white hover:text-white cursor-pointer hover:scale-110 transition-all">
+            <Link key={link} href={`/${link.toLowerCase()}`} className="text-[14px] uppercase tracking-[0.2em] text-white hover:text-green-600 cursor-pointer hover:scale-110 transition-all font-allura">
               {link}
             </Link>
           ))}
-          <Link href='/contact' className="bg-white text-black px-6 py-3 uppercase font-black text-[10px] tracking-[0.2em] hover:bg-gray-200 hover:scale-110 transition-all">
+          <Link href='/contact' className="bg-emerald-700 text-white px-6 py-3 uppercase font-allura font-bold text-[14px] tracking-[0.2em] hover:bg-emerald-500 hover:scale-110 transition-all">
             Book Now
           </Link>
         </div>
