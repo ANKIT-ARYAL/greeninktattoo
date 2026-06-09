@@ -37,9 +37,9 @@ export default function HeroReveal() {
         className="relative z-10 flex flex-col items-start text-left w-full max-w-4xl"
       >
         <h1 
-          className="text-6xl md:text-7xl text-white uppercase tracking-wider mb-6 leading-none font-pirata"
+          className="text-6xl md:text-7xl text-white uppercase mb-6 leading-none font-bold font-blackops"
         >
-          Art Beyond <span className='text-emerald-700'>The Surface</span>
+          Art Beyond <span className='text-white'>The Surface</span>
         </h1>
         
         <p className="text-white uppercase font-medium mb-10 opacity-80 text-lg max-w-2xl font-allura">
@@ -47,10 +47,10 @@ export default function HeroReveal() {
         </p>
 
         <div className="flex gap-6">
-          <Link href="/contact" className="border border-white/30 px-12 py-4 uppercase font-bold tracking-widest font-allura text-white hover:bg-white hover:text-black transition-all">
+          <Link href="/contact" className="border border-white/30 px-12 py-4 uppercase font-bold tracking-widest font-blackops text-white hover:bg-white hover:text-black transition-all rounded-full text-lg">
             Book Now
           </Link>
-          <Link href="/gallery" className="border border-white/30 text-white px-12 py-4 uppercase font-bold bg-emerald-700 tracking-widest font-allura hover:bg-emerald-500 hover:text-black transition-all">
+          <Link href="/gallery" className="border border-white/30 text-black px-12 py-4 uppercase font-bold bg-[#32CD32] tracking-widest font-blackops hover:bg-emerald-500 hover:text-black transition-all rounded-full text-lg">
             Gallery
           </Link>
         </div>

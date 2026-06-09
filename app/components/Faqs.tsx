@@ -20,7 +20,7 @@ export default function Faqs() {
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Header Section */}
         <div className="mb-16">
-          <h2 className="text-6xl md:text-7xl font-pirata uppercase text-white mb-4">Frequently Asked <span className='text-emerald-700'>Questions</span></h2>
+          <h2 className="text-6xl md:text-7xl font-blackops uppercase text-white mb-4">Frequently Asked Questions</h2>
           <p className="text-white/50 font-allura">A few things you might want to know before booking.</p>
         </div>
 

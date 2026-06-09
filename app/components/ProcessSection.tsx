@@ -10,39 +10,57 @@ const steps = [
 
 export default function ProcessSection() {
   return (
-    <section className="py-24 relative">
+    <section className="py-20 relative">
       <div className="max-w-6xl mx-auto px-8 relative">
-        {/* SVG Path: Hidden on mobile, visible on desktop */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 " viewBox="0 0 1000 1600">
-          <path 
-            d="M 850 150 Q 200 350 200 650 T 850 1000 T 200 1350" 
-            stroke="#dc2626" 
-            strokeWidth="2" 
-            fill="none" 
+
+        {/* SVG stays untouched */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 1600">
+          <path
+            d="M 850 150 Q 200 350 200 650 T 850 1000 T 200 1350"
+            stroke="#dc2626"
+            strokeWidth="2"
+            fill="none"
           />
         </svg>
 
-        {/* Header Block: Adjusted for mobile stacking */}
-        <div className="relative md:absolute top-0 left-0 md:left-8 w-full md:w-[300px] z-10 mb-16 md:mb-0">
-          <div className="md:sticky top-24">
-            <h2 className="text-5xl md:text-7xl font-pirata uppercase text-white mb-8">From<br /><span className='text-emerald-700'>Idea To Ink</span></h2>
+        {/* Header */}
+        <div className="relative md:absolute top-0 left-0 md:left-8 w-full md:w-[300px] z-10 mb-8">
+          <div className="md:sticky top-20">
+            <h2 className="text-5xl md:text-7xl font-blackops uppercase text-white mb-6">
+              From<br />Idea To Ink
+            </h2>
+
             <p className="text-white/60 max-w-sm font-allura leading-relaxed">
-              Here’s how we bring your tattoo to life, guiding you through every step of the process from start to finish, ensuring your vision becomes a stunning reality.
+              Here’s how we bring your tattoo to life, guiding you through every step of the process from start to finish.
             </p>
           </div>
         </div>
 
-        {/* Cards Flow: Centered on mobile */}
-        <div className="flex flex-col gap-20 md:gap-40 pt-10">
-          {steps.map((step, i) => (
-            <div 
-              key={step.id} 
-              className={`flex w-full ${i % 2 === 0 ? 'justify-end' : 'justify-start'} justify-center md:justify-end md:even:justify-start`}
-            >
-              <StepCard number={step.id} title={step.title} desc={step.desc} />
-            </div>
-          ))}
+        {/* Zig-zag layout (your actual request) */}
+        <div className="flex flex-col gap-10 md:gap-14">
+
+          {/* 1 - right */}
+          <div className="w-full flex justify-end md:pr-12">
+            <StepCard number={steps[0].id} title={steps[0].title} desc={steps[0].desc} />
+          </div>
+
+          {/* 2 - left */}
+          <div className="w-full flex justify-start md:pl-12">
+            <StepCard number={steps[1].id} title={steps[1].title} desc={steps[1].desc} />
+          </div>
+
+          {/* 3 - right */}
+          <div className="w-full flex justify-end md:pr-12">
+            <StepCard number={steps[2].id} title={steps[2].title} desc={steps[2].desc} />
+          </div>
+
+          {/* 4 - left */}
+          <div className="w-full flex justify-start md:pl-12">
+            <StepCard number={steps[3].id} title={steps[3].title} desc={steps[3].desc} />
+          </div>
+
         </div>
+
       </div>
     </section>
   );

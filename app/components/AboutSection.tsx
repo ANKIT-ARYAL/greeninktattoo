@@ -12,12 +12,12 @@ export default function AboutSection() {
             {/* Replace with your portrait image */}
             <img src="/sanjay-portrait.jpg" className="w-full h-full object-cover object-bottom" alt="Sanjay" />
           </div>
-          <h2 className="text-7xl font-pirata mt-6 tracking-wider">Sanjay Balami</h2>
+          <h2 className="text-7xl font-blackops mt-6 tracking-wider">Sanjay Balami</h2>
         </div>
 
         {/* Right: Content & Experience */}
         <div className="lg:col-span-8 flex flex-col gap-12">
-          <h3 className="text-5xl font-pirata uppercase tracking-wider">Meet The<span className='text-emerald-700'> Artist</span></h3>
+          <h3 className="text-5xl font-blackops uppercase tracking-wider">Meet The Artist</h3>
           
           <div className="space-y-8 font-allura">
             {[

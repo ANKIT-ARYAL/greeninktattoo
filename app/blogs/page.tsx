@@ -24,8 +24,8 @@ export default async function BlogsPage() {
         <header className="mb-24 flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/10 pb-12 mt-10">
           <div>            
             <Reveal delay={0.2}>
-              <h1 className="text-7xl md:text-9xl font-pirata text-white uppercase tracking-wider leading-[0.9]">
-                The <span className='text-emerald-700'>Journal</span>
+              <h1 className="text-7xl md:text-9xl font-blackops text-white tracking-widest leading-[0.9]">
+                The Journal
               </h1>
             </Reveal>
           </div>
@@ -66,7 +66,7 @@ export default async function BlogsPage() {
                     </span>
                   </div>
 
-                  <h3 className="text-4xl font-pirata text-white uppercase tracking-wider mb-6 group-hover:text-white transition-colors line-clamp-2 leading-tight">
+                  <h3 className="text-4xl font-blackops text-white tracking-wider mb-6 group-hover:text-white transition-colors line-clamp-2 leading-tight">
                     {post.title}
                   </h3>
                   

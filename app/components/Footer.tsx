@@ -28,7 +28,7 @@ export const Footer = () => {
 
           {/* NAV */}
           <div className="space-y-6">
-            <h4 className="text-xl uppercase text-emerald-700">Navigation</h4>
+            <h4 className="text-xl uppercase text-[#32CD32] tracking-widest font-blackops">Navigation</h4>
             <ul className="space-y-4">
               {[
                 { name: 'Home', path: '/' },
@@ -48,7 +48,7 @@ export const Footer = () => {
 
           {/* CONTACT */}
           <div className="space-y-6">
-            <h4 className="text-xl uppercase text-emerald-700">Studio</h4>
+            <h4 className="text-xl uppercase text-[#32CD32] tracking-widest font-blackops">Studio</h4>
             <div className="space-y-4">
               <div className="flex items-start gap-3 text-[10px] text-white uppercase tracking-[0.2em]">
                 <MapPin size={12} className="text-white shrink-0 mt-0.5" />

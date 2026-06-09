@@ -2,16 +2,16 @@
 import "./globals.css";
 import localFont from 'next/font/local';
 import { LayoutWrapper } from "./components/LayoutWrapper";
-import { Geist, Pirata_One, Cinzel, Black_Ops_One } from "next/font/google"; // Import the font
+import { Geist, Cinzel, Black_Ops_One, Bebas_Neue } from "next/font/google"; // Import the font
 import { cn } from "@/lib/utils";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 // Initialize the Black Ops One font
-const blackOps = Pirata_One({ 
+const blackOps = Bebas_Neue({ 
   subsets: ['latin'], 
   weight: '400',
-  variable: '--font-Pirata_One' 
+  variable: '--font-Bebas_Neue' 
 });
 
 const blackOps1 = Black_Ops_One({ 

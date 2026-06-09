@@ -60,7 +60,7 @@ function GalleryCard({ design, index }: { design: Design; index: number }) {
           <span className="text-white text-[9px] font-black uppercase tracking-[0.3em] mb-1">
             {design.category}
           </span>
-          <h3 className="text-xl md:text-2xl font-header text-white uppercase tracking-wider leading-none">
+          <h3 className="text-xl md:text-2xl font-blackops text-white tracking-wider leading-none">
             {design.title}
           </h3>
         </div>
