@@ -126,34 +126,34 @@ export const BookingForm: React.FC = () => {
   return (
     <motion.div
       style={{ perspective: 1000 }}
-      className="w-full font-blackops tracking-widest space-y-8"
+      className="w-full font-blackops tracking-widest space-y-6 sm:space-y-8"
     >
 
       {/* INPUT GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         <FormInput icon={User} name="name" placeholder="FULL NAME" value={formData.name} onChange={(e: any) => setFormData({ ...formData, name: e.target.value })} />
         <FormInput icon={Phone} name="contactNumber" placeholder="WHATSAPP NUMBER" value={formData.contactNumber} onChange={(e: any) => setFormData({ ...formData, contactNumber: e.target.value })} />
         <FormInput icon={AlertCircle} name="email" placeholder="EMAIL" value={formData.email} onChange={(e: any) => setFormData({ ...formData, email: e.target.value })} />
       </div>
 
       {/* DATE + TIME */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <div className="relative">
-          <CalendarIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60" size={18} />
+          <CalendarIcon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/60" size={16} />
           <input
             type="date"
             value={formData.date}
             onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-            className="w-full bg-transparent border border-white/20 rounded-xl p-4 pl-12 text-white text-sm outline-none focus:border-[#32CD32] [color-scheme:dark]"
+            className="w-full bg-transparent border border-white/20 rounded-xl p-3 sm:p-4 pl-10 sm:pl-12 text-white text-xs sm:text-sm outline-none focus:border-[#32CD32] [color-scheme:dark]"
           />
         </div>
 
         <div className="relative">
-          <Clock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60" size={18} />
+          <Clock className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/60" size={16} />
           <select
             value={formData.time}
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-            className="w-full bg-transparent border border-white/20 rounded-xl p-4 pl-12 text-white text-sm outline-none focus:border-[#32CD32]"
+            className="w-full bg-transparent border border-white/20 rounded-xl p-3 sm:p-4 pl-10 sm:pl-12 text-white text-xs sm:text-sm outline-none focus:border-[#32CD32]"
           >
             <option className="bg-black">11:00</option>
             <option className="bg-black">12:00</option>
@@ -164,7 +164,7 @@ export const BookingForm: React.FC = () => {
       {/* UPLOAD */}
       <div>
         {preview ? (
-          <div className="relative h-40 w-40 border border-white/20 rounded-xl overflow-hidden">
+          <div className="relative w-full max-w-[160px] sm:max-w-[200px] aspect-square border border-white/20 rounded-xl overflow-hidden">
             <Image src={preview} alt="Preview" fill className="object-cover" />
             <button
               type="button"
@@ -177,10 +177,10 @@ export const BookingForm: React.FC = () => {
         ) : (
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="border border-dashed border-white/20 rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer hover:border-[#32CD32] transition"
+            className="border border-dashed border-white/20 rounded-xl p-6 sm:p-10 flex flex-col items-center justify-center cursor-pointer hover:border-[#32CD32] transition"
           >
-            <Upload size={22} className="mb-3 text-white/70" />
-            <span className="text-xs uppercase tracking-widest text-neutral-400">
+            <Upload size={20} className="mb-2 sm:mb-3 text-white/70" />
+            <span className="text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 text-center">
               Attach Reference Image
             </span>
             <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleFileChange} />
@@ -194,14 +194,16 @@ export const BookingForm: React.FC = () => {
         rows={4}
         value={formData.description}
         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-        className="w-full bg-transparent border border-white/20 rounded-xl p-4 text-white text-sm outline-none focus:border-[#32CD32] resize-none"
+        className="w-full bg-transparent border border-white/20 rounded-xl p-3 sm:p-4 text-white text-xs sm:text-sm outline-none focus:border-[#32CD32] resize-none"
       />
 
       {/* MESSAGE */}
       {message && (
-        <div className={`rounded-xl px-4 py-3 text-sm ${message.type === 'success'
-          ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/20'
-          : 'bg-red-500/10 text-red-200 border border-red-500/20'}`}>
+        <div className={`rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm ${
+          message.type === 'success'
+            ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/20'
+            : 'bg-red-500/10 text-red-200 border border-red-500/20'
+        }`}>
           {message.text}
         </div>
       )}
@@ -210,7 +212,7 @@ export const BookingForm: React.FC = () => {
       <motion.button
         whileHover={{ scale: 1.02 }}
         disabled={loading}
-        className="w-full py-4 bg-[#32CD32] text-black uppercase tracking-widest text-lg rounded-full font-blackops"
+        className="w-full py-3 sm:py-4 bg-[#32CD32] text-black uppercase tracking-widest text-sm sm:text-lg rounded-full font-blackops"
       >
         {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : 'Submit Booking Request'}
       </motion.button>
@@ -222,10 +224,10 @@ export const BookingForm: React.FC = () => {
 /* INPUT */
 const FormInput = ({ icon: Icon, ...props }: any) => (
   <div className="relative">
-    <Icon className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60" size={18} />
+    <Icon className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-white/60" size={16} />
     <input
       {...props}
-      className="w-full bg-transparent border border-white/20 rounded-xl p-4 pl-12 text-white text-sm outline-none focus:border-[#32CD32] placeholder:text-neutral-500"
+      className="w-full bg-transparent border border-white/20 rounded-xl p-3 sm:p-4 pl-10 sm:pl-12 text-white text-xs sm:text-sm outline-none focus:border-[#32CD32] placeholder:text-neutral-500"
     />
   </div>
 );
