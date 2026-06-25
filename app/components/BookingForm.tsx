@@ -128,7 +128,7 @@ export const BookingForm: React.FC = () => {
       style={{ perspective: 1000 }}
       className="w-full font-blackops tracking-widest space-y-6 sm:space-y-8"
     >
-
+      <form onSubmit={validateAndSubmit} className="w-full font-blackops tracking-widest space-y-6 sm:space-y-8">
       {/* INPUT GRID */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         <FormInput icon={User} name="name" placeholder="FULL NAME" value={formData.name} onChange={(e: any) => setFormData({ ...formData, name: e.target.value })} />
@@ -210,13 +210,15 @@ export const BookingForm: React.FC = () => {
 
       {/* SUBMIT */}
       <motion.button
+      type='submit'
         whileHover={{ scale: 1.02 }}
         disabled={loading}
         className="w-full py-3 sm:py-4 bg-[#32CD32] text-black uppercase tracking-widest text-sm sm:text-lg rounded-full font-blackops"
       >
         {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : 'Submit Booking Request'}
+        
       </motion.button>
-
+      </form>
     </motion.div>
   );
 };
