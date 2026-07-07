@@ -29,7 +29,7 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: AddDesignModalPro
   const categories = [
     'Blackwork / Black and Gray', 'Realism', 'Traditional', 'Minimalist', 
     'Fontwork and Linework', 'Colorwork and New School', 
-    'Mandala , Dot Work and Geomatrical', 'Cover up', 'Other'
+    'Mandala , Dot Work and Geomatrical', 'Cover up', 'Color Realism', 'Other'
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,8 +77,9 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: AddDesignModalPro
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/95 backdrop-blur-md p-4">
-      <div className="bg-neutral-900 border border-white/10 w-full max-w-md rounded-[3rem] p-10 shadow-2xl">
+    <div className="fixed inset-0 z-[150] overflow-y-auto bg-black/95 backdrop-blur-md p-4 sm:p-6">
+      <div className="mx-auto my-4 flex min-h-[calc(100vh-2rem)] w-full max-w-md items-center justify-center">
+        <div className="w-full max-h-[calc(100vh-2rem)] overflow-y-auto bg-neutral-900 border border-white/10 rounded-[3rem] p-6 sm:p-8 lg:p-10 shadow-2xl">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-display font-header text-white uppercase  tracking-widerer">Add New Work</h2>
           <button onClick={onClose} className="text-neutral-500 hover:text-white"><X size={28}/></button>
@@ -122,6 +123,7 @@ export function AddDesignModal({ isOpen, onClose, onSuccess }: AddDesignModalPro
             {loading ? <Loader2 className="animate-spin mx-auto" size={18} /> : 'Save Asset'}
           </button>
         </form>
+        </div>
       </div>
     </div>
   );

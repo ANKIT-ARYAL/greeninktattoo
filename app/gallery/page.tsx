@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 async function getDesigns() {
   try {
     return await prisma.tattooDesign.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 50
+      orderBy: { createdAt: 'desc' }
+      
     });
   } catch (error) {
     console.error("Database fetch failed:", error);

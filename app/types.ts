@@ -2,7 +2,7 @@
 export interface TattooDesign {
   id: string;
   title: string;
-  category: 'Blackwork / Black and Gray' | 'Realism' | 'Traditional' | 'Fontwork and Linework' | 'Minimalist' | 'Colorwork and New School' | 'Mandala , Dot Work and Geomatrical' | 'Cover up' | 'Other';
+  category: 'Blackwork / Black and Gray' | 'Realism' | 'Traditional' | 'Fontwork and Linework' | 'Minimalist' | 'Colorwork and New School' | 'Mandala , Dot Work and Geomatrical' | 'Cover up' | 'Color Realism' | 'Other';
   imageUrl: string;
   isFeatured: boolean; // Added for homepage control
   createdAt: number;

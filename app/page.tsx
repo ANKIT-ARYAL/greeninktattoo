@@ -14,8 +14,9 @@ export const revalidate = 0;
 export default async function Page() {
   
   
-  // Fetch all work for "On The Board"
+  // Fetch only featured work for the homepage board slider
   const allWorks = await prisma.tattooDesign.findMany({
+    where: { isFeatured: true },
     orderBy: { createdAt: 'desc' },
     take: 11,
   });

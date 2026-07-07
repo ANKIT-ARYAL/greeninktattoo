@@ -8,14 +8,17 @@ interface Design {
   title: string;
   imageUrl: string;
   category: string;
+  isFeatured?: boolean;
 }
 
 export default function GalleryClient({ designs, isFeatured }: { designs: Design[]; isFeatured?: boolean }) {
   if (!designs?.length) return null;
 
+  const displayDesigns = isFeatured ? designs.filter((design) => design.isFeatured) : designs;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full [perspective:1000px]">
-      {designs.map((design, index) => (
+      {displayDesigns.map((design, index) => (
         <GalleryCard key={design.id} design={design} index={index} />
       ))}
     </div>

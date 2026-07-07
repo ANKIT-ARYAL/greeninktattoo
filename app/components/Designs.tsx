@@ -9,9 +9,10 @@ import Reveal from './Reveal';
 export const revalidate = 0;
 export default async function Designs() {
   const designs = await prisma.tattooDesign.findMany({
+    where: { isFeatured: true },
     take: 6,
     orderBy: { createdAt: 'desc' },
-    select: { id: true, title: true, imageUrl: true, category: true }
+    select: { id: true, title: true, imageUrl: true, category: true, isFeatured: true }
   });
 
   const serializedDesigns = JSON.parse(JSON.stringify(designs));

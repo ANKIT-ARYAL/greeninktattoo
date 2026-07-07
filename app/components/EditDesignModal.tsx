@@ -30,6 +30,7 @@ export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: EditDesi
     'Colorwork and New School', 
     'Mandala , Dot Work and Geomatrical', 
     'Cover up',
+    'Color Realism',
     'Other'
   ];
 
@@ -51,8 +52,9 @@ export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: EditDesi
   };
 
   return (
-    <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-      <div className="w-full max-w-lg bg-neutral-900 border border-white/10 rounded-[2.5rem] p-10 shadow-2xl">
+    <div className="fixed inset-0 z-[110] overflow-y-auto bg-black/90 backdrop-blur-md p-4 sm:p-6">
+      <div className="mx-auto my-4 flex min-h-[calc(100vh-2rem)] w-full max-w-lg items-center justify-center">
+        <div className="w-full max-h-[calc(100vh-2rem)] overflow-y-auto bg-neutral-900 border border-white/10 rounded-[2.5rem] p-6 sm:p-8 lg:p-10 shadow-2xl">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-display font-header text-white uppercase  tracking-widerer">Edit Work</h2>
           <button onClick={onClose} className="text-neutral-500 hover:text-white transition-colors"><X size={24} /></button>
@@ -119,6 +121,7 @@ export const EditDesignModal = ({ design, isOpen, onClose, onSuccess }: EditDesi
             {loading ? <Loader2 className="animate-spin" size={18} /> : "Update Design Asset"}
           </button>
         </form>
+        </div>
       </div>
     </div>
   );

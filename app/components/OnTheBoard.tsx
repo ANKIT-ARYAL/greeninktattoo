@@ -10,6 +10,7 @@ interface Design {
   title: string;
   imageUrl: string;
   category: string;
+  isFeatured?: boolean;
 }
 
 export default function OnTheBoard({
@@ -17,8 +18,9 @@ export default function OnTheBoard({
 }: {
   works?: Design[];
 }) {
-  const displayWorks = works.slice(0, 10);
-  const showViewMore = works.length > 10;
+  const featuredWorks = works.filter((work) => work.isFeatured !== false);
+  const displayWorks = featuredWorks.slice(0, 10);
+  const showViewMore = featuredWorks.length > 10;
 
   if (!displayWorks.length) return null;
 

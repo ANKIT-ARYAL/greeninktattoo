@@ -2,10 +2,14 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-// GET: Fetch all designs
-export async function GET() {
+// GET: Fetch all designs or only featured ones
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const featuredOnly = searchParams.get('featured') === 'true';
+
     const designs = await prisma.tattooDesign.findMany({
+      where: featuredOnly ? { isFeatured: true } : undefined,
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json(designs);
