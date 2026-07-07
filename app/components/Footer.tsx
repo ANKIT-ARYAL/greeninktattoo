@@ -1,8 +1,9 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { Phone, MapPin, ArrowUpRight, Facebook, Instagram, TicketCheckIcon } from 'lucide-react';
 import Image from 'next/image';
+import { FaTiktok } from 'react-icons/fa';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,6 +25,17 @@ export const Footer = () => {
             <p className="text-neutral-500 text-[10px] uppercase tracking-[0.2em] max-w-xs leading-relaxed">
               Kathmandu’s premier destination for custom ink. Merging traditional discipline with modern artistic precision.
             </p>
+            <div className="flex items-center gap-4">
+            <Link href='https://www.facebook.com/greeninktattoos'>
+            <Facebook />
+            </Link>
+            <Link href='https://www.instagram.com/green_inktattoo/'>
+            <Instagram />
+            </Link>
+            <Link href='https://www.tiktok.com/@greeninktattoo'>
+             <FaTiktok />
+            </Link>
+            </div>                      
           </div>
 
           {/* NAV */}
@@ -54,9 +66,9 @@ export const Footer = () => {
                 <MapPin size={12} className="text-white shrink-0 mt-0.5" />
                 Thamel, Kathmandu
               </div>
-              <a href="https://wa.me/9779840015954" target="_blank" rel="noreferrer noopener" className="flex items-center gap-3 text-[10px] text-white hover:text-white transition-colors uppercase tracking-[0.2em]">
+              <a href="https://wa.me/9779801017750" target="_blank" rel="noreferrer noopener" className="flex items-center gap-3 text-[10px] text-white hover:text-white transition-colors uppercase tracking-[0.2em]">
                 <Phone size={12} className="text-white shrink-0" />
-                WhatsApp: +977 9840015954
+                WhatsApp: +977 9801017750
               </a>
             </div>
           </div>
