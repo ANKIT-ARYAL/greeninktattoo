@@ -40,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     // Apply the new variable to the html class list
     <html lang="en" className={cn(customHeaderFont.variable, "font-sans", geist.variable, blackOps.variable, blackOps1.variable, customFont.variable)}>
+      <meta name="google-site-verification" content="IpJR-Mzjo0nVQZg_ivEJ7_ZoFD35WljOwqZhGZiMKc0" />
       <body className="bg-black text-white">
         <div className="fixed inset-0 -z-50 bg-[#050505]">
           <div className="absolute inset-0 bg-[url('/hero.jpg')] bg-cover bg-center opacity-10" />
