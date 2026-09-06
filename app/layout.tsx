@@ -3,6 +3,7 @@ import "./globals.css";
 import localFont from 'next/font/local';
 import { LayoutWrapper } from "./components/LayoutWrapper";
 import { Geist, Cinzel, Black_Ops_One, Bebas_Neue } from "next/font/google"; // Import the font
+import { GoogleTagManager } from "@next/third-parties/google";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
@@ -32,6 +33,8 @@ const customHeaderFont = localFont({
   display: 'swap',
 });
 
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+
 export const metadata = {
   title: 'Green Ink Tattoo - Kathmandu\'s Premier Tattoo Studio',
 };
@@ -42,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={cn(customHeaderFont.variable, "font-sans", geist.variable, blackOps.variable, blackOps1.variable, customFont.variable)}>
       <meta name="google-site-verification" content="IpJR-Mzjo0nVQZg_ivEJ7_ZoFD35WljOwqZhGZiMKc0" />
       <body className="bg-black text-white">
+        {gtmId ? <GoogleTagManager gtmId={gtmId} /> : null}
         <div className="fixed inset-0 -z-50 bg-[#050505]">
           <div className="absolute inset-0 bg-[url('/hero.jpg')] bg-cover bg-center opacity-10" />
         </div>        
